@@ -27,13 +27,6 @@
 				<webXml>src\main\webapp\WEB-INF\web.xml</webXml>        
 			  </configuration>
 			</plugin>
-			
-			<plugin>
-            	<groupId>com.google.appengine</groupId>
-            	<artifactId>appengine-api-1.0-sdk</artifactId>
-    			<version>1.9.48</version>
-        	</plugin>
-					
 				
 		</plugins>
 	</build>
