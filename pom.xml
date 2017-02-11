@@ -29,6 +29,7 @@
 			</plugin>
 				
 		</plugins>
+		<finalName>controle-vendas</finalName>
 	</build>
 	
 	<dependencies>
