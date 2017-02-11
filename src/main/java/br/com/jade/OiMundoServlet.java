@@ -29,7 +29,7 @@ public class OiMundoServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
 		out.print("<html>");
-		out.print("<body><h1>Oi Mundo</h1></body>");
+		out.print("<body><h1>Lingerie</h1></body>");
 		out.print("</html>");
 		
 	}
