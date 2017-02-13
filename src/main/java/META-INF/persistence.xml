@@ -12,7 +12,7 @@
               
                     <!-- dados da conexao -->
                     <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
-                    <property name="javax.persistence.jdbc.url" value="jdbc:mysql://mysql/vendas" />
+                    <property name="javax.persistence.jdbc.url" value="jdbc:mysql://mysql:3306/vendas" />
                     <property name="javax.persistence.jdbc.user" value="davi" />
                     <property name="javax.persistence.jdbc.password" value="davi1980" />
    
