@@ -12,9 +12,9 @@
               
                     <!-- dados da conexao -->
                     <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
-                    <property name="javax.persistence.jdbc.url" value="jdbc:mysql://${MYSQL_SERVICE_HOST}:${MYSQL_SERVICE_PORT}/${MYSQL_DATABASE}" />
-                    <property name="javax.persistence.jdbc.user" value="${MYSQL_USER}" />
-                    <property name="javax.persistence.jdbc.password" value="${MYSQL_PASSWORD}" />
+                    <property name="javax.persistence.jdbc.url" value="jdbc:mysql://${MYSQL_SERVICE_HOST}:${MYSQL_SERVICE_PORT}/vendas" />
+                    <property name="javax.persistence.jdbc.user" value="davi" />
+                    <property name="javax.persistence.jdbc.password" value="davi1980" />
 <!-- 					<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/vendas" /> -->
 <!--    					<property name="javax.persistence.jdbc.user" value="davi" /> -->
 <!--    					<property name="javax.persistence.jdbc.password" value="davi1980" /> -->
