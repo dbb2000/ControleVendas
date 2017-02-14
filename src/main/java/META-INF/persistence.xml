@@ -12,9 +12,9 @@
               
                     <!-- dados da conexao -->
                     <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
-                    <property name="javax.persistence.jdbc.url" value="jdbc:mysql://${HOSTNAME}:${MYSQL_SERVICE_PORT}/${MYSQL_DATABASE}" />
+                    <property name="javax.persistence.jdbc.url" value="jdbc:mysql://${MYSQL_SERVICE_HOST}:${MYSQL_SERVICE_PORT}/${MYSQL_DATABASE}" />
                     <property name="javax.persistence.jdbc.user" value="${MYSQL_USER}" />
-                    <property name="javax.persistence.jdbc.password" value=${MYSQL_PASSWORD}" />
+                    <property name="javax.persistence.jdbc.password" value="${MYSQL_PASSWORD}" />
    
                     <!-- propriedades do hibernate -->
                     <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
