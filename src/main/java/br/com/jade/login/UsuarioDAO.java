@@ -9,8 +9,7 @@ import br.com.jade.dao.Usuario;
 
 public class UsuarioDAO {
 	   
-    private EntityManagerFactory factory = Persistence
-                .createEntityManagerFactory("usuarios");
+    private EntityManagerFactory factory = Persistence.createEntityManagerFactory("usuarios");
     private EntityManager em = factory.createEntityManager();
 
     public Usuario getUsuario(String nomeUsuario, String senha) {
