@@ -5,7 +5,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import br.com.jade.dao.Usuario;
+import br.com.jade.model.Usuario;
 
 @ManagedBean(name = "LoginMB")
 @ViewScoped

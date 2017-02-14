@@ -1,4 +1,4 @@
-package br.com.jade.dao;
+package br.com.jade.model;
 
 import java.util.Date;
 

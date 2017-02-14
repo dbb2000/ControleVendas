@@ -6,18 +6,18 @@
 <!--               <provider>org.hibernate.ejb.HibernatePersistence</provider> -->
    			  <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
               <!-- entidade mapeada -->
-              <class>br.com.jade.dao.Usuario</class>
+              <class>br.com.jade.model.Usuario</class>
    
               <properties>
               
                     <!-- dados da conexao -->
                     <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
-                    <property name="javax.persistence.jdbc.url" value="jdbc:mysql://172.30.190.158:3306/vendas" />
-                    <property name="javax.persistence.jdbc.user" value="davi" />
-                    <property name="javax.persistence.jdbc.password" value="davi1980" />
-<!-- 					<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/vendas" /> -->
-<!--    					<property name="javax.persistence.jdbc.user" value="davi" /> -->
-<!--    					<property name="javax.persistence.jdbc.password" value="davi1980" /> -->
+<!--                     <property name="javax.persistence.jdbc.url" value="jdbc:mysql://172.30.190.158:3306/vendas" /> -->
+<!--                     <property name="javax.persistence.jdbc.user" value="davi" /> -->
+<!--                     <property name="javax.persistence.jdbc.password" value="davi1980" /> -->
+					<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/vendas" />
+					<property name="javax.persistence.jdbc.user" value="davi" />
+					<property name="javax.persistence.jdbc.password" value="davi1980" />
    	
                     <!-- propriedades do hibernate -->
                     <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />

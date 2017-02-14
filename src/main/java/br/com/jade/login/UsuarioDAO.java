@@ -5,7 +5,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 
-import br.com.jade.dao.Usuario;
+import br.com.jade.model.Usuario;
 
 public class UsuarioDAO {
 	   
