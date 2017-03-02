@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-<persistence-unit name="usuarios">
+<persistence-unit name="JadePU">
    
               <!-- provedor/implementacao do JPA -->
 <!--               <provider>org.hibernate.ejb.HibernatePersistence</provider> -->
    			  <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
               <!-- entidade mapeada -->
-              <class>br.com.jade.model.Usuario</class>
+<!--               <class>br.com.jade.model.Usuario</class> -->
    
               <properties>
               
                     <!-- dados da conexao -->
-                    <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+                    <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
 <!--                     <property name="javax.persistence.jdbc.url" value="jdbc:mysql://172.30.190.158:3306/vendas" /> -->
 <!--                     <property name="javax.persistence.jdbc.user" value="davi" /> -->
 <!--                     <property name="javax.persistence.jdbc.password" value="davi1980" /> -->
-					<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/vendas" />
+					<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/vendas?useTimezone=true&amp;serverTimezone=UTC" />
 					<property name="javax.persistence.jdbc.user" value="davi" />
 					<property name="javax.persistence.jdbc.password" value="davi1980" />
    	

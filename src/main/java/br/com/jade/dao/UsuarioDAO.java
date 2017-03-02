@@ -1,4 +1,4 @@
-package br.com.jade.login;
+package br.com.jade.dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -6,11 +6,12 @@ import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 
 import br.com.jade.model.Usuario;
+import br.com.jade.util.JpaUtil;
 
 public class UsuarioDAO {
 	   
-    private EntityManagerFactory factory = Persistence.createEntityManagerFactory("usuarios");
-    private EntityManager em = factory.createEntityManager();
+   // private EntityManagerFactory factory = Persistence.createEntityManagerFactory("usuarios");
+    private EntityManager em = JpaUtil.getEntityManager();
 
     public Usuario getUsuario(String nomeUsuario, String senha) {
 

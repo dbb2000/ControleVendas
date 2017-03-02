@@ -1,0 +1,60 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        template="main.xhtml">
+<ui:define name="source">
+  <h:head>
+   
+  </h:head>
+   
+  <h:body>
+       <h:form>
+       		<p:panelGrid columns="2" style="margin: 0 auto">
+			    <f:facet name="header">
+			        <h:outputText value="Dados de custo:" />
+			    </f:facet>
+						 
+				   	<h:outputText value="Data de compra:" />
+				    <p:calendar id="effect" value="#{fileUploadView.custo.dataCompra}" effect="fold" pattern="dd/MM/yyyy" onchange="submit()" valueChangeListener="#{fileUploadView.dataCompraChanged}" />
+				 
+				    <h:outputText value="Desconto Recebido: (%)" />
+				    <h:inputText value="#{fileUploadView.custo.descontoRecebido}" onchange="submit()" valueChangeListener="#{fileUploadView.descontoChanged}"/>
+				 
+				    <h:outputText value="Combustível:" />
+				    <h:inputText value="#{fileUploadView.custo.combustivel}" onchange="submit()" valueChangeListener="#{fileUploadView.combustivelChanged}"/>
+				 
+					<h:outputText value="Pedágio:" />
+			   		<h:inputText value="#{fileUploadView.custo.pedagio}" onchange="submit()" valueChangeListener="#{fileUploadView.pedagioChanged}"/>
+			   		
+			   		<h:outputText value="Frete:" />
+			    	<h:inputText value="#{fileUploadView.custo.frete}" onchange="submit()" valueChangeListener="#{fileUploadView.freteChanged}" />
+			    	
+			    	<h:outputText value="Outros:" />
+				    <h:inputText value="#{fileUploadView.custo.outros}" onchange="submit()" valueChangeListener="#{fileUploadView.outrosChanged}"/>
+				    
+				    <h:outputText value="Margem de lucro desejada: (%)" />
+				    <h:inputText value="#{fileUploadView.margemLucro}" onchange="submit()" valueChangeListener="#{fileUploadView.margemChanged}"/>
+			    	
+			 		<h:outputText value="Custo Total:" />
+				    <h:outputText id="soma" value="R$ #{fileUploadView.custo.custoTotal}"/>
+			    	
+			    
+			</p:panelGrid>
+       
+		    <p:fileUpload label="Escolher arquivo" 
+		    			  uploadLabel="Importar" 
+		    			  cancelLabel="Cancelar"
+		    			  fileUploadListener="#{fileUploadView.handleFileUpload}" 
+		    			  mode="advanced" 
+		    			  dragDropSupport="false"
+		           		  update="messages" 
+		           		  sizeLimit="100000" 
+		           		  fileLimit="3" 
+		           		  allowTypes="/(\.|\/)(csv)$/" />		 
+		    <p:growl id="messages" showDetail="true" />
+       </h:form>
+  </h:body>
+  </ui:define>
+</ui:composition>
