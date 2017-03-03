@@ -56,7 +56,7 @@
 		           </p:cellEditor>
 		       </p:column>
 		 
-		       <p:column headerText="Descrição do Produto" filterBy="#{produto.descricao}" filterable="false" filterMatchMode="contains">
+		       <p:column headerText="Descrição do Produto" style="width:15%" filterBy="#{produto.descricao}" filterable="false" filterMatchMode="contains">
 		           <p:cellEditor>
 		               <f:facet name="output"><h:outputText value="#{produto.descricao}" /></f:facet>
 		               <f:facet name="input"><p:inputText value="#{produto.descricao}" style="width:100%" label="descricao"/></f:facet>
@@ -130,7 +130,7 @@
 		           </p:cellEditor>
 		       </p:column>
 		 
-		       <p:column style="width:32px">
+		       <p:column style="width:3%">
 		           <p:rowEditor/>
 		       </p:column>
 		   </p:dataTable>

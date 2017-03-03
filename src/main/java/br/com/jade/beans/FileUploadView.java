@@ -16,6 +16,7 @@ import javax.faces.event.ValueChangeEvent;
 
 import org.primefaces.event.FileUploadEvent;
 
+import br.com.jade.dao.CustoDao;
 import br.com.jade.dao.ProdutoDao;
 import br.com.jade.model.Custo;
  
@@ -32,6 +33,9 @@ public class FileUploadView implements Serializable {
 
 	@ManagedProperty("#{produtoDao}")
     private ProdutoDao produtoDao;
+	
+	@ManagedProperty("#{custoDao}")
+	private CustoDao custoDao;
     
     @ManagedProperty("#{custo}")
     private Custo custo;
@@ -44,6 +48,10 @@ public class FileUploadView implements Serializable {
     public void init() {
         custo = new Custo();
         custo.setCustoTotal(new BigDecimal(0));
+        custo.setCombustivel(new BigDecimal(0));
+        custo.setFrete(new BigDecimal(0));
+        custo.setOutros(new BigDecimal(0));
+        custo.setPedagio(new BigDecimal(0));
     }
 	
     public void handleFileUpload(FileUploadEvent event) throws IOException {
@@ -76,6 +84,10 @@ public class FileUploadView implements Serializable {
 		this.margemLucro = margemLucro;
 	}
 	
+	public void setCustoDao(CustoDao custoDao) {
+		this.custoDao = custoDao;
+	}
+
 	public void margemChanged(ValueChangeEvent e){
 
 		   this.margemLucro = (Long) e.getNewValue(); 
@@ -83,7 +95,8 @@ public class FileUploadView implements Serializable {
 	
 	public void outrosChanged(ValueChangeEvent e){
 
-		   this.custo.setOutros( (BigDecimal) e.getNewValue());   
+		   this.custo.setOutros( (BigDecimal) e.getNewValue());
+		   somar();
 	}
 	
 	public void descontoChanged(ValueChangeEvent e){
@@ -99,28 +112,43 @@ public class FileUploadView implements Serializable {
 	public void combustivelChanged(ValueChangeEvent e){
 
 		   this.custo.setCombustivel( (BigDecimal) e.getNewValue());
-		   custo.setCustoTotal(custo.getCustoTotal().add(custo.getCombustivel()));
+//		   custo.setCustoTotal(custo.getCustoTotal().add(custo.getCombustivel()));
+		   somar();
 	}
 	
 
 	public void pedagioChanged(ValueChangeEvent e){
 
 		   this.custo.setPedagio((BigDecimal) e.getNewValue());
-		   custo.setCustoTotal(custo.getCustoTotal().add(custo.getPedagio()));
+//		   custo.setCustoTotal(custo.getCustoTotal().add(custo.getPedagio()));
+		   somar();
 	}
 	
 
 	public void freteChanged(ValueChangeEvent e){
 
-		   this.custo.setFrete((BigDecimal) e.getNewValue());   
+		   this.custo.setFrete((BigDecimal) e.getNewValue());
+		   somar();
 	}
     
-	public void somar(AjaxBehaviorEvent event) {
+	public void somar() {
 		
-		BigDecimal resultado = custo.getCombustivel().add(custo.getPedagio());
+		BigDecimal resultado = custo.getCombustivel().add(custo.getPedagio()).add(custo.getFrete()).add(custo.getOutros());
 		
 		this.custo.setCustoTotal(resultado);
 		}
+	
+	
+    public String gravarCusto(){
+    	custoDao.gravar(custo);
+    	FacesContext context = FacesContext.getCurrentInstance();
+    	FacesMessage mensagem = new FacesMessage(
+    	FacesMessage.SEVERITY_INFO, "Cadastro efetuado.",
+    	"Custo " + custo.getId() + " cadastrado com sucesso.");
+    	context.addMessage(null, mensagem);
+    	return null;
+    	    	
+    }
 }
 
 

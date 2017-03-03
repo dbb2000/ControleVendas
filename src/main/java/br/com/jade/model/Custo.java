@@ -120,6 +120,10 @@ public class Custo {
 	public void setAdicionalPeca(Long adicionalPeca) {
 		this.adicionalPeca = adicionalPeca;
 	}
+
+	public Long getId() {
+		return id;
+	}
 	
 	
 
