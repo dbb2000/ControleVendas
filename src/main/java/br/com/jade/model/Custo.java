@@ -28,7 +28,7 @@ public class Custo {
 	int qtdePecas;
 	
 	@Column(name="DESCONTO_RECEBIDO")	
-	Long descontoRecebido;
+	BigDecimal descontoRecebido;
 	
 	@Column(name="COMBUSTIVEL")
 	BigDecimal combustivel;
@@ -65,11 +65,11 @@ public class Custo {
 		this.qtdePecas = qtdePecas;
 	}
 
-	public Long getDescontoRecebido() {
+	public BigDecimal getDescontoRecebido() {
 		return descontoRecebido;
 	}
 
-	public void setDescontoRecebido(Long descontoRecebido) {
+	public void setDescontoRecebido(BigDecimal descontoRecebido) {
 		this.descontoRecebido = descontoRecebido;
 	}
 

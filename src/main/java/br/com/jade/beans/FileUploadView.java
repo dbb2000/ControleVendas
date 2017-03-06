@@ -11,7 +11,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.ValueChangeEvent;
 
 import org.primefaces.event.FileUploadEvent;
@@ -41,7 +40,7 @@ public class FileUploadView implements Serializable {
     private Custo custo;
     
     @ManagedProperty("#{margemLucro}")
-    private Long margemLucro;
+    private BigDecimal margemLucro;
 
 
     @PostConstruct
@@ -76,11 +75,11 @@ public class FileUploadView implements Serializable {
 		this.custo = custo;
 	}
 
-	public Long getMargemLucro() {
+	public BigDecimal getMargemLucro() {
 		return margemLucro;
 	}
 
-	public void setMargemLucro(Long margemLucro) {
+	public void setMargemLucro(BigDecimal margemLucro) {
 		this.margemLucro = margemLucro;
 	}
 	
@@ -90,53 +89,50 @@ public class FileUploadView implements Serializable {
 
 	public void margemChanged(ValueChangeEvent e){
 
-		   this.margemLucro = (Long) e.getNewValue(); 
+		this.margemLucro = (BigDecimal) e.getNewValue(); 
 	}
-	
+
 	public void outrosChanged(ValueChangeEvent e){
 
-		   this.custo.setOutros( (BigDecimal) e.getNewValue());
-		   somar();
+		this.custo.setOutros( (BigDecimal) e.getNewValue());
+		somar();
 	}
-	
+
 	public void descontoChanged(ValueChangeEvent e){
 
-		   this.custo.setDescontoRecebido((Long) e.getNewValue());   
+		this.custo.setDescontoRecebido((BigDecimal) e.getNewValue());   
 	}
-	
+
 	public void dataCompraChanged(ValueChangeEvent e){
 
-		   this.custo.setDataCompra((Date) e.getNewValue());   
+		this.custo.setDataCompra((Date) e.getNewValue());   
 	}
 
 	public void combustivelChanged(ValueChangeEvent e){
 
-		   this.custo.setCombustivel( (BigDecimal) e.getNewValue());
-//		   custo.setCustoTotal(custo.getCustoTotal().add(custo.getCombustivel()));
-		   somar();
+		this.custo.setCombustivel( (BigDecimal) e.getNewValue());
+		somar();
 	}
-	
+
 
 	public void pedagioChanged(ValueChangeEvent e){
 
-		   this.custo.setPedagio((BigDecimal) e.getNewValue());
-//		   custo.setCustoTotal(custo.getCustoTotal().add(custo.getPedagio()));
-		   somar();
+		this.custo.setPedagio((BigDecimal) e.getNewValue());
+		somar();
 	}
-	
+
 
 	public void freteChanged(ValueChangeEvent e){
 
-		   this.custo.setFrete((BigDecimal) e.getNewValue());
-		   somar();
+		this.custo.setFrete((BigDecimal) e.getNewValue());
+		somar();
 	}
-    
+
 	public void somar() {
-		
+
 		BigDecimal resultado = custo.getCombustivel().add(custo.getPedagio()).add(custo.getFrete()).add(custo.getOutros());
-		
 		this.custo.setCustoTotal(resultado);
-		}
+	}
 	
 	
     public String gravarCusto(){

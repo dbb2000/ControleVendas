@@ -2,12 +2,10 @@ package br.com.jade.dao;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
-import java.io.OutputStream;
 import java.io.Reader;
 import java.math.BigDecimal;
 import java.util.List;
@@ -82,7 +80,7 @@ public class ProdutoDao {
 		tx.commit();
 	}
 	
-	public void importar(InputStream file, Custo custo, Long margemLucro) throws IOException{
+	public void importar(InputStream file, Custo custo, BigDecimal margemLucro) throws IOException{
 
 		// aqui crio duas cópias de InputStream, uma para contar linha e outra para iterar
 		// pois não posso usar o mesmo InputStream duas vezes.
@@ -104,16 +102,20 @@ public class ProdutoDao {
 				// campo[2] = preço de custo
 				String[] campos = line.split(";");
 				
-				BigDecimal custoEfetivo = Calculos.calculaCustoEfetivo(totalLinhas, custo.getDescontoRecebido(), new BigDecimal(campos[2]));
+				BigDecimal custoEfetivo = Calculos.calculaCustoEfetivo(totalLinhas, custo.getDescontoRecebido(), new BigDecimal(campos[2]), custo.getCustoTotal());
 				BigDecimal precoVenda = Calculos.calculaPrecoVenda(margemLucro, custoEfetivo);
 				
 				Produto produto = new Produto();
 				produto.setCodigo(campos[0]);
-				produto.setDataEntrada(custo.getDataCompra());
 				produto.setDescricao(campos[1]);
+				
 				produto.setPrecoCusto(new BigDecimal(campos[2]));
-//				produto.setPrecoCustoEfetivo(custoEfetivo);
-//				produto.setPrecoVenda(precoVenda);
+				produto.setPrecoCustoEfetivo(custoEfetivo);
+				produto.setPrecoVenda(precoVenda);				
+				produto.setDataEntrada(custo.getDataCompra());
+				
+				
+				
 
 				
 //				gravar(produto);
