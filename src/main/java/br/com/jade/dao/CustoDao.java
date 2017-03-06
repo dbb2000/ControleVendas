@@ -5,11 +5,7 @@ import javax.faces.bean.ManagedBean;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-import br.com.jade.enums.Localidade;
-import br.com.jade.enums.Status;
 import br.com.jade.model.Custo;
-import br.com.jade.model.Produto;
-import br.com.jade.model.Venda;
 import br.com.jade.util.JpaUtil;
 
 @ManagedBean(name = "custoDao")
@@ -22,15 +18,19 @@ public class CustoDao {
 		
 		EntityTransaction tx = manager.getTransaction();
 		tx.begin();
-		
-				
-//		produto.setLocalidade(Localidade.LOJA.getLocalidade());
-//		produto.setStatus(Status.DISPONIVEL.getStatus());
-//		
+
 		manager.persist(custo);		
-//		produto.setVenda(venda);
-//		manager.persist(produto);
 		
 		tx.commit();
 	}
+
+	public void atualizarQtdePecas(Custo custo , int numPecas){
+		EntityTransaction tx = manager.getTransaction();
+		tx.begin();
+		
+		custo.setQtdePecas(numPecas);
+		manager.persist(custo);
+		tx.commit();
+	}
+	
 }

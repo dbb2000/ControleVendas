@@ -1,6 +1,5 @@
 package br.com.jade.beans;
 
-import java.awt.event.ActionEvent;
 import java.io.Serializable;
 import java.util.List;
 
@@ -16,7 +15,6 @@ import org.primefaces.event.RowEditEvent;
 
 import br.com.jade.dao.ProdutoDao;
 import br.com.jade.model.Produto;
-import br.com.jade.model.Venda;
  
 @ManagedBean(name="dtEditView")
 @ViewScoped

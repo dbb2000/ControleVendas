@@ -1,12 +1,9 @@
 package br.com.jade.dao;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.LineNumberReader;
-import java.io.Reader;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -15,8 +12,6 @@ import javax.faces.bean.ManagedBean;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
-
-import org.apache.commons.io.IOUtils;
 
 import br.com.jade.enums.Localidade;
 import br.com.jade.enums.Status;
@@ -80,21 +75,13 @@ public class ProdutoDao {
 		tx.commit();
 	}
 	
-	public void importar(InputStream file, Custo custo, BigDecimal margemLucro) throws IOException{
+	public void importar(InputStream file, Custo custo, BigDecimal margemLucro, int totalProdutos) throws IOException{
 
-		// aqui crio duas cópias de InputStream, uma para contar linha e outra para iterar
-		// pois não posso usar o mesmo InputStream duas vezes.
-		byte[] byteArray = IOUtils.toByteArray(file); 
-		InputStream input1 = new ByteArrayInputStream(byteArray);
-	    InputStream input2 = new ByteArrayInputStream(byteArray);
-		
-		int totalLinhas = contarLinhas(input1);
-		
 		BufferedReader br = null;
 		String line;
 		
 		try {
-			br = new BufferedReader(new InputStreamReader(input2));
+			br = new BufferedReader(new InputStreamReader(file));
 			while ((line = br.readLine()) != null) {
 				
 				// campo[0] = código
@@ -102,7 +89,7 @@ public class ProdutoDao {
 				// campo[2] = preço de custo
 				String[] campos = line.split(";");
 				
-				BigDecimal custoEfetivo = Calculos.calculaCustoEfetivo(totalLinhas, custo.getDescontoRecebido(), new BigDecimal(campos[2]), custo.getCustoTotal());
+				BigDecimal custoEfetivo = Calculos.calculaCustoEfetivo(totalProdutos, custo.getDescontoRecebido(), new BigDecimal(campos[2]), custo.getCustoTotal());
 				BigDecimal precoVenda = Calculos.calculaPrecoVenda(margemLucro, custoEfetivo);
 				
 				Produto produto = new Produto();
@@ -113,13 +100,9 @@ public class ProdutoDao {
 				produto.setPrecoCustoEfetivo(custoEfetivo);
 				produto.setPrecoVenda(precoVenda);				
 				produto.setDataEntrada(custo.getDataCompra());
-				
-				
-				
-
-				
-//				gravar(produto);
-			
+				produto.setCusto(custo);
+	
+				gravar(produto);			
 			}
 
 		} catch (IOException e) {
@@ -136,22 +119,7 @@ public class ProdutoDao {
 
 	}
 	
-	private int contarLinhas (InputStream file) throws IOException{
-		
-		int numberOfLines = 0;
 
-		try {
-			Reader fr = new InputStreamReader(file);
-			LineNumberReader lnr = new LineNumberReader(fr);
-			lnr.skip(Long.MAX_VALUE);
-			numberOfLines = lnr.getLineNumber();
-
-		}
-		catch (Exception e){ 
-			System.out.println(e); 
-		}
-		return numberOfLines;
-	}
 
 
 }

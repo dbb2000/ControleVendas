@@ -16,11 +16,11 @@ public class Calculos {
 			BigDecimal valorDesconto = descontoDecimal.multiply(precoCusto);
 			BigDecimal precoComDesconto = precoCusto.min(valorDesconto);
 			custoEfetivo = custoPecaAdcional.add(precoComDesconto);
-			return custoEfetivo;
+			return custoEfetivo.setScale(2, RoundingMode.HALF_UP);
 		}
 		
 		custoEfetivo = precoCusto.add(custoPecaAdcional);
-		return custoEfetivo;		
+		return custoEfetivo.setScale(2, RoundingMode.HALF_UP);		
 	}
 	
 	public static BigDecimal calculaPrecoVenda(BigDecimal margemLucro, BigDecimal custoEfetivo){
@@ -29,7 +29,7 @@ public class Calculos {
 		BigDecimal margemDecimal = margemLucro.divide(cem, 2, RoundingMode.HALF_UP);
 		BigDecimal lucro = margemDecimal.multiply(custoEfetivo);
 		
-		return custoEfetivo.add(lucro);
+		return custoEfetivo.add(lucro).setScale(2, RoundingMode.HALF_UP);
 		
 	}
 }

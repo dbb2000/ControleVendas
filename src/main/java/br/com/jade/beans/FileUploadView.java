@@ -1,6 +1,11 @@
 package br.com.jade.beans;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.LineNumberReader;
+import java.io.Reader;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -13,6 +18,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 
+import org.apache.commons.io.IOUtils;
 import org.primefaces.event.FileUploadEvent;
 
 import br.com.jade.dao.CustoDao;
@@ -22,9 +28,7 @@ import br.com.jade.model.Custo;
 @ManagedBean
 @ViewScoped
 public class FileUploadView implements Serializable {
- 
-	
-	
+
     /**
 	 * 
 	 */
@@ -54,7 +58,16 @@ public class FileUploadView implements Serializable {
     }
 	
     public void handleFileUpload(FileUploadEvent event) throws IOException {
-    	produtoDao.importar(event.getFile().getInputstream(), this.custo, this.margemLucro);
+    	
+		// aqui crio duas cópias de InputStream, uma para contar linha e outra para iterar
+		// pois não posso usar o mesmo InputStream duas vezes.
+		byte[] byteArray = IOUtils.toByteArray(event.getFile().getInputstream()); 
+		InputStream input1 = new ByteArrayInputStream(byteArray);
+	    InputStream input2 = new ByteArrayInputStream(byteArray);
+    	
+	    int totalLinhas = contarLinhas(input1);
+    	custoDao.atualizarQtdePecas(custo, totalLinhas);
+    	produtoDao.importar(input2, this.custo, this.margemLucro, totalLinhas);
         FacesMessage message = new FacesMessage("Sucesso", event.getFile().getFileName() + " foi importado com sucesso.");
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
@@ -145,6 +158,23 @@ public class FileUploadView implements Serializable {
     	return null;
     	    	
     }
+    
+	private int contarLinhas (InputStream file) throws IOException{
+		
+		int numberOfLines = 0;
+
+		try {
+			Reader fr = new InputStreamReader(file);
+			LineNumberReader lnr = new LineNumberReader(fr);
+			lnr.skip(Long.MAX_VALUE);
+			numberOfLines = lnr.getLineNumber();
+
+		}
+		catch (Exception e){ 
+			System.out.println(e); 
+		}
+		return numberOfLines;
+	}
 }
 
 
