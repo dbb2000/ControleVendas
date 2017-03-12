@@ -25,4 +25,9 @@ xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/
 	<param-value>Development</param-value>
   </context-param>
   
+  <context-param>
+   <param-name>facelets.SKIP_COMMENTS</param-name>
+   <param-value>true</param-value>
+  </context-param>
+  
 </web-app>

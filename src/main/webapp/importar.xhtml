@@ -40,7 +40,9 @@
 			 		<h:outputText value="Custo Total:" />
 				    <h:outputText id="soma" value="R$ #{fileUploadView.custo.custoTotal}"/>
 			    	
-			    	<h:commandButton value="Salvar custo" type="submit"  action="#{fileUploadView.gravarCusto}"/>
+			    	<f:facet name="footer">
+			    		<h:commandButton value="Salvar custo" type="submit"  action="#{fileUploadView.gravarCusto}" style="float:right;"/>
+			    	</f:facet>
 			    
 			</p:panelGrid>
        
@@ -53,7 +55,8 @@
 		           		  update="messages" 
 		           		  sizeLimit="100000" 
 		           		  fileLimit="3" 
-		           		  allowTypes="/(\.|\/)(csv)$/" />		 
+		           		  allowTypes="/(\.|\/)(csv)$/"
+		           		  style="width:540px;margin: 0 auto" />		 
 		    <p:growl id="messages" showDetail="true" />
        </h:form>
   </h:body>

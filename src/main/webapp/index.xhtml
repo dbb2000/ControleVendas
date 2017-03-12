@@ -8,9 +8,15 @@
   </h:head>
    
   <h:body>
+  		
         <h:form>
               <p:messages id="messages" />
-              <p:panelGrid columns="2" style="margin: 0 auto">
+              <p:panelGrid columns="2" style="margin: 0 auto;">
+              		
+              		<f:facet name="header" >
+			        	<h:graphicImage library="images" name="logo.png" width="100%" />  	
+			    	</f:facet>
+			    
                     <p:outputLabel for="nomeUsuario" value="Nome Usuário:" />
                     <p:inputText id="nomeUsuario" value="#{LoginMB.usuario.nomeUsuario}" />
                     

@@ -14,7 +14,7 @@ public class Calculos {
 			BigDecimal cem = new BigDecimal(100);			
 			BigDecimal descontoDecimal  = desconto.divide(cem,2, RoundingMode.HALF_UP );
 			BigDecimal valorDesconto = descontoDecimal.multiply(precoCusto);
-			BigDecimal precoComDesconto = precoCusto.min(valorDesconto);
+			BigDecimal precoComDesconto = precoCusto.subtract(valorDesconto);
 			custoEfetivo = custoPecaAdcional.add(precoComDesconto);
 			return custoEfetivo.setScale(2, RoundingMode.HALF_UP);
 		}
