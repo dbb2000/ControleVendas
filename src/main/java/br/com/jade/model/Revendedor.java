@@ -41,6 +41,9 @@ public class Revendedor {
 	
 	@Column(name="UF")
 	String uf;
+
+	@Column(name="CEP")
+	String cep;
 	
 	@Column(name="FONE_RESIDENCIAL")
 	String foneResidencial;
@@ -93,6 +96,12 @@ public class Revendedor {
 	}
 	public void setUf(String uf) {
 		this.uf = uf;
+	}
+	public String getCep() {
+		return cep;
+	}
+	public void setCep(String cep) {
+		this.cep = cep;
 	}
 	public String getFoneResidencial() {
 		return foneResidencial;

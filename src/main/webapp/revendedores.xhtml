@@ -1,0 +1,62 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        template="main.xhtml">
+<ui:define name="source">
+  <h:head>
+   
+  </h:head>
+   
+  <h:body>
+       <h:form>
+       		<p:panelGrid columns="2" style="margin: 0 auto">
+			    <f:facet name="header">
+			        <h:outputText value="Cadastro de fornecedores" />
+			    </f:facet>
+						 
+				   	<h:outputText value="Apelido:" />
+				    <h:inputText value="#{revendedorBean.revendedor.apelido}"/>
+				 
+				    <h:outputText value="Nome Completo:" />
+				    <h:inputText value="#{revendedorBean.revendedor.nomeCompleto}"/>
+				    
+					<h:outputText value="RG:" />
+				    <h:inputText value="#{revendedorBean.revendedor.rg}"/>
+				    
+					<h:outputText value="CPF:" />
+				    <h:inputText value="#{revendedorBean.revendedor.cpf}"/>
+				 
+				    <h:outputText value="Endereço" />
+				    <h:inputText value="#{revendedorBean.revendedor.endereço}" />
+				 
+					<h:outputText value="Complemento:" />
+			   		<h:inputText value="#{revendedorBean.revendedor.complemento}"/>
+			   		
+			   		<h:outputText value="Cidade:" />
+			    	<h:inputText value="#{revendedorBean.revendedor.cidade}"/>
+			    	
+			    	<h:outputText value="UF:" />
+				    <h:inputText value="#{revendedorBean.revendedor.uf}" />
+				    
+				    <h:outputText value="CEP:" />
+				    <h:inputText value="#{revendedorBean.revendedor.cep}" />
+			    	
+			 		<h:outputText value="Fone residencial:" />
+				    <h:inputText value="#{revendedorBean.revendedor.foneResidencial}"/>
+				    
+					<h:outputText value="Celular:" />
+				    <h:inputText value="#{revendedorBean.revendedor.foneCelular}"/>
+			    	
+			    	<f:facet name="footer">
+			    		<h:commandButton value="Salvar cadastro" type="submit"  action="#{revendedorBean.gravarCadastro}" style="float:right;"/>
+			    	</f:facet>
+			    
+			</p:panelGrid>
+       
+		    <p:growl id="messages" showDetail="true" />
+       </h:form>
+  </h:body>
+  </ui:define>
+</ui:composition>

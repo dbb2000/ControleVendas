@@ -44,6 +44,7 @@
 <!-- 					Openshift Postgresql -->
 					<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
 					<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://172.30.91.127:5432/vendas" ></property>
+<!-- 					<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/vendas" ></property> -->
 					<property name="javax.persistence.jdbc.user" value="davi" />
 					<property name="javax.persistence.jdbc.password" value="davi1980"  />
 					<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
