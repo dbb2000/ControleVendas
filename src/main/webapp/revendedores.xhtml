@@ -17,16 +17,16 @@
 			    </f:facet>
 						 
 				   	<h:outputText value="Apelido:" />
-				    <h:inputText value="#{revendedorBean.revendedor.apelido}"/>
+				    <h:inputText value="#{revendedorBean.revendedor.apelido}" />
 				 
 				    <h:outputText value="Nome Completo:" />
 				    <h:inputText value="#{revendedorBean.revendedor.nomeCompleto}"/>
 				    
 					<h:outputText value="RG:" />
-				    <h:inputText value="#{revendedorBean.revendedor.rg}"/>
+				    <p:inputMask value="#{revendedorBean.revendedor.rg}" mask="99.999.999-9" style="width: 96%"/>
 				    
 					<h:outputText value="CPF:" />
-				    <h:inputText value="#{revendedorBean.revendedor.cpf}"/>
+				    <p:inputMask value="#{revendedorBean.revendedor.cpf}" mask="999.999.999-99" style="width: 96%"/>
 				 
 				    <h:outputText value="Endereço" />
 				    <h:inputText value="#{revendedorBean.revendedor.endereço}" />
@@ -38,16 +38,21 @@
 			    	<h:inputText value="#{revendedorBean.revendedor.cidade}"/>
 			    	
 			    	<h:outputText value="UF:" />
-				    <h:inputText value="#{revendedorBean.revendedor.uf}" />
+				    <h:selectOneMenu value="#{revendedorBean.revendedor.uf}" >
+				    	<f:selectItem itemValue="  " itemLabel=" "></f:selectItem>
+				    	<f:selectItem itemValue="SP" itemLabel="SP"></f:selectItem>
+				    </h:selectOneMenu>
+				    
+<!-- 				    <h:inputText value="#{revendedorBean.revendedor.uf}" /> -->
 				    
 				    <h:outputText value="CEP:" />
-				    <h:inputText value="#{revendedorBean.revendedor.cep}" />
+				    <p:inputMask value="#{revendedorBean.revendedor.cep}" mask="99999-999"  style="width: 96%"/>
 			    	
 			 		<h:outputText value="Fone residencial:" />
-				    <h:inputText value="#{revendedorBean.revendedor.foneResidencial}"/>
+			 		<p:inputMask id="fone" value="#{revendedorBean.revendedor.foneResidencial}" mask="(99)9999-9999" style="width: 96%"/>
 				    
 					<h:outputText value="Celular:" />
-				    <h:inputText value="#{revendedorBean.revendedor.foneCelular}"/>
+				    <p:inputMask value="#{revendedorBean.revendedor.foneCelular}" mask="(99)99999-9999" style="width: 96%"/>
 			    	
 			    	<f:facet name="footer">
 			    		<h:commandButton value="Salvar cadastro" type="submit"  action="#{revendedorBean.gravarCadastro}" style="float:right;"/>

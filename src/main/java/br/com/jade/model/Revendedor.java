@@ -39,7 +39,7 @@ public class Revendedor {
 	@Column(name="CIDADE")
 	String cidade;
 	
-	@Column(name="UF")
+	@Column(name="UF", length=2 )
 	String uf;
 
 	@Column(name="CEP")
