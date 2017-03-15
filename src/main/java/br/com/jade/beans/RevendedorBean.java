@@ -1,7 +1,7 @@
 package br.com.jade.beans;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -10,7 +10,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import br.com.jade.model.Custo;
+import br.com.jade.model.Produto;
 import br.com.jade.model.Revendedor;
 
 @ManagedBean
@@ -22,15 +22,21 @@ public class RevendedorBean implements Serializable {
 	 */
 	private static final long serialVersionUID = 1652594235516983389L;
 
-    @ManagedProperty("#{revendedor}")
-    private Revendedor revendedor;
+	private List<Revendedor> revendedores;
+	private List<Revendedor> revendedoresFiltrados;
+	private Revendedor revendedor = new Revendedor();
+	
+//    @ManagedProperty("#{revendedor}")
+//    private Revendedor revendedor;
 
 	@ManagedProperty("#{revendedorDao}")
-	private revendedorDao revendedorDao;
+	private RevendedorDao revendedorDao;
 
     @PostConstruct
     public void init() {
-        revendedor = new Revendedor();
+
+        this.revendedores = revendedorDao.getRevendedores(); 
+        
     }
     
     public String gravarCadastro(){ 
@@ -52,12 +58,28 @@ public class RevendedorBean implements Serializable {
 		this.revendedor = revendedor;
 	}
 
-	public revendedorDao getRevendedorDao() {
+	public RevendedorDao getRevendedorDao() {
 		return revendedorDao;
 	}
 
-	public void setRevendedorDao(revendedorDao revendedorDao) {
+	public void setRevendedorDao(RevendedorDao revendedorDao) {
 		this.revendedorDao = revendedorDao;
+	}
+
+	public List<Revendedor> getRevendedores() {
+		return revendedores;
+	}
+
+	public void setRevendedores(List<Revendedor> revendedores) {
+		this.revendedores = revendedores;
+	}
+
+	public List<Revendedor> getRevendedoresFiltrados() {
+		return revendedoresFiltrados;
+	}
+
+	public void setRevendedoresFiltrados(List<Revendedor> revendedoresFiltrados) {
+		this.revendedoresFiltrados = revendedoresFiltrados;
 	}
 	
 	

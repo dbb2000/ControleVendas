@@ -10,58 +10,49 @@
   </h:head>
    
   <h:body>
-       <h:form>
-       		<p:panelGrid columns="2" style="margin: 0 auto">
-			    <f:facet name="header">
-			        <h:outputText value="Cadastro de fornecedores" />
-			    </f:facet>
-						 
-				   	<h:outputText value="Apelido:" />
-				    <h:inputText value="#{revendedorBean.revendedor.apelido}" />
-				 
-				    <h:outputText value="Nome Completo:" />
-				    <h:inputText value="#{revendedorBean.revendedor.nomeCompleto}"/>
-				    
-					<h:outputText value="RG:" />
-				    <p:inputMask value="#{revendedorBean.revendedor.rg}" mask="99.999.999-9" style="width: 96%"/>
-				    
-					<h:outputText value="CPF:" />
-				    <p:inputMask value="#{revendedorBean.revendedor.cpf}" mask="999.999.999-99" style="width: 96%"/>
-				 
-				    <h:outputText value="Endereço" />
-				    <h:inputText value="#{revendedorBean.revendedor.endereço}" />
-				 
-					<h:outputText value="Complemento:" />
-			   		<h:inputText value="#{revendedorBean.revendedor.complemento}"/>
-			   		
-			   		<h:outputText value="Cidade:" />
-			    	<h:inputText value="#{revendedorBean.revendedor.cidade}"/>
-			    	
-			    	<h:outputText value="UF:" />
-				    <h:selectOneMenu value="#{revendedorBean.revendedor.uf}" >
-				    	<f:selectItem itemValue="  " itemLabel=" "></f:selectItem>
-				    	<f:selectItem itemValue="SP" itemLabel="SP"></f:selectItem>
-				    </h:selectOneMenu>
-				    
-<!-- 				    <h:inputText value="#{revendedorBean.revendedor.uf}" /> -->
-				    
-				    <h:outputText value="CEP:" />
-				    <p:inputMask value="#{revendedorBean.revendedor.cep}" mask="99999-999"  style="width: 96%"/>
-			    	
-			 		<h:outputText value="Fone residencial:" />
-			 		<p:inputMask id="fone" value="#{revendedorBean.revendedor.foneResidencial}" mask="(99)9999-9999" style="width: 96%"/>
-				    
-					<h:outputText value="Celular:" />
-				    <p:inputMask value="#{revendedorBean.revendedor.foneCelular}" mask="(99)99999-9999" style="width: 96%"/>
-			    	
-			    	<f:facet name="footer">
-			    		<h:commandButton value="Salvar cadastro" type="submit"  action="#{revendedorBean.gravarCadastro}" style="float:right;"/>
-			    	</f:facet>
-			    
-			</p:panelGrid>
-       
-		    <p:growl id="messages" showDetail="true" />
-       </h:form>
+       <h:form id="form">
+		   <p:growl id="msgs" showDetail="true"/>
+		 
+		   <p:dataTable id="revendedores" var="revendedor" value="#{revendedorBean.revendedores}" editable="true" style="margin-top:1px" widgetVar="produtosTable" multiViewState="true"
+		   				rows="10"
+                        paginator="true"
+                        paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                        rowsPerPageTemplate="5,10,15"
+                        paginatorPosition="bottom"                        
+                        emptyMessage="Nenhum revendedor encontrado." filteredValue="#{revendedorBean.revendedoresFiltrados}">
+                    
+                        
+		       <f:facet name="header">		           
+		            <p:outputPanel style="text-align:right" >
+		                <h:outputText value="Procurar: " />
+		                <p:inputText id="globalFilter" onkeyup="PF('revendedoresTable').filter()" style="width:150px" placeholder="Digite Palavra..."/>
+            		</p:outputPanel>
+		       </f:facet>
+		 
+		       <p:ajax event="rowEdit" listener="#{dtEditView.onRowEdit}" update=":form:msgs" />
+		       <p:ajax event="rowEditCancel" listener="#{dtEditView.onRowCancel}" update=":form:msgs" />
+		       
+		       
+		       <p:column headerText="Apelido" style="width:5%" filterBy="#{revendedor.apelido}" filterable="false" sortBy="#{revendedor.id}" filterMatchMode="contains">
+		           <p:cellEditor>
+		               <f:facet name="output"><h:outputText value="#{revendedor.apelido}" /></f:facet>
+		               <f:facet name="input"><p:inputText id="apelidoInput" value="#{revendedor.apelido}" style="width:100%" disabled="true"/></f:facet>
+		           </p:cellEditor>
+		       </p:column>
+		 
+		       <p:column headerText="Nome Completo" style="width:9%" filterBy="#{revendedor.nomeCompleto}" filterable="false" sortBy="#{revendedor.nomeCompleto}" filterMatchMode="contains">
+		           <p:cellEditor>
+		               <f:facet name="output"><h:outputText value="#{produto.codigo}" /></f:facet>
+		               <f:facet name="input"><p:inputText id="nomeCompletoInput" value="#{revendedor.nomeCompleto}" style="width:100%"/></f:facet>
+		           </p:cellEditor>
+		       </p:column>
+		 
+		 
+		       <p:column style="width:3%">
+		           <p:rowEditor/>
+		       </p:column>
+		   </p:dataTable>
+        </h:form>
   </h:body>
   </ui:define>
 </ui:composition>

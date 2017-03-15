@@ -1,0 +1,67 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        template="main.xhtml">
+<ui:define name="source">
+  <h:head>
+   
+  </h:head>
+   
+  <h:body>
+       <h:form>
+       		<p:panelGrid columns="2" style="margin: 0 auto">
+			    <f:facet name="header">
+			        <h:outputText value="Cadastro de fornecedores" />
+			    </f:facet>
+						 
+				   	<h:outputText value="Apelido:" />
+				    <h:inputText value="#{revendedorBean.revendedor.apelido}" />
+				 
+				    <h:outputText value="Nome Completo:" />
+				    <h:inputText value="#{revendedorBean.revendedor.nomeCompleto}"/>
+				    
+					<h:outputText value="RG:" />
+				    <p:inputMask value="#{revendedorBean.revendedor.rg}" mask="99.999.999-9" style="width: 96%"/>
+				    
+					<h:outputText value="CPF:" />
+				    <p:inputMask value="#{revendedorBean.revendedor.cpf}" mask="999.999.999-99" style="width: 96%"/>
+				 
+				    <h:outputText value="Endereço" />
+				    <h:inputText value="#{revendedorBean.revendedor.endereço}" />
+				 
+					<h:outputText value="Complemento:" />
+			   		<h:inputText value="#{revendedorBean.revendedor.complemento}"/>
+			   		
+			   		<h:outputText value="Cidade:" />
+			    	<h:inputText value="#{revendedorBean.revendedor.cidade}"/>
+			    	
+			    	<h:outputText value="UF:" />
+				    <h:selectOneMenu value="#{revendedorBean.revendedor.uf}" >
+				    	<f:selectItem itemValue="  " itemLabel=" "></f:selectItem>
+				    	<f:selectItem itemValue="SP" itemLabel="SP"></f:selectItem>
+				    </h:selectOneMenu>
+				    
+<!-- 				    <h:inputText value="#{revendedorBean.revendedor.uf}" /> -->
+				    
+				    <h:outputText value="CEP:" />
+				    <p:inputMask value="#{revendedorBean.revendedor.cep}" mask="99999-999"  style="width: 96%"/>
+			    	
+			 		<h:outputText value="Fone residencial:" />
+			 		<p:inputMask id="fone" value="#{revendedorBean.revendedor.foneResidencial}" mask="(99)9999-9999" style="width: 96%"/>
+				    
+					<h:outputText value="Celular:" />
+				    <p:inputMask value="#{revendedorBean.revendedor.foneCelular}" mask="(99)99999-9999" style="width: 96%"/>
+			    	
+			    	<f:facet name="footer">
+			    		<h:commandButton value="Salvar cadastro" type="submit"  action="#{revendedorBean.gravarCadastro}" style="float:right;"/>
+			    	</f:facet>
+			    
+			</p:panelGrid>
+       
+		    <p:growl id="messages" showDetail="true" />
+       </h:form>
+  </h:body>
+  </ui:define>
+</ui:composition>
