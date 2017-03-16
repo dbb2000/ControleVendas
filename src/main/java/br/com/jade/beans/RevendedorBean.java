@@ -9,8 +9,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 
-import br.com.jade.model.Produto;
 import br.com.jade.model.Revendedor;
 
 @ManagedBean
@@ -25,6 +25,7 @@ public class RevendedorBean implements Serializable {
 	private List<Revendedor> revendedores;
 	private List<Revendedor> revendedoresFiltrados;
 	private Revendedor revendedor = new Revendedor();
+	private Revendedor selectedRevendedor;
 	
 //    @ManagedProperty("#{revendedor}")
 //    private Revendedor revendedor;
@@ -48,6 +49,16 @@ public class RevendedorBean implements Serializable {
     	context.addMessage(null, mensagem);
     	return null;
     	    	
+    }
+    
+    public String carregarCadastro(){
+    	this.revendedor = selectedRevendedor;
+    	return null;
+    }
+    
+    public String excluirCadastro(){
+		return null;
+    	
     }
     
 	public Revendedor getRevendedor() {
@@ -80,6 +91,14 @@ public class RevendedorBean implements Serializable {
 
 	public void setRevendedoresFiltrados(List<Revendedor> revendedoresFiltrados) {
 		this.revendedoresFiltrados = revendedoresFiltrados;
+	}
+
+	public Revendedor getSelectedRevendedor() {
+		return selectedRevendedor;
+	}
+
+	public void setSelectedRevendedor(Revendedor selectedRevendedor) {
+		this.selectedRevendedor = selectedRevendedor;
 	}
 	
 	

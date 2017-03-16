@@ -13,12 +13,12 @@ import javax.persistence.Table;
 @Table(name = "REVENDEDOR")
 public class Revendedor {
 
-//	@Id
-//	@GeneratedValue
-//	@Column(name="ID")
-//	int id;
-	
 	@Id
+	@GeneratedValue
+	@Column(name="ID")
+	int id;
+	
+
 	@Column(name="APELIDO")
 	String apelido;
 	

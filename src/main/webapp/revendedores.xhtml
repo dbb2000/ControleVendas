@@ -13,14 +13,13 @@
        <h:form id="form">
 		   <p:growl id="msgs" showDetail="true"/>
 		 
-		   <p:dataTable id="revendedores" var="revendedor" value="#{revendedorBean.revendedores}" editable="true" style="margin-top:1px" widgetVar="produtosTable" multiViewState="true"
+		   <p:dataTable id="revendedores" var="revendedor" value="#{revendedorBean.revendedores}" editable="true" style="margin-top:1px" widgetVar="revendedoresTable" multiViewState="true"
 		   				rows="10"
                         paginator="true"
                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                         rowsPerPageTemplate="5,10,15"
                         paginatorPosition="bottom"                        
                         emptyMessage="Nenhum revendedor encontrado." filteredValue="#{revendedorBean.revendedoresFiltrados}">
-                    
                         
 		       <f:facet name="header">		           
 		            <p:outputPanel style="text-align:right" >
@@ -29,30 +28,51 @@
             		</p:outputPanel>
 		       </f:facet>
 		 
-		       <p:ajax event="rowEdit" listener="#{dtEditView.onRowEdit}" update=":form:msgs" />
-		       <p:ajax event="rowEditCancel" listener="#{dtEditView.onRowCancel}" update=":form:msgs" />
-		       
-		       
-		       <p:column headerText="Apelido" style="width:5%" filterBy="#{revendedor.apelido}" filterable="false" sortBy="#{revendedor.id}" filterMatchMode="contains">
-		           <p:cellEditor>
-		               <f:facet name="output"><h:outputText value="#{revendedor.apelido}" /></f:facet>
-		               <f:facet name="input"><p:inputText id="apelidoInput" value="#{revendedor.apelido}" style="width:100%" disabled="true"/></f:facet>
-		           </p:cellEditor>
+		       <p:column headerText="Apelido" style="width:5%" filterBy="#{revendedor.apelido}" filterable="false" sortBy="#{revendedor.apelido}" filterMatchMode="contains">
+					<h:outputText value="#{revendedor.apelido}" />
 		       </p:column>
 		 
 		       <p:column headerText="Nome Completo" style="width:9%" filterBy="#{revendedor.nomeCompleto}" filterable="false" sortBy="#{revendedor.nomeCompleto}" filterMatchMode="contains">
-		           <p:cellEditor>
-		               <f:facet name="output"><h:outputText value="#{produto.codigo}" /></f:facet>
-		               <f:facet name="input"><p:inputText id="nomeCompletoInput" value="#{revendedor.nomeCompleto}" style="width:100%"/></f:facet>
-		           </p:cellEditor>
+					<h:outputText value="#{revendedor.nomeCompleto}" />
 		       </p:column>
 		 
-		 
-		       <p:column style="width:3%">
-		           <p:rowEditor/>
-		       </p:column>
+				<p:column style="width:32px;text-align: center">
+					<p:commandButton update=":form:revendedorDetail" oncomplete="PF('revendedorDialog').show()" icon="ui-icon-search" title="Detalhes do Revendedor">
+				    	<f:setPropertyActionListener value="#{revendedor}" target="#{revendedorBean.selectedRevendedor}" />
+					</p:commandButton>
+					<p:commandButton icon="ui-icon-pencil" title="Editar cadastro"  actionListener="#{revendedorBean.carregarCadastro}" action="cadRevendedores" >
+				    	<f:setPropertyActionListener value="#{revendedor}" target="#{revendedorBean.selectedRevendedor}" />
+<!-- 				    	<f:ajax listener="#{revendedorBean.carregarCadastro}" ></f:ajax> -->
+					</p:commandButton>
+					<p:commandButton update=":form:revendedorDetail" oncomplete="PF('revendedorDialog').show()" icon="ui-icon-suitcase" title="Produtos deste Revendedor">
+				    	<f:setPropertyActionListener value="#{revendedor}" target="#{revendedorBean.selectedRevendedor}" />
+					</p:commandButton>
+					<p:commandButton icon="ui-icon-trash" process="@this" update="@form" title="Deletar Revendedor" action="#{revendedorBean.excluirCadastro}">
+				    	<f:setPropertyActionListener value="#{revendedor}" target="#{revendedorBean.selectedRevendedor}" />
+					</p:commandButton>
+				</p:column>      
 		   </p:dataTable>
-        </h:form>
+		   
+		<p:dialog header="Revendedor Info" widgetVar="revendedorDialog" modal="true" appendTo="@(body)" showEffect="fade" hideEffect="fade" resizable="false">
+	        <p:outputPanel id="revendedorDetail" style="text-align:center;">
+	            <p:panelGrid  columns="2" rendered="#{not empty revendedorBean.selectedRevendedor}" columnClasses="label,value">
+		  			<f:facet name="header">
+	                    <h:outputText value="info"/> 
+	                </f:facet>
+	                <h:outputText value="Apelido:" />
+	                <h:outputText value="#{revendedorBean.selectedRevendedor.apelido}" />
+	 
+	                <h:outputText value="Nome Completo:" />
+	                <h:outputText value="#{revendedorBean.selectedRevendedor.nomeCompleto}" />
+	 
+	                <h:outputText value="Celular:" />
+	                <h:outputText value="#{revendedorBean.selectedRevendedor.foneCelular}" />
+	
+	            </p:panelGrid>
+	        </p:outputPanel>
+	    </p:dialog>
+        
+  </h:form>
   </h:body>
   </ui:define>
 </ui:composition>
