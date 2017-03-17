@@ -10,7 +10,10 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.event.DragDropEvent;
+
 import br.com.jade.dao.RevendedorDao;
+import br.com.jade.model.Produto;
 import br.com.jade.model.Revendedor;
 
 @ManagedBean
@@ -47,15 +50,24 @@ public class RevendedorBean implements Serializable {
     	FacesMessage.SEVERITY_INFO, "Cadastro efetuado.",
     	"Revedendor " + revendedor.getApelido() + " cadastrado com sucesso.");
     	context.addMessage(null, mensagem);
+    	
     	return "revendedores?faces-redirect=true";
+    	
     	    	
     }
     
     public String carregarCadastro(){
     	this.revendedor = new Revendedor();
     	this.revendedor = selectedRevendedor;
-    	return "cadRevendedores";
+    	return "cadRevendedor";
     }
+    
+    public String associarItens(){
+    	this.revendedor = new Revendedor();
+    	this.revendedor = selectedRevendedor;
+    	return "cadProdReven";
+    }
+    
     
     public String excluirCadastro(){
 		revendedorDao.excluir(selectedRevendedor);
@@ -65,7 +77,16 @@ public class RevendedorBean implements Serializable {
     	"Revedendor " + selectedRevendedor.getApelido() + " removido com sucesso.");
     	context.addMessage(null, mensagem);
     	
-    	return "revendedores?faces-redirect=true";    	
+    	return "revendedores?faces-redirect=true";
+    	
+    }
+    
+    public void onCarDrop(DragDropEvent ddEvent) {
+        Produto produto = ((Produto) ddEvent.getData());
+  
+        selectedRevendedor.getProdutos().add(produto);
+        // preciso remover item dos produtos.
+        //cars.remove(car);
     }
     
 	public Revendedor getRevendedor() {

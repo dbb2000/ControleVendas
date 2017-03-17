@@ -43,12 +43,18 @@
 					<p:commandButton icon="ui-icon-pencil" title="Editar cadastro"  action="#{revendedorBean.carregarCadastro}" update="@form">
 				    	<f:setPropertyActionListener value="#{revendedor}" target="#{revendedorBean.selectedRevendedor}" />
 					</p:commandButton>
-					<p:commandButton update=":form:revendedorDetail" oncomplete="PF('revendedorDialog').show()" icon="ui-icon-suitcase" title="Produtos deste Revendedor">
+					<p:commandButton update=":form:revendedorDetail" action="#{revendedorBean.associarItens}" icon="ui-icon-suitcase" title="Produtos deste Revendedor">
 				    	<f:setPropertyActionListener value="#{revendedor}" target="#{revendedorBean.selectedRevendedor}" />
 					</p:commandButton>
 					<p:commandButton icon="ui-icon-trash" process="@this" update="@form" title="Deletar Revendedor" action="#{revendedorBean.excluirCadastro}">
 				    	<f:setPropertyActionListener value="#{revendedor}" target="#{revendedorBean.selectedRevendedor}" />
+				    	<p:confirm header="Exclusão de Fornecedor" message="Tem certeza que deseja excluir?" icon="ui-icon-alert" />
 					</p:commandButton>
+					
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+        				<p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+        				<p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+    				</p:confirmDialog>
 				</p:column>      
 		   </p:dataTable>
 		   

@@ -1,0 +1,106 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        template="main.xhtml">
+<ui:define name="source">
+  <h:head>
+   
+  </h:head>   
+	  <h:body>
+	  
+	  <script type="text/javascript">
+    	function handleDrop(event, ui) {
+        var droppedCar = ui.draggable;
+ 
+        droppedCar.fadeOut('fast');
+    	}
+	  </script>
+	  
+	  <h:form id="prodRevenForm">
+	    <p:fieldset id="availableProdutosField" legend="Produtos disponíveis">
+	        <p:dataTable id="availableProdutos" var="produto" value="#{dtEditView.produtos}">
+	            <p:column style="width:20px">
+	                <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4" />
+	                <p:draggable for="dragIcon" revert="true" helper="clone"/>
+	            </p:column>
+	 
+	            <p:column headerText="Id">
+	                <h:outputText value="#{produto.id}" />
+	            </p:column>
+	 
+	            <p:column headerText="Código">
+	                <h:outputText value="#{produto.codigo}" />
+	            </p:column>
+	 
+	            <p:column headerText="Descrição do produto">
+	                <h:outputText value="#{produto.descricao}" />
+	            </p:column>
+	 
+	            <p:column headerText="Preço Venda">
+	                <h:outputText value="#{produto.precoVenda}" />
+	            </p:column>
+	        </p:dataTable>
+	    </p:fieldset>
+	 
+	    <p:fieldset id="selectedProdutos" legend="Produtos selecionados" style="margin-top:20px">
+	        <p:outputPanel id="dropArea">
+	            <h:outputText value="!!!Arraste para cá!!!" rendered="#{empty revendedorBean.selectedRevendedor.produtos}" style="font-size:24px;" />
+	            <p:dataTable id="selectedProdutoTable" var="produto" value="#{revendedorBean.selectedRevendedor.produtos}" rendered="#{not empty revendedorBean.selectedRevendedor.produtos}">
+	  	            <p:column headerText="Id">
+	                <h:outputText value="#{produto.id}" />
+	            </p:column>
+	 
+	            <p:column headerText="Código">
+	                <h:outputText value="#{produto.codigo}" />
+	            </p:column>
+	 
+	            <p:column headerText="Descrição do produto">
+	                <h:outputText value="#{produto.descricao}" />
+	            </p:column>
+	 
+	            <p:column headerText="Preço Venda">
+	                <h:outputText value="#{produto.precoVenda}" />
+	            </p:column>
+	 
+	                <p:column style="width:32px">
+	                    <p:commandButton update=":prodRevenForm:display" oncomplete="PF('carDialog').show()" icon="ui-icon-search">
+	                        <f:setPropertyActionListener value="#{produto}" target="#{revendedorBean.selectedRevendedor.produtos}" />
+	                    </p:commandButton>
+	                </p:column>
+	            </p:dataTable>
+	        </p:outputPanel>
+	    </p:fieldset>
+	 
+	    <p:droppable for="selectedProdutos" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="availableProdutos" onDrop="handleDrop">
+	        <p:ajax listener="#{revendedorBean.onCarDrop}" update="dropArea availableProdutos" />
+	    </p:droppable>
+	 
+<!-- 	    <p:dialog header="Car Detail" widgetVar="carDialog" resizable="false" draggable="false" -->
+<!-- 	                showEffect="fade" hideEffect="fade" modal="true"> -->
+	 
+<!-- 	        <p:outputPanel id="display"> -->
+<!-- 	            <h:panelGrid columns="2" cellpadding="4" rendered="#{not empty dndCarsView.selectedCar}"> -->
+<!-- 	                <f:facet name="header"> -->
+<!-- 	                    <p:graphicImage name="demo/images/car/#{dndCarsView.selectedCar.brand}.gif"/> -->
+<!-- 	                </f:facet> -->
+	 
+<!-- 	                <h:outputText value="Id:" /> -->
+<!-- 	                <h:outputText value="#{dndCarsView.selectedCar.id}" style="font-weight:bold"/> -->
+	 
+<!-- 	                <h:outputText value="Year:" /> -->
+<!-- 	                <h:outputText value="#{dndCarsView.selectedCar.year}" style="font-weight:bold"/> -->
+	 
+<!-- 	                <h:outputText value="Brand:" /> -->
+<!-- 	                <h:outputText value="#{dndCarsView.selectedCar.brand}" style="font-weight:bold"/> -->
+	 
+<!-- 	                <h:outputText value="Color:" /> -->
+<!-- 	                <h:outputText value="#{dndCarsView.selectedCar.color}" style="font-weight:bold"/> -->
+<!-- 	            </h:panelGrid> -->
+<!-- 	        </p:outputPanel> -->
+<!-- 	    </p:dialog> -->
+	</h:form>
+  </h:body>
+  </ui:define>
+</ui:composition>
