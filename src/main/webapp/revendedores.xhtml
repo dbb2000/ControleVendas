@@ -28,21 +28,20 @@
             		</p:outputPanel>
 		       </f:facet>
 		 
-		       <p:column headerText="Apelido" style="width:5%" filterBy="#{revendedor.apelido}" filterable="false" sortBy="#{revendedor.apelido}" filterMatchMode="contains">
+		       <p:column headerText="Apelido" filterBy="#{revendedor.apelido}" filterable="false" sortBy="#{revendedor.apelido}" filterMatchMode="contains">
 					<h:outputText value="#{revendedor.apelido}" />
 		       </p:column>
 		 
-		       <p:column headerText="Nome Completo" style="width:9%" filterBy="#{revendedor.nomeCompleto}" filterable="false" sortBy="#{revendedor.nomeCompleto}" filterMatchMode="contains">
+		       <p:column headerText="Nome Completo" filterBy="#{revendedor.nomeCompleto}" filterable="false" sortBy="#{revendedor.nomeCompleto}" filterMatchMode="contains">
 					<h:outputText value="#{revendedor.nomeCompleto}" />
 		       </p:column>
 		 
-				<p:column style="width:32px;text-align: center">
+				<p:column style="text-align: center">
 					<p:commandButton update=":form:revendedorDetail" oncomplete="PF('revendedorDialog').show()" icon="ui-icon-search" title="Detalhes do Revendedor">
 				    	<f:setPropertyActionListener value="#{revendedor}" target="#{revendedorBean.selectedRevendedor}" />
 					</p:commandButton>
-					<p:commandButton icon="ui-icon-pencil" title="Editar cadastro"  actionListener="#{revendedorBean.carregarCadastro}" action="cadRevendedores" >
+					<p:commandButton icon="ui-icon-pencil" title="Editar cadastro"  action="#{revendedorBean.carregarCadastro}" update="@form">
 				    	<f:setPropertyActionListener value="#{revendedor}" target="#{revendedorBean.selectedRevendedor}" />
-<!-- 				    	<f:ajax listener="#{revendedorBean.carregarCadastro}" ></f:ajax> -->
 					</p:commandButton>
 					<p:commandButton update=":form:revendedorDetail" oncomplete="PF('revendedorDialog').show()" icon="ui-icon-suitcase" title="Produtos deste Revendedor">
 				    	<f:setPropertyActionListener value="#{revendedor}" target="#{revendedorBean.selectedRevendedor}" />

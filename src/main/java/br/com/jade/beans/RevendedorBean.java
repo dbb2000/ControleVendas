@@ -7,14 +7,14 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AjaxBehaviorEvent;
 
+import br.com.jade.dao.RevendedorDao;
 import br.com.jade.model.Revendedor;
 
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class RevendedorBean implements Serializable {
 
 	/**
@@ -52,8 +52,9 @@ public class RevendedorBean implements Serializable {
     }
     
     public String carregarCadastro(){
+    	this.revendedor = new Revendedor();
     	this.revendedor = selectedRevendedor;
-    	return null;
+    	return "cadRevendedores";
     }
     
     public String excluirCadastro(){

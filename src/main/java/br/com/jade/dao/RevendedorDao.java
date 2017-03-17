@@ -1,4 +1,4 @@
-package br.com.jade.beans;
+package br.com.jade.dao;
 
 import java.util.List;
 
@@ -8,7 +8,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
-import br.com.jade.model.Produto;
 import br.com.jade.model.Revendedor;
 import br.com.jade.util.JpaUtil;
 
@@ -19,13 +18,38 @@ public class RevendedorDao {
 	private EntityManager manager = JpaUtil.getEntityManager();
 	
 	public void gravar(Revendedor revendedor) {
-		
+
 		EntityTransaction tx = manager.getTransaction();
 		tx.begin();
+		Revendedor buscado = manager.find(Revendedor.class, revendedor.getApelido());
+		
+		if(buscado == null){
+			
+			manager.persist(revendedor);			
+			
+		
+		}else {
+			buscado.setApelido(revendedor.getApelido());
+			buscado.setCep(revendedor.getCep());
+			buscado.setCidade(revendedor.getCidade());
+			buscado.setComplemento(revendedor.getComplemento());
+			buscado.setCpf(revendedor.getCpf());
+			buscado.setEndereço(revendedor.getEndereço());
+			buscado.setFoneCelular(revendedor.getFoneCelular());
+			buscado.setFoneResidencial(revendedor.getFoneResidencial());
+			buscado.setNomeCompleto(revendedor.getNomeCompleto());
+			buscado.setProdutos(revendedor.getProdutos());
+			buscado.setRg(revendedor.getRg());
+			buscado.setUf(revendedor.getUf());
+			
 
-		manager.persist(revendedor);		
+		}
 		
 		tx.commit();
+
+
+		
+		
 	}
 	
 	public List<Revendedor> getRevendedores() {
