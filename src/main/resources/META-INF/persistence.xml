@@ -52,6 +52,9 @@
 					<property name="hibernate.hbm2ddl.auto" value="update" />
 					<property name="hibernate.show_sql" value="true" />
 					<property name="hibernate.format_sql" value="true"/>
+<!-- 					Essas duas abaixo são uma correção para a lentidão do Postgresql -->
+					<property name="hibernate.jdbc.use_get_generated_keys" value="true" />
+					<property name="hibernate.temp.use_jdbc_metadata_defaults" value="false" />
               </properties>
         </persistence-unit>
   </persistence>

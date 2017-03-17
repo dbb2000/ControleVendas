@@ -24,10 +24,8 @@ public class RevendedorDao {
 		Revendedor buscado = manager.find(Revendedor.class, revendedor.getApelido());
 		
 		if(buscado == null){
-			
 			manager.persist(revendedor);			
-			
-		
+	
 		}else {
 			buscado.setApelido(revendedor.getApelido());
 			buscado.setCep(revendedor.getCep());
@@ -41,15 +39,19 @@ public class RevendedorDao {
 			buscado.setProdutos(revendedor.getProdutos());
 			buscado.setRg(revendedor.getRg());
 			buscado.setUf(revendedor.getUf());
-			
-
-		}
-		
+		}		
 		tx.commit();
+//		manager.close();	
+	}
+	
+	public void excluir( Revendedor revendedor){
 
-
-		
-		
+		EntityTransaction tx = manager.getTransaction();
+		tx.begin();
+		Revendedor reven = manager.find(Revendedor.class, revendedor.getApelido());
+		manager.remove(reven);
+		tx.commit();
+//		manager.close();
 	}
 	
 	public List<Revendedor> getRevendedores() {

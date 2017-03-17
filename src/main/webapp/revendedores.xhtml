@@ -52,18 +52,37 @@
 				</p:column>      
 		   </p:dataTable>
 		   
-		<p:dialog header="Revendedor Info" widgetVar="revendedorDialog" modal="true" appendTo="@(body)" showEffect="fade" hideEffect="fade" resizable="false">
+		<p:dialog header="Informações do Revendedor" widgetVar="revendedorDialog" modal="true" appendTo="@(body)" showEffect="fade" hideEffect="fade" resizable="false">
 	        <p:outputPanel id="revendedorDetail" style="text-align:center;">
 	            <p:panelGrid  columns="2" rendered="#{not empty revendedorBean.selectedRevendedor}" columnClasses="label,value">
-		  			<f:facet name="header">
-	                    <h:outputText value="info"/> 
-	                </f:facet>
+
 	                <h:outputText value="Apelido:" />
 	                <h:outputText value="#{revendedorBean.selectedRevendedor.apelido}" />
 	 
 	                <h:outputText value="Nome Completo:" />
 	                <h:outputText value="#{revendedorBean.selectedRevendedor.nomeCompleto}" />
+	                
+	                <h:outputText value="RG:" />
+	                <h:outputText value="#{revendedorBean.selectedRevendedor.rg}" />
 	 
+	 				<h:outputText value="CPF:" />
+	                <h:outputText value="#{revendedorBean.selectedRevendedor.cpf}" />
+	 				
+	 				<h:outputText value="Endereço:" />
+	                <h:outputText value="#{revendedorBean.selectedRevendedor.endereço}" />
+	 
+	 				<h:outputText value="Complemento:" />
+	                <h:outputText value="#{revendedorBean.selectedRevendedor.complemento}" />
+					
+					<h:outputText value="Cidade:" />
+	                <h:outputText value="#{revendedorBean.selectedRevendedor.cidade}" />
+	                
+	                <h:outputText value="UF:" />
+	                <h:outputText value="#{revendedorBean.selectedRevendedor.uf}" />
+					
+					<h:outputText value="Fone Residencial:" />
+	                <h:outputText value="#{revendedorBean.selectedRevendedor.foneResidencial}" />
+	                	 					
 	                <h:outputText value="Celular:" />
 	                <h:outputText value="#{revendedorBean.selectedRevendedor.foneCelular}" />
 	

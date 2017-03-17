@@ -47,7 +47,7 @@ public class RevendedorBean implements Serializable {
     	FacesMessage.SEVERITY_INFO, "Cadastro efetuado.",
     	"Revedendor " + revendedor.getApelido() + " cadastrado com sucesso.");
     	context.addMessage(null, mensagem);
-    	return null;
+    	return "revendedores?faces-redirect=true";
     	    	
     }
     
@@ -58,8 +58,14 @@ public class RevendedorBean implements Serializable {
     }
     
     public String excluirCadastro(){
-		return null;
+		revendedorDao.excluir(selectedRevendedor);
+		FacesContext context = FacesContext.getCurrentInstance();
+    	FacesMessage mensagem = new FacesMessage(
+    	FacesMessage.SEVERITY_INFO, "Cadastro removido.",
+    	"Revedendor " + selectedRevendedor.getApelido() + " removido com sucesso.");
+    	context.addMessage(null, mensagem);
     	
+    	return "revendedores?faces-redirect=true";    	
     }
     
 	public Revendedor getRevendedor() {
