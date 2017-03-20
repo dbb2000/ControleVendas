@@ -20,13 +20,28 @@
 	  
 	  <h:form id="prodRevenForm">
 	    <p:fieldset id="availableProdutosField" legend="Produtos disponíveis">
-	        <p:dataTable id="availableProdutos" var="produto" value="#{dtEditView.produtos}">
+	        <p:dataTable id="availableProdutos" var="produto" value="#{revendProdBean.produtos}" editable="true" style="margin-top:1px" widgetVar="produtosTable" multiViewState="true"
+		   				rows="5"
+                        paginator="true"
+                        paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                        rowsPerPageTemplate="5,10,15"
+                        paginatorPosition="bottom"                        
+                        emptyMessage="Nenhum produto encontrado."
+                        filteredValue="#{revendProdBean.produtosFiltrados}" >
+             
+             	<f:facet name="header">		           
+		            <p:outputPanel style="text-align:right" >
+		                <h:outputText value="Procurar: " />
+		                <p:inputText id="globalFilter" onkeyup="PF('produtosTable').filter()" style="width:150px" placeholder="Digite Palavra..."/>
+            		</p:outputPanel>
+		       	</f:facet>
+		       
 	            <p:column style="width:20px">
 	                <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4" />
 	                <p:draggable for="dragIcon" revert="true" helper="clone"/>
 	            </p:column>
 	 
-	            <p:column headerText="Id">
+	            <p:column headerText="Id" filterBy="#{produto.id}" filterable="false" sortBy="#{produto.id}" filterMatchMode="contains">
 	                <h:outputText value="#{produto.id}" />
 	            </p:column>
 	 
@@ -46,9 +61,15 @@
 	 
 	    <p:fieldset id="selectedProdutos" legend="Produtos selecionados" style="margin-top:20px">
 	        <p:outputPanel id="dropArea">
-	            <h:outputText value="!!!Arraste para cá!!!" rendered="#{empty revendedorBean.revendedor.produtos}" style="font-size:24px;" />
-	            <p:dataTable id="selectedProdutoTable" var="produto" value="#{revendedorBean.revendedor.produtos}" rendered="#{not empty revendedorBean.revendedor.produtos}">
-	  	            <p:column headerText="Id">
+	            <h:outputText value="!!!Arraste para cá!!!" rendered="#{empty revendProdBean.selectedRevendedor.produtos}" style="font-size:24px;" />
+	            <p:dataTable id="selectedProdutoTable" var="produto" value="#{revendProdBean.selectedRevendedor.produtos}" rendered="#{not empty revendProdBean.selectedRevendedor.produtos}">
+				
+	            <p:column style="width:20px">
+	                <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4" />
+	                <p:draggable for="dragIcon" revert="true" helper="clone"/>
+	            </p:column>				
+				
+				<p:column headerText="Id">
 	                <h:outputText value="#{produto.id}" />
 	            </p:column>
 	 
@@ -74,8 +95,12 @@
 	    </p:fieldset>
 	 
 	    <p:droppable for="selectedProdutos" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="availableProdutos" onDrop="handleDrop">
-	        <p:ajax listener="#{revendedorBean.onCarDrop}" update="dropArea availableProdutos" />
+	        <p:ajax listener="#{revendProdBean.onRevendedorDrop}" update="dropArea availableProdutos" />
 	    </p:droppable>
+	    
+	    <p:droppable for="availableProdutosField" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="selectedProdutoTable" onDrop="handleDrop">
+	        <p:ajax listener="#{revendProdBean.onListaProdutosDrop}" update="dropArea availableProdutos" />
+	    </p:droppable>	    
 	 
 <!-- 	    <p:dialog header="Car Detail" widgetVar="carDialog" resizable="false" draggable="false" -->
 <!-- 	                showEffect="fade" hideEffect="fade" modal="true"> -->

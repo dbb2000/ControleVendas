@@ -44,7 +44,7 @@
 				    	<f:setPropertyActionListener value="#{revendedor}" target="#{revendedorBean.selectedRevendedor}" />
 					</p:commandButton>
 					<p:commandButton action="#{revendedorBean.associarItens}" icon="ui-icon-suitcase" title="Produtos deste Revendedor" update="@form">
-				    	<f:setPropertyActionListener value="#{revendedor}" target="#{revendedorBean.selectedRevendedor}" />
+				    	<f:setPropertyActionListener value="#{revendedor}" target="#{revendProdBean.selectedRevendedor}" />
 					</p:commandButton>
 					<p:commandButton icon="ui-icon-trash" process="@this" update="@form" title="Deletar Revendedor" action="#{revendedorBean.excluirCadastro}">
 				    	<f:setPropertyActionListener value="#{revendedor}" target="#{revendedorBean.selectedRevendedor}" />

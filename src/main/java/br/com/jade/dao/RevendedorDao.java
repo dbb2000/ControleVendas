@@ -5,6 +5,7 @@ import java.util.List;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
@@ -13,7 +14,7 @@ import br.com.jade.model.Revendedor;
 import br.com.jade.util.JpaUtil;
 
 @ManagedBean(name = "revendedorDao")
-@RequestScoped
+@SessionScoped
 public class RevendedorDao {
 
 	private EntityManager manager = JpaUtil.getEntityManager();
