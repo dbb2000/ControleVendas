@@ -46,8 +46,8 @@
 	 
 	    <p:fieldset id="selectedProdutos" legend="Produtos selecionados" style="margin-top:20px">
 	        <p:outputPanel id="dropArea">
-	            <h:outputText value="!!!Arraste para cá!!!" rendered="#{empty revendedorBean.selectedRevendedor.produtos}" style="font-size:24px;" />
-	            <p:dataTable id="selectedProdutoTable" var="produto" value="#{revendedorBean.selectedRevendedor.produtos}" rendered="#{not empty revendedorBean.selectedRevendedor.produtos}">
+	            <h:outputText value="!!!Arraste para cá!!!" rendered="#{empty revendedorBean.revendedor.produtos}" style="font-size:24px;" />
+	            <p:dataTable id="selectedProdutoTable" var="produto" value="#{revendedorBean.revendedor.produtos}" rendered="#{not empty revendedorBean.revendedor.produtos}">
 	  	            <p:column headerText="Id">
 	                <h:outputText value="#{produto.id}" />
 	            </p:column>
@@ -64,11 +64,11 @@
 	                <h:outputText value="#{produto.precoVenda}" />
 	            </p:column>
 	 
-	                <p:column style="width:32px">
-	                    <p:commandButton update=":prodRevenForm:display" oncomplete="PF('carDialog').show()" icon="ui-icon-search">
-	                        <f:setPropertyActionListener value="#{produto}" target="#{revendedorBean.selectedRevendedor.produtos}" />
-	                    </p:commandButton>
-	                </p:column>
+<!-- 	                <p:column style="width:32px"> -->
+<!-- 	                    <p:commandButton update=":prodRevenForm:display" oncomplete="PF('carDialog').show()" icon="ui-icon-search"> -->
+<!-- 	                        <f:setPropertyActionListener value="#{produto}" target="#{revendedorBean.selectedRevendedor.produtos}" /> -->
+<!-- 	                    </p:commandButton> -->
+<!-- 	                </p:column> -->
 	            </p:dataTable>
 	        </p:outputPanel>
 	    </p:fieldset>

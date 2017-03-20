@@ -4,10 +4,12 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.DragDropEvent;
@@ -57,13 +59,13 @@ public class RevendedorBean implements Serializable {
     }
     
     public String carregarCadastro(){
-    	this.revendedor = new Revendedor();
+//    	this.revendedor = new Revendedor();
     	this.revendedor = selectedRevendedor;
     	return "cadRevendedor";
     }
     
     public String associarItens(){
-    	this.revendedor = new Revendedor();
+//    	this.revendedor = new Revendedor();
     	this.revendedor = selectedRevendedor;
     	return "cadProdReven";
     }
@@ -84,7 +86,7 @@ public class RevendedorBean implements Serializable {
     public void onCarDrop(DragDropEvent ddEvent) {
         Produto produto = ((Produto) ddEvent.getData());
   
-        selectedRevendedor.getProdutos().add(produto);
+        revendedor.getProdutos().add(produto);
         // preciso remover item dos produtos.
         //cars.remove(car);
     }
