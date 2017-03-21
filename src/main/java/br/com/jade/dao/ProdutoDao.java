@@ -7,8 +7,9 @@ import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.util.List;
 
-import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
@@ -22,7 +23,7 @@ import br.com.jade.util.Calculos;
 import br.com.jade.util.JpaUtil;
 
 @ManagedBean(name = "produtoDao")
-@ApplicationScoped
+@ViewScoped
 public class ProdutoDao {
 
 	private EntityManager manager = JpaUtil.getEntityManager();

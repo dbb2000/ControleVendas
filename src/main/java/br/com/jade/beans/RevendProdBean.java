@@ -3,16 +3,13 @@ package br.com.jade.beans;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 
 import org.primefaces.event.DragDropEvent;
 
-import br.com.jade.dao.ProdutoDao;
-import br.com.jade.dao.RevendedorDao;
+import br.com.jade.dao.RevendProdDao;
 import br.com.jade.model.Produto;
 import br.com.jade.model.Revendedor;
 
@@ -29,16 +26,17 @@ public class RevendProdBean implements Serializable {
 	private List<Produto> produtos;	
 	private List<Produto> produtosFiltrados; 
 	
-	@ManagedProperty("#{revendedorDao}")
-	private RevendedorDao revendedorDao;
+	@ManagedProperty("#{revendProdDao}")
+	private RevendProdDao revendProdDao;
 	
-    @ManagedProperty("#{produtoDao}")
-    private ProdutoDao produtoDao;
+//    @ManagedProperty("#{produtoDao}")
+//    private ProdutoDao produtoDao;
 	
-    @PostConstruct
-    public void init() {
 
-        this.produtos = produtoDao.getProdutos();
+    public String onLoad() {
+
+        this.produtos = revendProdDao.getProdutos();
+        return "cadProdReven";
         
     }
   
@@ -74,20 +72,12 @@ public class RevendProdBean implements Serializable {
 		this.produtos = produtos;
 	}
 
-	public RevendedorDao getRevendedorDao() {
-		return revendedorDao;
+	public RevendProdDao getRevendProdDao() {
+		return revendProdDao;
 	}
 
-	public void setRevendedorDao(RevendedorDao revendedorDao) {
-		this.revendedorDao = revendedorDao;
-	}
-
-	public ProdutoDao getProdutoDao() {
-		return produtoDao;
-	}
-
-	public void setProdutoDao(ProdutoDao produtoDao) {
-		this.produtoDao = produtoDao;
+	public void setRevendProdDao(RevendProdDao revendProdDao) {
+		this.revendProdDao = revendProdDao;
 	}
 
 	public List<Produto> getProdutosFiltrados() {

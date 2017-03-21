@@ -10,10 +10,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
-import org.primefaces.event.DragDropEvent;
-
 import br.com.jade.dao.RevendedorDao;
-import br.com.jade.model.Produto;
 import br.com.jade.model.Revendedor;
 
 @ManagedBean
@@ -62,11 +59,11 @@ public class RevendedorBean implements Serializable {
     	return "cadRevendedor";
     }
     
-    public String associarItens(){
-//    	this.revendedor = new Revendedor();
-    	this.revendedor = selectedRevendedor;
-    	return "cadProdReven";
-    }
+//    public String associarItens(){
+////    	this.revendedor = new Revendedor();
+//    	this.revendedor = selectedRevendedor;
+//    	return "cadProdReven";
+//    }
     
     
     public String excluirCadastro(){
