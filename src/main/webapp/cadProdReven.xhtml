@@ -19,6 +19,8 @@
 	  </script>
 	  
 	  <h:form id="prodRevenForm">
+	  	
+	  	<p:growl id="msgs" showDetail="true"/>
 	    <p:fieldset id="availableProdutosField" legend="Produtos disponíveis">
 	        <p:dataTable id="availableProdutos" var="produto" value="#{revendProdBean.produtos}" editable="true" style="margin-top:1px" widgetVar="produtosTable" multiViewState="true"
 		   				rows="5"
@@ -35,24 +37,19 @@
 		                <p:inputText id="globalFilter" onkeyup="PF('produtosTable').filter()" style="width:150px" placeholder="Digite Palavra..."/>
             		</p:outputPanel>
 		       	</f:facet>
-		       
 	            <p:column style="width:20px">
 	                <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4" />
 	                <p:draggable for="dragIcon" revert="true" helper="clone"/>
 	            </p:column>
-	 
 	            <p:column headerText="Id" filterBy="#{produto.id}" filterable="false" sortBy="#{produto.id}" filterMatchMode="contains">
 	                <h:outputText value="#{produto.id}" />
 	            </p:column>
-	 
 	            <p:column headerText="Código">
 	                <h:outputText value="#{produto.codigo}" />
 	            </p:column>
-	 
 	            <p:column headerText="Descrição do produto">
 	                <h:outputText value="#{produto.descricao}" />
 	            </p:column>
-	 
 	            <p:column headerText="Preço Venda">
 	                <h:outputText value="#{produto.precoVenda}" />
 	            </p:column>
@@ -62,28 +59,90 @@
 	    <p:fieldset id="selectedProdutos" legend="Produtos selecionados" style="margin-top:20px">
 	        <p:outputPanel id="dropArea">
 	            <h:outputText value="!!!Arraste para cá!!!" rendered="#{empty revendProdBean.selectedRevendedor.produtos}" style="font-size:24px;" />
-	            <p:dataTable id="selectedProdutoTable" var="produto" value="#{revendProdBean.selectedRevendedor.produtos}" rendered="#{not empty revendProdBean.selectedRevendedor.produtos}">
+	            <p:dataTable id="selectedProdutoTable" var="produto" value="#{revendProdBean.selectedRevendedor.produtos}" rendered="#{not empty revendProdBean.selectedRevendedor.produtos}" 
+	            		editable="true" style="margin-top:1px" widgetVar="produtosTable" multiViewState="true"
+		   				rows="5"
+                        paginator="true"
+                        paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                        rowsPerPageTemplate="5,10,15"
+                        paginatorPosition="bottom"                        
+                        emptyMessage="Nenhum produto encontrado."
+                        filteredValue="#{revendProdBean.produtosFiltrados}" >
 				
+				<p:ajax event="rowEdit" listener="#{revendProdBean.onRowEdit}" update=":prodRevenForm:msgs" />
+		       	<p:ajax event="rowEditCancel" listener="#{revendProdBean.onRowCancel}" update=":prodRevenForm:msgs" />
+		       		                        
 	            <p:column style="width:20px">
 	                <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4" />
 	                <p:draggable for="dragIcon" revert="true" helper="clone"/>
 	            </p:column>				
 				
-				<p:column headerText="Id">
-	                <h:outputText value="#{produto.id}" />
-	            </p:column>
+		       <p:column headerText="Id" style="width:5%" filterBy="#{produto.id}" filterable="false" sortBy="#{produto.id}" filterMatchMode="contains">
+		           <p:cellEditor>
+		               <f:facet name="output"><h:outputText value="#{produto.id}" /></f:facet>
+		               <f:facet name="input"><p:inputText id="idInput" value="#{produto.id}" style="width:100%" disabled="true"/></f:facet>
+		           </p:cellEditor>
+		       </p:column>
 	 
-	            <p:column headerText="Código">
-	                <h:outputText value="#{produto.codigo}" />
-	            </p:column>
+		       <p:column headerText="Código" style="width:9%" filterBy="#{produto.codigo}" filterable="false" sortBy="#{produto.codigo}" filterMatchMode="contains">
+		           <p:cellEditor>
+		               <f:facet name="output"><h:outputText value="#{produto.codigo}" /></f:facet>
+		               <f:facet name="input"><p:inputText id="codigoInput" value="#{produto.codigo}" style="width:100%"/></f:facet>
+		           </p:cellEditor>
+		       </p:column>
 	 
-	            <p:column headerText="Descrição do produto">
-	                <h:outputText value="#{produto.descricao}" />
-	            </p:column>
+		       <p:column headerText="Descrição do Produto" style="width:15%" filterBy="#{produto.descricao}" filterable="false" filterMatchMode="contains">
+		           <p:cellEditor>
+		               <f:facet name="output"><h:outputText value="#{produto.descricao}" /></f:facet>
+		               <f:facet name="input"><p:inputText value="#{produto.descricao}" style="width:100%" label="descricao"/></f:facet>
+		           </p:cellEditor>
+		       </p:column>
 	 
-	            <p:column headerText="Preço Venda">
-	                <h:outputText value="#{produto.precoVenda}" />
-	            </p:column>
+		       <p:column headerText="Preço Venda" style="width:5%;text-align:center" filterBy="#{produto.precoVenda}" filterable="false" filterMatchMode="contains">
+		           <p:cellEditor>
+		               <f:facet name="output"><h:outputText value="#{produto.precoVenda}" /></f:facet>
+		               <f:facet name="input"><p:inputText value="#{produto.precoVenda}" style="width:100%" label="venda"/></f:facet>
+		           </p:cellEditor>
+		       </p:column>
+		       
+		       <p:column headerText="Status" style="width:8%;text-align:center" filterBy="#{produto.status}" filterable="false" filterMatchMode="contains">
+		           <p:cellEditor>
+		               <f:facet name="output"><h:outputText value="#{produto.status}" /></f:facet>
+		               <f:facet name="input">
+		                   <h:selectOneMenu value="#{produto.status}" style="width:100%">
+		                       <f:selectItems value="#{revendProdBean.todosStatus}" var="status" itemLabel="#{status}" itemValue="#{status}" />
+		                   </h:selectOneMenu>
+		               </f:facet>
+		           </p:cellEditor>
+		       </p:column>
+		       
+		       <p:column headerText="Modo Venda" style="width:6%;text-align:center" filterBy="#{produto.venda.formaPagamento}" filterable="false" filterMatchMode="contains">
+		           <p:cellEditor>
+		               <f:facet name="output"><h:outputText value="#{produto.venda.formaPagamento}" /></f:facet>
+		               <f:facet name="input">
+		                   <h:selectOneMenu value="#{produto.venda.formaPagamento}" style="width:100%">
+		                       <f:selectItems value="#{revendProdBean.modosVenda}" var="modoVenda" itemLabel="#{modo}" itemValue="#{modo}" />
+		                   </h:selectOneMenu>
+		               </f:facet>
+		           </p:cellEditor>
+		       </p:column>
+		       
+		       <p:column headerText="Data" style="width:7%;text-align:center" filterBy="#{produto.venda.dataVenda}" filterable="false" filterMatchMode="contains">
+		           <p:cellEditor>
+		               <f:facet name="output">
+		               		<h:outputText value="#{produto.venda.dataVenda}">
+		               			<f:convertDateTime pattern="dd/MM/yyyy" />
+		               		</h:outputText> 
+		               </f:facet>
+		               <f:facet name="input">
+		               		<p:calendar id="effect" value="#{produto.venda.dataVenda}" effect="fold" pattern="dd/MM/yyyy"  />
+		               </f:facet>
+		           </p:cellEditor>
+		       </p:column>
+		 
+		       <p:column style="width:3%">
+		           <p:rowEditor/>
+		       </p:column>		       
 	 
 <!-- 	                <p:column style="width:32px"> -->
 <!-- 	                    <p:commandButton update=":prodRevenForm:display" oncomplete="PF('carDialog').show()" icon="ui-icon-search"> -->

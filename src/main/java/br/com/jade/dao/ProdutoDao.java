@@ -4,11 +4,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -24,16 +24,20 @@ import br.com.jade.util.JpaUtil;
 
 @ManagedBean(name = "produtoDao")
 @ViewScoped
-public class ProdutoDao {
+public class ProdutoDao implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -831991596841551692L;
 	private EntityManager manager = JpaUtil.getEntityManager();
 
 
 	public List<Produto> getProdutos() {
 
-//		Query query = manager.createQuery("from Produto");
 		TypedQuery<Produto> query = manager.createQuery(
-				"select p from Produto p inner join p.venda v",
+				"select p from Produto p "
+				+ "inner join fetch p.venda v",
 				Produto.class);
 		List<Produto> produtos = query.getResultList();
 		

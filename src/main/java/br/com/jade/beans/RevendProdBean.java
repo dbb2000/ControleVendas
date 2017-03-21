@@ -3,11 +3,14 @@ package br.com.jade.beans;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import org.primefaces.event.DragDropEvent;
+import org.primefaces.event.RowEditEvent;
 
 import br.com.jade.dao.RevendProdDao;
 import br.com.jade.model.Produto;
@@ -28,6 +31,12 @@ public class RevendProdBean implements Serializable {
 	
 	@ManagedProperty("#{revendProdDao}")
 	private RevendProdDao revendProdDao;
+	
+    @ManagedProperty("#{modoVendaBean}")
+    private ModoVendaBean modoVenda;
+    
+    @ManagedProperty("#{statusBean}")
+    private StatusBean status;
 	
 //    @ManagedProperty("#{produtoDao}")
 //    private ProdutoDao produtoDao;
@@ -55,6 +64,29 @@ public class RevendProdBean implements Serializable {
         this.produtos.add(produto);
         
     }
+    
+	public void onRowEdit(RowEditEvent event) {
+    	revendProdDao.atualizar((Produto) event.getObject());
+        FacesMessage msg = new FacesMessage("Produto Editado", ((Produto) event.getObject()).getCodigo());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+     
+    public void onRowCancel(RowEditEvent event) {
+        FacesMessage msg = new FacesMessage("Edição cancelada", ((Produto) event.getObject()).getCodigo());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+    
+    public String gravar(){
+//    	revendProdDao.gravar(produto);
+//    	FacesContext context = FacesContext.getCurrentInstance();
+//    	FacesMessage mensagem = new FacesMessage(
+//    	FacesMessage.SEVERITY_INFO, "Cadastro efetuado.",
+//    	"Produto " + produto.getCodigo() + " cadastrado com sucesso.");
+//    	context.addMessage(null, mensagem);
+    	return "produtos";
+    	    	
+    }
+     
 
 	public Revendedor getSelectedRevendedor() {
 		return selectedRevendedor;
@@ -87,7 +119,28 @@ public class RevendProdBean implements Serializable {
 	public void setProdutosFiltrados(List<Produto> produtosFiltrados) {
 		this.produtosFiltrados = produtosFiltrados;
 	}
-	  
+
+	public ModoVendaBean getModoVenda() {
+		return modoVenda;
+	}
+
+	public void setModoVenda(ModoVendaBean modoVenda) {
+		this.modoVenda = modoVenda;
+	}
+
+	public StatusBean getStatus() {
+		return status;
+	}
+
+	public void setStatus(StatusBean status) {
+		this.status = status;
+	}
 	
-	  
+    public List<String> getModosVenda() {
+        return modoVenda.getModosVenda();
+    }
+    
+    public List<String> getTodosStatus() {
+        return status.getTodosStatus();
+    }
 }
