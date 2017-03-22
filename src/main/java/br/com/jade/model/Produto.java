@@ -167,6 +167,6 @@ public class Produto {
 	
 	
 
-	
+	//TODO consertar a notação de ponto para virgula nas casas de centavos
 	
 }

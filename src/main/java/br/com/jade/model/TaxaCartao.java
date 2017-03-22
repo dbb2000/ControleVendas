@@ -10,6 +10,7 @@ import javax.persistence.Table;
 @Table(name = "TAXA_CARTAO")
 public class TaxaCartao {
 
+	//TODO precisa calcular o desconto de taxas do cartão se a venda for cred ou deb
 	@Id
 	@GeneratedValue
 	@Column(name="ID")

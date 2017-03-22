@@ -6,7 +6,6 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
@@ -30,8 +29,8 @@ public class RevendedorBean implements Serializable {
 //    @ManagedProperty("#{revendedor}")
 //    private Revendedor revendedor;
 
-	@ManagedProperty("#{revendedorDao}")
-	private RevendedorDao revendedorDao;
+//	@ManagedProperty("#{revendedorDao}")
+	private RevendedorDao revendedorDao = new RevendedorDao();
 
     @PostConstruct
     public void init() {
@@ -119,5 +118,5 @@ public class RevendedorBean implements Serializable {
 		this.selectedRevendedor = selectedRevendedor;
 	}
 	
-	
+	//TODO fazer o calculo todos dos produtos do revendedor (talvez mostrar isso na tela de revendedores
 }

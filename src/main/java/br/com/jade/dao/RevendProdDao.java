@@ -60,7 +60,16 @@ public class RevendProdDao {
 		EntityTransaction tx = manager.getTransaction();
 		tx.begin();
 		
-		manager.persist(selectedRevendedor);
+		Revendedor revendedor =  manager.merge(selectedRevendedor);
+		
+		for( Produto produto: revendedor.getProdutos()){
+			produto.setLocalidade(Localidade.REVENDEDOR.getLocalidade());
+			manager.persist(produto);
+		}
+		
+		
+		
+		manager.persist(revendedor);
 
 		tx.commit();
 		manager.close();

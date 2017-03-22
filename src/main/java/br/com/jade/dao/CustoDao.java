@@ -8,8 +8,8 @@ import javax.persistence.EntityTransaction;
 import br.com.jade.model.Custo;
 import br.com.jade.util.JpaUtil;
 
-@ManagedBean(name = "custoDao")
-@ApplicationScoped
+//@ManagedBean(name = "custoDao")
+//@ApplicationScoped
 public class CustoDao {
 
 	private EntityManager manager = JpaUtil.getEntityManager();
