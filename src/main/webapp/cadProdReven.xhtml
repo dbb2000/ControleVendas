@@ -56,7 +56,7 @@
 	        </p:dataTable>
 	    </p:fieldset>
 	 
-	    <p:fieldset id="selectedProdutos" legend="Produtos selecionados" style="margin-top:20px">
+	    <p:fieldset id="selectedProdutos" legend="Produtos do Revendedor" style="margin-top:20px">
 	        <p:outputPanel id="dropArea">
 	            <h:outputText value="!!!Arraste para cá!!!" rendered="#{empty revendProdBean.selectedRevendedor.produtos}" style="font-size:24px;" />
 	            <p:dataTable id="selectedProdutoTable" var="produto" value="#{revendProdBean.selectedRevendedor.produtos}" rendered="#{not empty revendProdBean.selectedRevendedor.produtos}" 
@@ -143,15 +143,11 @@
 		       <p:column style="width:3%">
 		           <p:rowEditor/>
 		       </p:column>		       
-	 
-<!-- 	                <p:column style="width:32px"> -->
-<!-- 	                    <p:commandButton update=":prodRevenForm:display" oncomplete="PF('carDialog').show()" icon="ui-icon-search"> -->
-<!-- 	                        <f:setPropertyActionListener value="#{produto}" target="#{revendedorBean.selectedRevendedor.produtos}" /> -->
-<!-- 	                    </p:commandButton> -->
-<!-- 	                </p:column> -->
+
 	            </p:dataTable>
 	        </p:outputPanel>
 	    </p:fieldset>
+	    <h:commandButton value="Salvar produtos para #{revendProdBean.selectedRevendedor.apelido}" style="float:right;" type="submit"  action="#{revendProdBean.gravar}"/>
 	 
 	    <p:droppable for="selectedProdutos" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="availableProdutos" onDrop="handleDrop">
 	        <p:ajax listener="#{revendProdBean.onRevendedorDrop}" update="dropArea availableProdutos" />
@@ -160,30 +156,7 @@
 	    <p:droppable for="availableProdutosField" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="selectedProdutoTable" onDrop="handleDrop">
 	        <p:ajax listener="#{revendProdBean.onListaProdutosDrop}" update="dropArea availableProdutos" />
 	    </p:droppable>	    
-	 
-<!-- 	    <p:dialog header="Car Detail" widgetVar="carDialog" resizable="false" draggable="false" -->
-<!-- 	                showEffect="fade" hideEffect="fade" modal="true"> -->
-	 
-<!-- 	        <p:outputPanel id="display"> -->
-<!-- 	            <h:panelGrid columns="2" cellpadding="4" rendered="#{not empty dndCarsView.selectedCar}"> -->
-<!-- 	                <f:facet name="header"> -->
-<!-- 	                    <p:graphicImage name="demo/images/car/#{dndCarsView.selectedCar.brand}.gif"/> -->
-<!-- 	                </f:facet> -->
-	 
-<!-- 	                <h:outputText value="Id:" /> -->
-<!-- 	                <h:outputText value="#{dndCarsView.selectedCar.id}" style="font-weight:bold"/> -->
-	 
-<!-- 	                <h:outputText value="Year:" /> -->
-<!-- 	                <h:outputText value="#{dndCarsView.selectedCar.year}" style="font-weight:bold"/> -->
-	 
-<!-- 	                <h:outputText value="Brand:" /> -->
-<!-- 	                <h:outputText value="#{dndCarsView.selectedCar.brand}" style="font-weight:bold"/> -->
-	 
-<!-- 	                <h:outputText value="Color:" /> -->
-<!-- 	                <h:outputText value="#{dndCarsView.selectedCar.color}" style="font-weight:bold"/> -->
-<!-- 	            </h:panelGrid> -->
-<!-- 	        </p:outputPanel> -->
-<!-- 	    </p:dialog> -->
+
 	</h:form>
   </h:body>
   </ui:define>

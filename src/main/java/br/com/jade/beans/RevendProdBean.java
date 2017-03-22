@@ -20,9 +20,6 @@ import br.com.jade.model.Revendedor;
 @SessionScoped
 public class RevendProdBean implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 2952101094659010510L;
 
 	private Revendedor selectedRevendedor;
@@ -37,16 +34,11 @@ public class RevendProdBean implements Serializable {
     
     @ManagedProperty("#{statusBean}")
     private StatusBean status;
-	
-//    @ManagedProperty("#{produtoDao}")
-//    private ProdutoDao produtoDao;
-	
 
     public String onLoad() {
 
         this.produtos = revendProdDao.getProdutos();
-        return "cadProdReven";
-        
+        return "cadProdReven";        
     }
   
     public void onRevendedorDrop(DragDropEvent ddEvent) {
@@ -77,16 +69,14 @@ public class RevendProdBean implements Serializable {
     }
     
     public String gravar(){
-//    	revendProdDao.gravar(produto);
-//    	FacesContext context = FacesContext.getCurrentInstance();
-//    	FacesMessage mensagem = new FacesMessage(
-//    	FacesMessage.SEVERITY_INFO, "Cadastro efetuado.",
-//    	"Produto " + produto.getCodigo() + " cadastrado com sucesso.");
-//    	context.addMessage(null, mensagem);
-    	return "produtos";
-    	    	
-    }
-     
+    	revendProdDao.gravar(selectedRevendedor);
+    	FacesContext context = FacesContext.getCurrentInstance();
+    	FacesMessage mensagem = new FacesMessage(
+    	FacesMessage.SEVERITY_INFO, "Produtos atribuídos.",
+    	"Produtos para o revendedor " + selectedRevendedor.getApelido() + " atribuidos com sucesso.");
+    	context.addMessage(null, mensagem);
+    	return null;    	    	
+    }     
 
 	public Revendedor getSelectedRevendedor() {
 		return selectedRevendedor;
