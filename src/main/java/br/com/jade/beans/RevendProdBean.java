@@ -3,6 +3,7 @@ package br.com.jade.beans;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -26,8 +27,8 @@ public class RevendProdBean implements Serializable {
 	private List<Produto> produtos;	
 	private List<Produto> produtosFiltrados; 
 	
-	@ManagedProperty("#{revendProdDao}")
-	private RevendProdDao revendProdDao;
+//	@ManagedProperty("#{revendProdDao}")
+	private RevendProdDao revendProdDao = new RevendProdDao();
 	
     @ManagedProperty("#{modoVendaBean}")
     private ModoVendaBean modoVenda;
@@ -35,15 +36,18 @@ public class RevendProdBean implements Serializable {
     @ManagedProperty("#{statusBean}")
     private StatusBean status;
 
+    @PostConstruct()
+    public void init() {
+   		produtos = revendProdDao.getProdutos();
+    		 
+    }
+    
     public String onLoad() {
-
-        this.produtos = revendProdDao.getProdutos();
         return "cadProdReven";        
     }
   
     public void onRevendedorDrop(DragDropEvent ddEvent) {
         Produto produto = ((Produto) ddEvent.getData());
-  
         this.selectedRevendedor.getProdutos().add(produto);
         // preciso remover item dos produtos.
         this.produtos.remove(produto);
