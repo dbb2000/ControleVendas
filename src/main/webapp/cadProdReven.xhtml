@@ -31,48 +31,64 @@
                         emptyMessage="Nenhum produto encontrado."
                         filteredValue="#{revendProdBean.produtosFiltrados}" >
              
+			             
              	<f:facet name="header">		           
 		            <p:outputPanel style="text-align:right" >
 		                <h:outputText value="Procurar: " />
 		                <p:inputText id="globalFilter" onkeyup="PF('produtosTable').filter()" style="width:150px" placeholder="Digite Palavra..."/>
             		</p:outputPanel>
 		       	</f:facet>
-	            <p:column style="width:20px">
+		       
+		       	
+	            <p:column style="width:1%">
 	                <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4" />
 	                <p:draggable for="dragIcon" revert="true" helper="clone"/>
 	            </p:column>
-	            <p:column headerText="Id" filterBy="#{produto.id}" filterable="false" sortBy="#{produto.id}" filterMatchMode="contains">
+	            <p:column style="width:6%" headerText="Id" filterBy="#{produto.id}" filterable="false" sortBy="#{produto.id}" filterMatchMode="contains">
 	                <h:outputText value="#{produto.id}" />
 	            </p:column>
-	            <p:column headerText="Código">
+	            <p:column style="width:7%" headerText="Código">
 	                <h:outputText value="#{produto.codigo}" />
 	            </p:column>
 	            <p:column headerText="Descrição do produto">
 	                <h:outputText value="#{produto.descricao}" />
 	            </p:column>
-	            <p:column headerText="Preço Venda">
+	            <p:column style="width:6%" headerText="Preço Venda">
 	                <h:outputText value="#{produto.precoVenda}" />
 	            </p:column>
 	        </p:dataTable>
 	    </p:fieldset>
 	 
+	 
+	 
+	 
 	    <p:fieldset id="selectedProdutos" legend="Produtos do Revendedor" style="margin-top:20px">
 	        <p:outputPanel id="dropArea">
 	            <h:outputText value="!!!Arraste para cá!!!" rendered="#{empty revendProdBean.selectedRevendedor.produtos}" style="font-size:24px;" />
 	            <p:dataTable id="selectedProdutoTable" var="produto" value="#{revendProdBean.selectedRevendedor.produtos}" rendered="#{not empty revendProdBean.selectedRevendedor.produtos}" 
-	            		editable="true" style="margin-top:1px" widgetVar="produtosTable" multiViewState="true"
+	            		editable="true" style="margin-top:1px" widgetVar="produtosRevendTable" multiViewState="true"
 		   				rows="5"
                         paginator="true"
                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                         rowsPerPageTemplate="5,10,15"
                         paginatorPosition="bottom"                        
                         emptyMessage="Nenhum produto encontrado."
-                        filteredValue="#{revendProdBean.produtosFiltrados}" >
+                        filteredValue="#{revendProdBean.produtosRevendedoresFiltrados}" >
+
+             	<f:facet name="header">		      
+             		<p:panelGrid columns="2" style="text-align:left">     
+             		<h:outputText value="Total: R$ #{revendProdBean.selectedRevendedor.totalMercadorias}"></h:outputText>
+		            <p:outputPanel style="text-align:right" >		            	
+		                <h:outputText value="Procurar: " />
+		                <p:inputText id="globalFilter" onkeyup="PF('produtosRevendTable').filter()" style="width:150px" placeholder="Digite Palavra..."/>
+            		</p:outputPanel>
+            		</p:panelGrid>
+		       	</f:facet>                 
 				
-				<p:ajax event="rowEdit" listener="#{revendProdBean.onRowEdit}" update=":prodRevenForm:msgs" />
+				<p:ajax event="rowEdit" listener="#{revendProdBean.onRowEdit}" update="selectedProdutoTable"  />
 		       	<p:ajax event="rowEditCancel" listener="#{revendProdBean.onRowCancel}" update=":prodRevenForm:msgs" />
 		       		                        
-	            <p:column style="width:20px">
+	            <p:column style="width:1%">
 	                <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4" />
 	                <p:draggable for="dragIcon" revert="true" helper="clone"/>
 	            </p:column>				

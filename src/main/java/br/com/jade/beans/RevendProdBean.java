@@ -1,6 +1,7 @@
 package br.com.jade.beans;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -14,6 +15,7 @@ import org.primefaces.event.DragDropEvent;
 import org.primefaces.event.RowEditEvent;
 
 import br.com.jade.dao.RevendProdDao;
+import br.com.jade.enums.Status;
 import br.com.jade.model.Produto;
 import br.com.jade.model.Revendedor;
 
@@ -25,7 +27,8 @@ public class RevendProdBean implements Serializable {
 
 	private Revendedor selectedRevendedor;
 	private List<Produto> produtos;	
-	private List<Produto> produtosFiltrados; 
+	private List<Produto> produtosFiltrados;
+	private List<Produto> produtosRevendedoresFiltrados;
 	
 //	@ManagedProperty("#{revendProdDao}")
 	private RevendProdDao revendProdDao = new RevendProdDao();
@@ -36,35 +39,65 @@ public class RevendProdBean implements Serializable {
     @ManagedProperty("#{statusBean}")
     private StatusBean status;
 
-    @PostConstruct()
-    public void init() {
-   		produtos = revendProdDao.getProdutos();
-    		 
-    }
+//    @PostConstruct()
+//    public void init() {
+//   		
+//    		 
+//    }
     
     public String onLoad() {
+    	produtos = revendProdDao.getProdutos();
         return "cadProdReven";        
+    }
+    
+    public void somaProdutos(){
+    	
+    	BigDecimal total = new BigDecimal(0);
+    	
+    	for(Produto produto : selectedRevendedor.getProdutos()){
+    		total = total.add(produto.getPrecoVenda());
+    		
+    	}    	
+    	selectedRevendedor.setTotalMercadorias(total);
     }
   
     public void onRevendedorDrop(DragDropEvent ddEvent) {
         Produto produto = ((Produto) ddEvent.getData());
         this.selectedRevendedor.getProdutos().add(produto);
+        this.somaProdutos();
         // preciso remover item dos produtos.
         this.produtos.remove(produto);
+        
     }
     
     public void onListaProdutosDrop(DragDropEvent ddEvent) {
         Produto produto = ((Produto) ddEvent.getData());
-  
         this.selectedRevendedor.getProdutos().remove(produto);
+        this.somaProdutos();
         this.produtos.add(produto);
+        revendProdDao.atualizaStatus(produto);
+        
         
     }
     
 	public void onRowEdit(RowEditEvent event) {
-    	revendProdDao.atualizar((Produto) event.getObject());
-        FacesMessage msg = new FacesMessage("Produto Editado", ((Produto) event.getObject()).getCodigo());
+		
+		Produto produto = (Produto) event.getObject();
+		
+		this.somaProdutos();
+		
+		revendProdDao.atualizar(produto, selectedRevendedor.getApelido());
+		
+		if(produto.getStatus().equals(Status.VENDIDO.getStatus())){
+	    	revendProdDao.removerProdutoVendido(selectedRevendedor, produto);
+			this.selectedRevendedor.getProdutos().remove(produto);
+	    	this.somaProdutos();
+	    	revendProdDao.gravar(selectedRevendedor);
+		}
+		
+    	FacesMessage msg = new FacesMessage("Produto Editado", produto.getCodigo());
         FacesContext.getCurrentInstance().addMessage(null, msg);
+        
     }
      
     public void onRowCancel(RowEditEvent event) {
@@ -72,13 +105,21 @@ public class RevendProdBean implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
     
+    public String atualizarPagina(){
+    	return null;
+    }
+    
+
+    
     public String gravar(){
+    	this.somaProdutos();
     	revendProdDao.gravar(selectedRevendedor);
     	FacesContext context = FacesContext.getCurrentInstance();
     	FacesMessage mensagem = new FacesMessage(
     	FacesMessage.SEVERITY_INFO, "Produtos atribuídos.",
     	"Produtos para o revendedor " + selectedRevendedor.getApelido() + " atribuidos com sucesso.");
     	context.addMessage(null, mensagem);
+    	
     	return null;    	    	
     }     
 
@@ -137,4 +178,15 @@ public class RevendProdBean implements Serializable {
     public List<String> getTodosStatus() {
         return status.getTodosStatus();
     }
+
+	public List<Produto> getProdutosRevendedoresFiltrados() {
+		return produtosRevendedoresFiltrados;
+	}
+
+	public void setProdutosRevendedoresFiltrados(List<Produto> produtosRevendedoresFiltrados) {
+		this.produtosRevendedoresFiltrados = produtosRevendedoresFiltrados;
+	}
+    
+    
+    //FIXME filtro dos produtos revendedor com bug
 }

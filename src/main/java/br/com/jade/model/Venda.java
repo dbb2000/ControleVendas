@@ -31,6 +31,9 @@ public class Venda {
 	@Column(name="FORMA_PGTO")
 	//Enum<ModoVenda> formaPagamento;
 	String formaPagamento;
+	
+	@Column(name="VENDEDOR")
+	String vendedor;
 
 	public Date getDataVenda() {
 		return dataVenda;
@@ -62,6 +65,14 @@ public class Venda {
 
 	public void setCodigoVenda(Long codigoVenda) {
 		this.codigoVenda = codigoVenda;
+	}
+	
+	public String getVendedor() {
+		return vendedor;
+	}
+
+	public void setVendedor(String vendedor) {
+		this.vendedor = vendedor;
 	}
 
 	@Override

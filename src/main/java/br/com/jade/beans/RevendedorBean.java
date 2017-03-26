@@ -66,14 +66,25 @@ public class RevendedorBean implements Serializable {
     
     
     public String excluirCadastro(){
-		revendedorDao.excluir(selectedRevendedor);
-		FacesContext context = FacesContext.getCurrentInstance();
-    	FacesMessage mensagem = new FacesMessage(
-    	FacesMessage.SEVERITY_INFO, "Cadastro removido.",
-    	"Revedendor " + selectedRevendedor.getApelido() + " removido com sucesso.");
-    	context.addMessage(null, mensagem);
+		
+    	FacesContext context = FacesContext.getCurrentInstance();
     	
-    	return "revendedores?faces-redirect=true";
+    	if(selectedRevendedor.getProdutos().isEmpty()){
+    		
+    		revendedorDao.excluir(selectedRevendedor);    	
+        	FacesMessage mensagem = new FacesMessage(
+        	FacesMessage.SEVERITY_INFO, "Cadastro removido.",
+        	"Revedendor " + selectedRevendedor.getApelido() + " removido com sucesso.");
+        	context.addMessage(null, mensagem);
+        	return "revendedores?faces-redirect=true";
+    	} else {
+			
+        	FacesMessage mensagem = new FacesMessage(
+        	FacesMessage.SEVERITY_INFO, "Atenção.",
+        	"Não é possível remover revendedor com produtos atribuídos");
+        	context.addMessage(null, mensagem);
+    		return null;
+		}
     	
     }
     

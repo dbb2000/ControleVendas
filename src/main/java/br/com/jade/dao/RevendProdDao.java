@@ -2,8 +2,6 @@ package br.com.jade.dao;
 
 import java.util.List;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
@@ -12,6 +10,7 @@ import br.com.jade.enums.Localidade;
 import br.com.jade.enums.Status;
 import br.com.jade.model.Produto;
 import br.com.jade.model.Revendedor;
+import br.com.jade.model.Venda;
 import br.com.jade.util.JpaUtil;
 
 //@ManagedBean(name = "revendProdDao")
@@ -36,21 +35,24 @@ public class RevendProdDao {
 		return produtos;
 	}
 	
-	public void atualizar(Produto produto){
+	public void atualizar(Produto produto, String apelido){
 		EntityManager manager = JpaUtil.getEntityManager();
 		EntityTransaction tx = manager.getTransaction();
 		tx.begin();
+		Venda venda  = manager.merge(produto.getVenda());
+		Produto prod = manager.merge(produto);
 		
-		if(produto.getStatus().equalsIgnoreCase(Status.VENDIDO.getStatus())){
-			produto.getVenda().setPrecoVenda(produto.getPrecoVenda());
+		if(prod.getStatus().equalsIgnoreCase(Status.VENDIDO.getStatus())){
+			prod.getVenda().setPrecoVenda(prod.getPrecoVenda());
+			prod.getVenda().setVendedor(apelido);
 		}else {
-			produto.getVenda().setDataVenda(null);
-			produto.getVenda().setFormaPagamento(null);
-			produto.getVenda().setPrecoVenda(null);
+			prod.getVenda().setDataVenda(null);
+			prod.getVenda().setFormaPagamento(null);
+			prod.getVenda().setPrecoVenda(null);
 		}
 				
-		manager.persist(produto.getVenda());		
-		manager.persist(produto);		
+		manager.persist(prod.getVenda());		
+		manager.persist(prod);		
 		tx.commit();
 		manager.close();
 	}
@@ -67,15 +69,38 @@ public class RevendProdDao {
 			manager.persist(produto);
 		}
 		
-		
-		
 		manager.persist(revendedor);
 
 		tx.commit();
 		manager.close();
 	}
+
+	public void atualizaStatus(Produto produto) {
+		EntityManager manager = JpaUtil.getEntityManager();
+		EntityTransaction tx = manager.getTransaction();
+		tx.begin();
+		
+		produto.setLocalidade(Localidade.LOJA.getLocalidade());
+		
+		tx.commit();
+		manager.close();
+		
+		
+	}
 	
-	
+    public void removerProdutoVendido(Revendedor revendedor, Produto produto){
+		EntityManager manager = JpaUtil.getEntityManager();
+		EntityTransaction tx = manager.getTransaction();
+		tx.begin();
+    	
+		Revendedor revend = manager.merge(revendedor);
+		
+		revend.getProdutos().remove(produto);
+		manager.persist(revend);
+		
+		tx.commit();
+		manager.close();
+    }
 	
 	
 	

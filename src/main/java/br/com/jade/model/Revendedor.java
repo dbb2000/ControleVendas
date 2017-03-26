@@ -1,5 +1,6 @@
 package br.com.jade.model;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -36,6 +37,9 @@ public class Revendedor {
 	@Column(name="COMPLEMENTO")
 	String complemento;
 	
+	@Column(name="BAIRRO")
+	String bairro;
+	
 	@Column(name="CIDADE")
 	String cidade;
 	//TODO acrescentar o campo Bairro
@@ -54,6 +58,8 @@ public class Revendedor {
 	@OneToMany
 	List<Produto> produtos;
 	
+	@Column(name="TOTAL_MERCADORIAS")
+	BigDecimal totalMercadorias;
 	
 //	public int getId() {
 //		return id;
@@ -133,7 +139,19 @@ public class Revendedor {
 	public void setProdutos(List<Produto> produtos) {
 		this.produtos = produtos;
 	}
-//	public int getId() {
+	public BigDecimal getTotalMercadorias() {
+		return totalMercadorias;
+	}
+	public void setTotalMercadorias(BigDecimal totalMercadorias) {
+		this.totalMercadorias = totalMercadorias;
+	}
+	public String getBairro() {
+		return bairro;
+	}
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
+	}
+	//	public int getId() {
 //		return id;
 //	}
 //	

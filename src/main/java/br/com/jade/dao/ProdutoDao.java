@@ -49,6 +49,7 @@ public class ProdutoDao implements Serializable {
 		
 		if(produto.getStatus().equalsIgnoreCase(Status.VENDIDO.getStatus())){
 			produto.getVenda().setPrecoVenda(produto.getPrecoVenda());
+			produto.getVenda().setVendedor(Localidade.LOJA.getLocalidade());
 		}else {
 			produto.getVenda().setDataVenda(null);
 			produto.getVenda().setFormaPagamento(null);
