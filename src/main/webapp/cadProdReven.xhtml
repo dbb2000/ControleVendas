@@ -40,14 +40,14 @@
 		       	</f:facet>
 		       
 		       	
-	            <p:column style="width:1%">
+	            <p:column style="width:3%">
 	                <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4" />
 	                <p:draggable for="dragIcon" revert="true" helper="clone"/>
 	            </p:column>
 	            <p:column style="width:6%" headerText="Id" filterBy="#{produto.id}" filterable="false" sortBy="#{produto.id}" filterMatchMode="contains">
 	                <h:outputText value="#{produto.id}" />
 	            </p:column>
-	            <p:column style="width:7%" headerText="Código">
+	            <p:column style="width:9%" headerText="Código">
 	                <h:outputText value="#{produto.codigo}" />
 	            </p:column>
 	            <p:column headerText="Descrição do produto">
@@ -88,7 +88,7 @@
 				<p:ajax event="rowEdit" listener="#{revendProdBean.onRowEdit}" update="selectedProdutoTable"  />
 		       	<p:ajax event="rowEditCancel" listener="#{revendProdBean.onRowCancel}" update=":prodRevenForm:msgs" />
 		       		                        
-	            <p:column style="width:1%">
+	            <p:column style="width:3%">
 	                <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4" />
 	                <p:draggable for="dragIcon" revert="true" helper="clone"/>
 	            </p:column>				
