@@ -32,5 +32,5 @@ public class CustoDao {
 		manager.persist(custo);
 		tx.commit();
 	}
-	
+	//FIXME verificar a sessão da tela de custo que parece não estar correta. fui tentar salvar dois arquivos cvs de uma vez e não rolou
 }
