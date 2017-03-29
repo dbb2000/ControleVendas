@@ -37,6 +37,7 @@ public class RevendedorDao {
 			buscado.setProdutos(revendedor.getProdutos());
 			buscado.setRg(revendedor.getRg());
 			buscado.setUf(revendedor.getUf());
+			buscado.setBairro(revendedor.getBairro());
 		}		
 		tx.commit();
 //		manager.close();	
