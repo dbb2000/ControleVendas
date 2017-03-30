@@ -32,7 +32,6 @@ public class RevendProdBean implements Serializable {
 	private List<Produto> produtosRevendedoresFiltrados;
 	
 //	@ManagedProperty("#{revendProdDao}")
-	@Inject
 	private RevendProdDao revendProdDao = new RevendProdDao();
 	
     @ManagedProperty("#{modoVendaBean}")
@@ -194,4 +193,5 @@ public class RevendProdBean implements Serializable {
 	//FIXME ao pressionar enter na tabela de produtos com alguma palavra de pesquisa o sistema erroneamente adiciona um produto em branco
 	//TODO adicionar codigo e descrição do produto como itens filtrados na tabela de disponíveis e revendedor
 	//TODO verificar a questão do @Inject
+	//TODO reimplementar o login. Pag 200 da apostila
 }
