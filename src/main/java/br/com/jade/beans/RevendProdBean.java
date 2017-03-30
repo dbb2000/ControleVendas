@@ -10,6 +10,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 
 import org.primefaces.event.DragDropEvent;
 import org.primefaces.event.RowEditEvent;
@@ -31,6 +32,7 @@ public class RevendProdBean implements Serializable {
 	private List<Produto> produtosRevendedoresFiltrados;
 	
 //	@ManagedProperty("#{revendProdDao}")
+	@Inject
 	private RevendProdDao revendProdDao = new RevendProdDao();
 	
     @ManagedProperty("#{modoVendaBean}")
@@ -191,4 +193,5 @@ public class RevendProdBean implements Serializable {
 	//FIXME fazer o mesmo no filtro de produtos do revendedor
 	//FIXME ao pressionar enter na tabela de produtos com alguma palavra de pesquisa o sistema erroneamente adiciona um produto em branco
 	//TODO adicionar codigo e descrição do produto como itens filtrados na tabela de disponíveis e revendedor
+	//TODO verificar a questão do @Inject
 }
