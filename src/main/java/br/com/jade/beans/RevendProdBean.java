@@ -187,6 +187,8 @@ public class RevendProdBean implements Serializable {
 		this.produtosRevendedoresFiltrados = produtosRevendedoresFiltrados;
 	}
     
-    
-    //FIXME filtro dos produtos revendedor com bug
+    //FIXME adicionar o tratamento para produtosfiltados. deve sumir da tabela de disponíveis quando um filtro é usado
+	//FIXME fazer o mesmo no filtro de produtos do revendedor
+	//FIXME ao pressionar enter na tabela de produtos com alguma palavra de pesquisa o sistema erroneamente adiciona um produto em branco
+	//TODO adicionar codigo e descrição do produto como itens filtrados na tabela de disponíveis e revendedor
 }
