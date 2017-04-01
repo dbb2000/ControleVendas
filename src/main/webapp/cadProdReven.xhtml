@@ -18,7 +18,7 @@
     	}
 	  </script>
 	  
-	  <h:form id="prodRevenForm">
+	  <h:form id="prodRevenForm" onkeypress="if (event.keyCode == 13) { return false; }"> <!-- para evitar o Enter falso -->>
 	  	
 	  	<p:growl id="msgs" showDetail="true"/>
 	    <p:fieldset id="availableProdutosField" legend="Produtos disponíveis">
@@ -47,7 +47,7 @@
 	            <p:column style="width:6%" headerText="Id" filterBy="#{produto.id}" filterable="false" sortBy="#{produto.id}" filterMatchMode="contains">
 	                <h:outputText value="#{produto.id}" />
 	            </p:column>
-	            <p:column style="width:9%" headerText="Código">
+	            <p:column style="width:11%" headerText="Código">
 	                <h:outputText value="#{produto.codigo}" />
 	            </p:column>
 	            <p:column headerText="Descrição do produto">
@@ -66,14 +66,14 @@
 	        <p:outputPanel id="dropArea">
 	            <h:outputText value="!!!Arraste para cá!!!" rendered="#{empty revendProdBean.selectedRevendedor.produtos}" style="font-size:24px;" />
 	            <p:dataTable id="selectedProdutoTable" var="produto" value="#{revendProdBean.selectedRevendedor.produtos}" rendered="#{not empty revendProdBean.selectedRevendedor.produtos}" 
-	            		editable="true" style="margin-top:1px" widgetVar="produtosRevendTable" multiViewState="true"
+	            		editable="true" style="margin-top:1px" widgetVar="produtosRevendTable" multiViewState="false"
 		   				rows="5"
                         paginator="true"
                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                         rowsPerPageTemplate="5,10,15"
                         paginatorPosition="bottom"                        
                         emptyMessage="Nenhum produto encontrado."
-                        filteredValue="#{revendProdBean.produtosRevendedoresFiltrados}" >
+                        filteredValue="#{revendProdBean.produtosRevendedorFiltrados}" >
 
              	<f:facet name="header">		      
              		<p:panelGrid columns="2" style="text-align:left">     

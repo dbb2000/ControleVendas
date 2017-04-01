@@ -10,7 +10,7 @@
   </h:head>
    
   <h:body>
-       <h:form id="form">
+       <h:form id="form" onkeypress="if (event.keyCode == 13) { return false; }"> <!-- para evitar o Enter falso -->
 		   <p:growl id="msgs" showDetail="true"/>
 		 
 		   <p:dataTable id="produtos" var="produto" value="#{dtEditView.produtos}" editable="true" style="margin-top:1px" widgetVar="produtosTable" multiViewState="true"
@@ -34,7 +34,7 @@
 		                <p:inputText style="width:10%;color:gray"  placeholder="Custo" value="#{dtEditView.produto.precoCusto}" onfocus="this.style.backgroundColor = 'yellow';"/>
 		                <p:inputText style="width:10%;color:gray"  placeholder="Custo efetivo" value="#{dtEditView.produto.precoCustoEfetivo}" onfocus="this.style.backgroundColor = 'yellow';"/>
 		                <p:inputText style="width:10%;color:gray"  placeholder="Preço venda" value="#{dtEditView.produto.precoVenda}" onfocus="this.style.backgroundColor = 'yellow';"/>
-		                <h:commandButton value="Salvar produto" type="submit"  action="#{dtEditView.gravar}"/>
+		                <h:commandButton value="Salvar produto" type="submit"  action="#{dtEditView.gravar}" />
             		</p:outputPanel>
 		       </f:facet>
 		 

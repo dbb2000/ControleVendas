@@ -129,5 +129,5 @@ public class RevendedorBean implements Serializable {
 		this.selectedRevendedor = selectedRevendedor;
 	}
 	
-	//TODO fazer o calculo todos dos produtos do revendedor (talvez mostrar isso na tela de revendedores
+
 }

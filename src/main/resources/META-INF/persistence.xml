@@ -45,6 +45,7 @@
 <!-- 					<property name="hibernate.format_sql" value="true"/> -->
 										
 <!-- 					Openshift Postgresql -->
+<<<<<<< HEAD
 <!-- 					<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" /> -->
 <!-- 					<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://172.30.57.26:5432/vendas" ></property> -->
 <!-- 					<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/vendas" ></property> -->
@@ -64,6 +65,13 @@
 					<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://ec2-107-20-141-145.compute-1.amazonaws.com/d4934s4m5820ng" ></property>
 					<property name="javax.persistence.jdbc.user" value="akzbgzszqpmhfe" />
 					<property name="javax.persistence.jdbc.password" value="dd029adb5cb4a10daec8edb2afe8deab409ee3e673ab8163ea77d3d0db0d00a7"  />
+=======
+					<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
+<!-- 					<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://172.30.57.26:5432/vendas" ></property> -->
+					<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/vendas" ></property>
+					<property name="javax.persistence.jdbc.user" value="davi" />
+					<property name="javax.persistence.jdbc.password" value="davi1980"  />
+>>>>>>> dev01
 					<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
 					<property name="hibernate.connection.shutdown" value="true" />
 					<property name="hibernate.hbm2ddl.auto" value="update" />

@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -28,7 +27,7 @@ public class RevendProdBean implements Serializable {
 	private Revendedor selectedRevendedor;
 	private List<Produto> produtos;	
 	private List<Produto> produtosFiltrados;
-	private List<Produto> produtosRevendedoresFiltrados;
+	private List<Produto> produtosRevendedorFiltrados;
 	
 //	@ManagedProperty("#{revendProdDao}")
 	private RevendProdDao revendProdDao = new RevendProdDao();
@@ -46,7 +45,13 @@ public class RevendProdBean implements Serializable {
 //    }
     
     public String onLoad() {
-    	produtos = revendProdDao.getProdutos();
+    	this.produtos = null;
+    	this.selectedRevendedor.getProdutos().clear();
+    	
+    	this.produtos = revendProdDao.getProdutos();
+    	this.selectedRevendedor.setProdutos(revendProdDao.buscaLista(selectedRevendedor.getApelido()));
+    	
+    	
         return "cadProdReven";        
     }
     
@@ -63,20 +68,42 @@ public class RevendProdBean implements Serializable {
   
     public void onRevendedorDrop(DragDropEvent ddEvent) {
         Produto produto = ((Produto) ddEvent.getData());
-        this.selectedRevendedor.getProdutos().add(produto);
-        this.somaProdutos();
+  
         // preciso remover item dos produtos.
         this.produtos.remove(produto);
+        if( produtosFiltrados != null ){
+        	produtosFiltrados.remove(produto);
+        	produtosFiltrados = null;
+
+        }
+        
+        if(produtosRevendedorFiltrados != null){
+        	produtosRevendedorFiltrados = null;
+
+        }
+        
+        this.selectedRevendedor.getProdutos().add(produto);
+        this.somaProdutos();
         
     }
     
     public void onListaProdutosDrop(DragDropEvent ddEvent) {
         Produto produto = ((Produto) ddEvent.getData());
         this.selectedRevendedor.getProdutos().remove(produto);
-        this.somaProdutos();
+        if(produtosRevendedorFiltrados != null){
+        	produtosRevendedorFiltrados.remove(produto);
+        	produtosRevendedorFiltrados = null;
+
+        }
+        
+        if( produtosFiltrados != null ){
+        	produtosFiltrados = null;
+
+        }
+        
         this.produtos.add(produto);
         revendProdDao.atualizaStatus(produto);
-        
+        this.somaProdutos();
         
     }
     
@@ -179,14 +206,17 @@ public class RevendProdBean implements Serializable {
         return status.getTodosStatus();
     }
 
-	public List<Produto> getProdutosRevendedoresFiltrados() {
-		return produtosRevendedoresFiltrados;
+	public List<Produto> getProdutosRevendedorFiltrados() {
+		return produtosRevendedorFiltrados;
 	}
 
-	public void setProdutosRevendedoresFiltrados(List<Produto> produtosRevendedoresFiltrados) {
-		this.produtosRevendedoresFiltrados = produtosRevendedoresFiltrados;
+	public void setProdutosRevendedorFiltrados(List<Produto> produtosRevendedorFiltrados) {
+		this.produtosRevendedorFiltrados = produtosRevendedorFiltrados;
 	}
     
-    
-    //FIXME filtro dos produtos revendedor com bug
+    //FIXME adicionar o tratamento para produtosfiltados. deve sumir da tabela de disponíveis quando um filtro é usado
+	//FIXME fazer o mesmo no filtro de produtos do revendedor
+	//TODO adicionar codigo e descrição do produto como itens filtrados na tabela de disponíveis e revendedor
+	//TODO verificar a questão do @Inject
+	//TODO reimplementar o login. Pag 200 da apostila
 }

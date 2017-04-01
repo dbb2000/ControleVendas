@@ -42,7 +42,7 @@ public class Revendedor {
 	
 	@Column(name="CIDADE")
 	String cidade;
-	//TODO acrescentar o campo Bairro
+
 	@Column(name="UF", length=2 )
 	String uf;
 

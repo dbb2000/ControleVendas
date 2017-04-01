@@ -10,7 +10,7 @@
   </h:head>
    
   <h:body>
-       <h:form id="form">
+       <h:form id="form" onkeypress="if (event.keyCode == 13) { return false; }"> <!-- para evitar o Enter falso -->
 		   <p:growl id="msgs" showDetail="true"/>
 		 
 		   <p:dataTable id="revendedores" var="revendedor" value="#{revendedorBean.revendedores}" editable="true" style="margin-top:1px" widgetVar="revendedoresTable" multiViewState="true"
