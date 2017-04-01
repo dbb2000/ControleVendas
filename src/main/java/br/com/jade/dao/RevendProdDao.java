@@ -1,5 +1,6 @@
 package br.com.jade.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -81,6 +82,8 @@ public class RevendProdDao {
 		tx.begin();
 		
 		produto.setLocalidade(Localidade.LOJA.getLocalidade());
+		Produto prod = manager.merge(produto);
+		manager.persist(prod);
 		
 		tx.commit();
 		manager.close();
@@ -101,6 +104,23 @@ public class RevendProdDao {
 		tx.commit();
 		manager.close();
     }
+
+	public List<Produto> buscaLista(String apelido) {
+		List<Produto> lista = new ArrayList<>();
+		EntityManager manager = JpaUtil.getEntityManager();
+		EntityTransaction tx = manager.getTransaction();
+		tx.begin();
+		
+		Revendedor revendedor = manager.find(Revendedor.class, apelido);
+		
+		for(Produto produto : revendedor.getProdutos()){
+			lista.add(produto);
+		}
+		
+		tx.commit();
+		manager.close();
+		return lista;
+	}
 	
 	
 	
@@ -109,7 +129,7 @@ public class RevendProdDao {
 	
 	
 	
-	
+	//TODO Criar metodo para limpar a base.Definir aonde e quando isso vai rodar
 	
 	
 	
