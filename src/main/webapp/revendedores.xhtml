@@ -37,7 +37,9 @@
 		       </p:column>
 		       
 		       <p:column headerText="Total em Mercadorias" style="text-align:center" >
-					<h:outputText value="#{revendedor.totalMercadorias}" />
+					<h:outputText value="#{revendedor.totalMercadorias}">
+						<f:convertNumber type="currency" minFractionDigits="2" locale="pt_BR" />
+					</h:outputText>
 		       </p:column>
 		 
 				<p:column style="text-align: center">

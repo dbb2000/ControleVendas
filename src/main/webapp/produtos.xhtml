@@ -6,20 +6,48 @@
         template="main.xhtml">
 <ui:define name="source">
   <h:head>
-   
+   <script>
+   PrimeFaces.locales['pt'] = {  
+           closeText: 'Fechar',  
+           prevText: 'Anterior',  
+           nextText: 'Próximo',  
+           currentText: 'Começo',  
+           monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],  
+           monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun', 'Jul','Ago','Set','Out','Nov','Dez'],  
+           dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],  
+           dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'],  
+           dayNamesMin: ['D','S','T','Q','Q','S','S'],  
+           weekHeader: 'Semana',  
+           firstDay: 1,  
+           isRTL: false,  
+           showMonthAfterYear: false,  
+           yearSuffix: '',  
+           timeOnlyTitle: 'Só Horas',  
+           timeText: 'Tempo',  
+           hourText: 'Hora',  
+           minuteText: 'Minuto',  
+           secondText: 'Segundo',  
+           currentText: 'Data Atual',  
+           ampm: false,  
+           month: 'Mês',  
+           week: 'Semana',  
+           day: 'Dia',  
+           allDayText : 'Todo Dia'  
+       }; 
+   </script>
   </h:head>
    
   <h:body>
        <h:form id="form" onkeypress="if (event.keyCode == 13) { return false; }"> <!-- para evitar o Enter falso -->
 		   <p:growl id="msgs" showDetail="true"/>
 		 
-		   <p:dataTable id="produtos" var="produto" value="#{dtEditView.produtos}" editable="true" style="margin-top:1px" widgetVar="produtosTable" multiViewState="true"
+		   <p:dataTable id="produtos" var="produto" value="#{produtoBean.produtos}" editable="true" style="margin-top:1px" widgetVar="produtosTable" multiViewState="true"
 		   				rows="10"
                         paginator="true"
                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                         rowsPerPageTemplate="5,10,15"
                         paginatorPosition="bottom"                        
-                        emptyMessage="Nenhum produto encontrado." filteredValue="#{dtEditView.produtosFiltrados}">
+                        emptyMessage="Nenhum produto encontrado." filteredValue="#{produtoBean.produtosFiltrados}">
                     
                         
 		       <f:facet name="header">		           
@@ -29,17 +57,23 @@
             		</p:outputPanel>
             		
             		 <p:outputPanel style="text-align:left;width:100%">
-		                <p:inputText style="width:10%;color:gray" placeholder="Código" value="#{dtEditView.produto.codigo}" onfocus="this.style.backgroundColor = 'yellow';" />
-		                <p:inputText style="width:25%;color:gray" placeholder="Descrição" value="#{dtEditView.produto.descricao}" onfocus="this.style.backgroundColor = 'yellow';"/>
-		                <p:inputText style="width:10%;color:gray"  placeholder="Custo" value="#{dtEditView.produto.precoCusto}" onfocus="this.style.backgroundColor = 'yellow';"/>
-		                <p:inputText style="width:10%;color:gray"  placeholder="Custo efetivo" value="#{dtEditView.produto.precoCustoEfetivo}" onfocus="this.style.backgroundColor = 'yellow';"/>
-		                <p:inputText style="width:10%;color:gray"  placeholder="Preço venda" value="#{dtEditView.produto.precoVenda}" onfocus="this.style.backgroundColor = 'yellow';"/>
-		                <h:commandButton value="Salvar produto" type="submit"  action="#{dtEditView.gravar}" />
+		                <p:inputText style="width:10%;color:gray" placeholder="Código" value="#{produtoBean.produto.codigo}" onfocus="this.style.backgroundColor = 'yellow';" />
+		                <p:inputText style="width:25%;color:gray" placeholder="Descrição" value="#{produtoBean.produto.descricao}" onfocus="this.style.backgroundColor = 'yellow';"/>
+		                <p:inputText style="width:10%;color:gray"  placeholder="Custo" value="#{produtoBean.produto.precoCusto}" onfocus="this.style.backgroundColor = 'yellow';">
+		                	<f:convertNumber minFractionDigits="2" locale="pt_BR" />
+		                </p:inputText>
+		                <p:inputText style="width:10%;color:gray"  placeholder="Custo efetivo" value="#{produtoBean.produto.precoCustoEfetivo}" onfocus="this.style.backgroundColor = 'yellow';">
+		                	<f:convertNumber minFractionDigits="2" locale="pt_BR" />
+		                </p:inputText>
+		                <p:inputText style="width:10%;color:gray"  placeholder="Preço venda" value="#{produtoBean.produto.precoVenda}" onfocus="this.style.backgroundColor = 'yellow';">
+		                	<f:convertNumber minFractionDigits="2" locale="pt_BR" />
+		                </p:inputText>
+		                <h:commandButton value="Salvar produto" type="submit"  action="#{produtoBean.gravar}" />
             		</p:outputPanel>
 		       </f:facet>
 		 
-		       <p:ajax event="rowEdit" listener="#{dtEditView.onRowEdit}" update=":form:msgs" />
-		       <p:ajax event="rowEditCancel" listener="#{dtEditView.onRowCancel}" update=":form:msgs" />
+		       <p:ajax event="rowEdit" listener="#{produtoBean.onRowEdit}" update=":form:msgs" />
+		       <p:ajax event="rowEditCancel" listener="#{produtoBean.onRowCancel}" update=":form:msgs" />
 		       
 		       
 		       <p:column headerText="Id" style="width:5%" filterBy="#{produto.id}" filterable="false" sortBy="#{produto.id}" filterMatchMode="contains">
@@ -68,7 +102,7 @@
 		               <f:facet name="output"><h:outputText value="#{produto.localidade}"  /></f:facet>
 		               <f:facet name="input">
 		                   <h:selectOneMenu value="#{produto.localidade}" style="width:100%">
-		                       <f:selectItems value="#{dtEditView.localidades}" var="man" itemLabel="#{man}" itemValue="#{man}" />
+		                       <f:selectItems value="#{produtoBean.localidades}" var="man" itemLabel="#{man}" itemValue="#{man}" />
 		                   </h:selectOneMenu>
 		               </f:facet>
 		           </p:cellEditor>
@@ -76,22 +110,46 @@
 		       
 		       <p:column headerText="Unitário" style="width:5%;text-align:center" filterBy="#{produto.precoCusto}" filterable="false" filterMatchMode="contains">
 		           <p:cellEditor>
-		               <f:facet name="output"><h:outputText value="#{produto.precoCusto}" /></f:facet>
-		               <f:facet name="input"><p:inputText value="#{produto.precoCusto}" style="width:100%" label="unitario"/></f:facet>
+		               <f:facet name="output">
+		               		<h:outputText value="#{produto.precoCusto}">
+		               			<f:convertNumber minFractionDigits="2" locale="pt_BR" />
+		               		</h:outputText>
+		               </f:facet>
+		               <f:facet name="input">
+		               		<p:inputText value="#{produto.precoCusto}" style="width:100%" label="unitario">
+		               			<f:convertNumber minFractionDigits="2" locale="pt_BR"/>
+		               		</p:inputText>		               
+		               </f:facet>
 		           </p:cellEditor>
 		       </p:column>
 		       
 			   <p:column headerText="Total Efetivo" style="width:5%;text-align:center" filterBy="#{produto.precoCustoEfetivo}" filterable="false" filterMatchMode="contains">
 		           <p:cellEditor>
-		               <f:facet name="output"><h:outputText value="#{produto.precoCustoEfetivo}" /></f:facet>
-		               <f:facet name="input"><p:inputText value="#{produto.precoCustoEfetivo}" style="width:100%" label="efetivo"/></f:facet>
+		               <f:facet name="output">
+		               		<h:outputText value="#{produto.precoCustoEfetivo}">
+		               			<f:convertNumber minFractionDigits="2" locale="pt_BR" />
+		               		</h:outputText>
+		               </f:facet>
+		               <f:facet name="input">
+		               		<p:inputText value="#{produto.precoCustoEfetivo}" style="width:100%" label="efetivo">
+		               			<f:convertNumber minFractionDigits="2" locale="pt_BR" />
+		               		</p:inputText>
+		               </f:facet>
 		           </p:cellEditor>
 		       </p:column>
 		       
 		       <p:column headerText="Preço Venda" style="width:5%;text-align:center" filterBy="#{produto.precoVenda}" filterable="false" filterMatchMode="contains">
 		           <p:cellEditor>
-		               <f:facet name="output"><h:outputText value="#{produto.precoVenda}" /></f:facet>
-		               <f:facet name="input"><p:inputText value="#{produto.precoVenda}" style="width:100%" label="venda"/></f:facet>
+		               <f:facet name="output">
+		               		<h:outputText value="#{produto.precoVenda}">
+		               			<f:convertNumber minFractionDigits="2" locale="pt_BR" />
+		               		</h:outputText>
+		               </f:facet>
+		               <f:facet name="input">
+		               		<p:inputText value="#{produto.precoVenda}" style="width:100%" label="venda">
+		               			<f:convertNumber minFractionDigits="2" locale="pt_BR" />
+		               		</p:inputText>
+		               </f:facet>
 		           </p:cellEditor>
 		       </p:column>
 		 
@@ -100,7 +158,7 @@
 		               <f:facet name="output"><h:outputText value="#{produto.status}" /></f:facet>
 		               <f:facet name="input">
 		                   <h:selectOneMenu value="#{produto.status}" style="width:100%">
-		                       <f:selectItems value="#{dtEditView.todosStatus}" var="status" itemLabel="#{status}" itemValue="#{status}" />
+		                       <f:selectItems value="#{produtoBean.todosStatus}" var="status" itemLabel="#{status}" itemValue="#{status}" />
 		                   </h:selectOneMenu>
 		               </f:facet>
 		           </p:cellEditor>
@@ -111,7 +169,7 @@
 		               <f:facet name="output"><h:outputText value="#{produto.venda.formaPagamento}" /></f:facet>
 		               <f:facet name="input">
 		                   <h:selectOneMenu value="#{produto.venda.formaPagamento}" style="width:100%">
-		                       <f:selectItems value="#{dtEditView.modosVenda}" var="modoVenda" itemLabel="#{modo}" itemValue="#{modo}" />
+		                       <f:selectItems value="#{produtoBean.modosVenda}" var="modoVenda" itemLabel="#{modo}" itemValue="#{modo}" />
 		                   </h:selectOneMenu>
 		               </f:facet>
 		           </p:cellEditor>
@@ -125,7 +183,7 @@
 		               		</h:outputText> 
 		               </f:facet>
 		               <f:facet name="input">
-		               		<p:calendar id="effect" value="#{produto.venda.dataVenda}" effect="fold" pattern="dd/MM/yyyy"  />
+		               		<p:calendar id="effect" value="#{produto.venda.dataVenda}" effect="fold" pattern="dd/MM/yyyy" locale="pt"  />
 		               </f:facet>
 		           </p:cellEditor>
 		       </p:column>

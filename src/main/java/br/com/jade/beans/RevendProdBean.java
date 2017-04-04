@@ -110,20 +110,19 @@ public class RevendProdBean implements Serializable {
 	public void onRowEdit(RowEditEvent event) {
 		
 		Produto produto = (Produto) event.getObject();
-		
 		this.somaProdutos();
-		
 		revendProdDao.atualizar(produto, selectedRevendedor.getApelido());
 		
 		if(produto.getStatus().equals(Status.VENDIDO.getStatus())){
-	    	revendProdDao.removerProdutoVendido(selectedRevendedor, produto);
+	    	//revendProdDao.removerProdutoVendido(selectedRevendedor, produto);
 			this.selectedRevendedor.getProdutos().remove(produto);
 	    	this.somaProdutos();
 	    	revendProdDao.gravar(selectedRevendedor);
 		}
 		
-    	FacesMessage msg = new FacesMessage("Produto Editado", produto.getCodigo());
+    	FacesMessage msg = new FacesMessage("Produto Atualizado com sucesso", produto.getCodigo());
         FacesContext.getCurrentInstance().addMessage(null, msg);
+
         
     }
      
@@ -133,7 +132,7 @@ public class RevendProdBean implements Serializable {
     }
     
     public String atualizarPagina(){
-    	return null;
+    	return "cadProdReven";
     }
     
 
@@ -214,9 +213,7 @@ public class RevendProdBean implements Serializable {
 		this.produtosRevendedorFiltrados = produtosRevendedorFiltrados;
 	}
     
-    //FIXME adicionar o tratamento para produtosfiltados. deve sumir da tabela de disponíveis quando um filtro é usado
-	//FIXME fazer o mesmo no filtro de produtos do revendedor
-	//TODO adicionar codigo e descrição do produto como itens filtrados na tabela de disponíveis e revendedor
+
 	//TODO verificar a questão do @Inject
 	//TODO reimplementar o login. Pag 200 da apostila
 }

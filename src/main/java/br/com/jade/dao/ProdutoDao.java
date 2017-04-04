@@ -13,9 +13,11 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
 import br.com.jade.enums.Localidade;
+import br.com.jade.enums.ModoVenda;
 import br.com.jade.enums.Status;
 import br.com.jade.model.Custo;
 import br.com.jade.model.Produto;
+import br.com.jade.model.TaxaCartao;
 import br.com.jade.model.Venda;
 import br.com.jade.util.Calculos;
 import br.com.jade.util.JpaUtil;
@@ -42,13 +44,23 @@ public class ProdutoDao implements Serializable {
 		return produtos;
 	}
 	
-	public void atualizar(Produto produto){
+	public void atualizar(Produto produto, TaxaCartao taxas){
 		
 		EntityTransaction tx = manager.getTransaction();
 		tx.begin();
 		
 		if(produto.getStatus().equalsIgnoreCase(Status.VENDIDO.getStatus())){
-			produto.getVenda().setPrecoVenda(produto.getPrecoVenda());
+			
+			if(ModoVenda.DINHEIRO.getModoVenda().equalsIgnoreCase(produto.getVenda().getFormaPagamento())){
+				produto.getVenda().setPrecoVenda(produto.getPrecoVenda());
+			}else if (ModoVenda.CREDITO.getModoVenda().equalsIgnoreCase(produto.getVenda().getFormaPagamento())) {
+				produto.getVenda().setPrecoVenda(Calculos.calculaTaxaCartao(produto.getPrecoVenda(),
+																			taxas.getTaxaCredito()));
+			}else if (ModoVenda.DEBITO.getModoVenda().equalsIgnoreCase(produto.getVenda().getFormaPagamento())) {
+				produto.getVenda().setPrecoVenda(Calculos.calculaTaxaCartao(produto.getPrecoVenda(),
+																			taxas.getTaxaDebito()));
+			}
+			
 			produto.getVenda().setVendedor(Localidade.LOJA.getLocalidade());
 		}else {
 			produto.getVenda().setDataVenda(null);
@@ -121,6 +133,18 @@ public class ProdutoDao implements Serializable {
 			}
 		}
 
+	}
+
+	public TaxaCartao getTaxasMercadoLivre() {
+		
+		EntityTransaction tx = manager.getTransaction();
+		tx.begin();
+		
+		TaxaCartao taxas = manager.find(TaxaCartao.class, "Mercado Livre");
+		
+		tx.commit();
+		
+		return taxas;
 	}
 	
 

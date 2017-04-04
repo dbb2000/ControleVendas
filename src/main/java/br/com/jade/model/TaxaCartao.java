@@ -1,8 +1,9 @@
 package br.com.jade.model;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -12,28 +13,33 @@ public class TaxaCartao {
 
 	//TODO precisa calcular o desconto de taxas do cartão se a venda for cred ou deb
 	@Id
-	@GeneratedValue
-	@Column(name="ID")
-	Long id;
+	@Column(name="OPERADORA", unique=true, columnDefinition="VARCHAR(15)")
+	String operadora;
 	
 	@Column(name="TAXA_DEBITO")	
-	Long taxaDebito;
+	BigDecimal taxaDebito;
 	
 	@Column(name="TAXA_CREDITO")
-	Long taxaCredito;
+	BigDecimal taxaCredito;
 	
 	
-	public Long getTaxaDebito() {
+	public BigDecimal getTaxaDebito() {
 		return taxaDebito;
 	}
-	public void setTaxaDebito(Long taxaDebito) {
+	public void setTaxaDebito(BigDecimal taxaDebito) {
 		this.taxaDebito = taxaDebito;
 	}
-	public Long getTaxaCredito() {
+	public BigDecimal getTaxaCredito() {
 		return taxaCredito;
 	}
-	public void setTaxaCredito(Long taxaCredito) {
+	public void setTaxaCredito(BigDecimal taxaCredito) {
 		this.taxaCredito = taxaCredito;
+	}
+	public String getOperadora() {
+		return operadora;
+	}
+	public void setOperadora(String operadora) {
+		this.operadora = operadora;
 	}
 	
 	

@@ -15,8 +15,9 @@ import org.primefaces.event.RowEditEvent;
 
 import br.com.jade.dao.ProdutoDao;
 import br.com.jade.model.Produto;
+import br.com.jade.model.TaxaCartao;
  
-@ManagedBean(name="dtEditView")
+@ManagedBean
 @ViewScoped
 public class ProdutoBean implements Serializable {
      
@@ -29,6 +30,7 @@ public class ProdutoBean implements Serializable {
 	private List<Produto> produtos;	
 	private List<Produto> produtosFiltrados; 
 	private Produto produto = new Produto();
+	private TaxaCartao taxas;
          
 //    @ManagedProperty("#{produtoDao}")
     private ProdutoDao produtoDao = new ProdutoDao();
@@ -45,7 +47,7 @@ public class ProdutoBean implements Serializable {
     @PostConstruct()
     public void init() {
    		produtos = produtoDao.getProdutos();
-    		 
+   		taxas = produtoDao.getTaxasMercadoLivre();
     }
  
     public List<Produto> getProdutos() {
@@ -97,7 +99,7 @@ public class ProdutoBean implements Serializable {
     }
  
 	public void onRowEdit(RowEditEvent event) {
-    	produtoDao.atualizar((Produto) event.getObject());
+    	produtoDao.atualizar((Produto) event.getObject(), this.taxas);
         FacesMessage msg = new FacesMessage("Produto Editado", ((Produto) event.getObject()).getCodigo());
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }

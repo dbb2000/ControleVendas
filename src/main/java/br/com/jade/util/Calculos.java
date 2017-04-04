@@ -5,14 +5,15 @@ import java.math.RoundingMode;
 
 public class Calculos {
 
+	private static final BigDecimal NUMERO_CEM = new BigDecimal(100);
+	
 	public static BigDecimal calculaCustoEfetivo(int pecas, BigDecimal desconto, BigDecimal precoCusto, BigDecimal custoTotal){
 		
 		BigDecimal custoEfetivo = null;
 		BigDecimal custoPecaAdcional = custoTotal.divide(BigDecimal.valueOf(pecas), 2, RoundingMode.HALF_UP);
 		
 		if(desconto != null || desconto != BigDecimal.valueOf(0)){
-			BigDecimal cem = new BigDecimal(100);			
-			BigDecimal descontoDecimal  = desconto.divide(cem,2, RoundingMode.HALF_UP );
+			BigDecimal descontoDecimal  = desconto.divide(NUMERO_CEM,2, RoundingMode.HALF_UP );
 			BigDecimal valorDesconto = descontoDecimal.multiply(precoCusto);
 			BigDecimal precoComDesconto = precoCusto.subtract(valorDesconto);
 			custoEfetivo = custoPecaAdcional.add(precoComDesconto);
@@ -25,11 +26,16 @@ public class Calculos {
 	
 	public static BigDecimal calculaPrecoVenda(BigDecimal margemLucro, BigDecimal custoEfetivo){
 				
-		BigDecimal cem = new BigDecimal(100);
-		BigDecimal margemDecimal = margemLucro.divide(cem, 2, RoundingMode.HALF_UP);
+		BigDecimal margemDecimal = margemLucro.divide(NUMERO_CEM, 2, RoundingMode.HALF_UP);
 		BigDecimal lucro = margemDecimal.multiply(custoEfetivo);
 		
 		return custoEfetivo.add(lucro).setScale(2, RoundingMode.HALF_UP);
 		
+	}
+	
+	public static BigDecimal calculaTaxaCartao(BigDecimal valor, BigDecimal percentDesconto ){
+		
+		BigDecimal desconto = valor.divide(NUMERO_CEM).multiply(percentDesconto);			
+		return valor.subtract(desconto.setScale(2, RoundingMode.HALF_UP));
 	}
 }

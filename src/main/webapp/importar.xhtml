@@ -6,7 +6,35 @@
         template="main.xhtml">
 <ui:define name="source">
   <h:head>
-   
+   <script>
+   PrimeFaces.locales['pt'] = {  
+           closeText: 'Fechar',  
+           prevText: 'Anterior',  
+           nextText: 'Próximo',  
+           currentText: 'Começo',  
+           monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],  
+           monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun', 'Jul','Ago','Set','Out','Nov','Dez'],  
+           dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],  
+           dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'],  
+           dayNamesMin: ['D','S','T','Q','Q','S','S'],  
+           weekHeader: 'Semana',  
+           firstDay: 1,  
+           isRTL: false,  
+           showMonthAfterYear: false,  
+           yearSuffix: '',  
+           timeOnlyTitle: 'Só Horas',  
+           timeText: 'Tempo',  
+           hourText: 'Hora',  
+           minuteText: 'Minuto',  
+           secondText: 'Segundo',  
+           currentText: 'Data Atual',  
+           ampm: false,  
+           month: 'Mês',  
+           week: 'Semana',  
+           day: 'Dia',  
+           allDayText : 'Todo Dia'  
+       }; 
+   </script>
   </h:head>
    
   <h:body>
@@ -17,28 +45,39 @@
 			    </f:facet>
 						 
 				   	<h:outputText value="Data de compra:" />
-				    <p:calendar id="effect" value="#{fileUploadView.custo.dataCompra}" effect="fold" pattern="dd/MM/yyyy" onchange="submit()" valueChangeListener="#{fileUploadView.dataCompraChanged}" />
+				    <p:calendar id="effect" value="#{fileUploadView.custo.dataCompra}" effect="fold" pattern="dd/MM/yyyy" onchange="submit()" valueChangeListener="#{fileUploadView.dataCompraChanged}" locale="pt" />
 				 
 				    <h:outputText value="Desconto Recebido: (%)" />
 				    <h:inputText value="#{fileUploadView.custo.descontoRecebido}" onchange="submit()" valueChangeListener="#{fileUploadView.descontoChanged}"/>
-				 
+				    				 
 				    <h:outputText value="Combustível:" />
-				    <h:inputText value="#{fileUploadView.custo.combustivel}" onchange="submit()" valueChangeListener="#{fileUploadView.combustivelChanged}"/>
+				    <h:inputText value="#{fileUploadView.custo.combustivel}" onchange="submit()" valueChangeListener="#{fileUploadView.combustivelChanged}">
+				    	<f:convertNumber minFractionDigits="2" locale="pt_BR" />
+				    </h:inputText>
 				 
 					<h:outputText value="Pedágio:" />
-			   		<h:inputText value="#{fileUploadView.custo.pedagio}" onchange="submit()" valueChangeListener="#{fileUploadView.pedagioChanged}"/>
+			   		<h:inputText value="#{fileUploadView.custo.pedagio}" onchange="submit()" valueChangeListener="#{fileUploadView.pedagioChanged}">
+			   			<f:convertNumber minFractionDigits="2" locale="pt_BR" />
+			   		</h:inputText>
 			   		
 			   		<h:outputText value="Frete:" />
-			    	<h:inputText value="#{fileUploadView.custo.frete}" onchange="submit()" valueChangeListener="#{fileUploadView.freteChanged}" />
+			    	<h:inputText value="#{fileUploadView.custo.frete}" onchange="submit()" valueChangeListener="#{fileUploadView.freteChanged}">
+			    		<f:convertNumber minFractionDigits="2" locale="pt_BR" />
+			    	</h:inputText>
 			    	
 			    	<h:outputText value="Outros:" />
-				    <h:inputText value="#{fileUploadView.custo.outros}" onchange="submit()" valueChangeListener="#{fileUploadView.outrosChanged}"/>
+				    <h:inputText value="#{fileUploadView.custo.outros}" onchange="submit()" valueChangeListener="#{fileUploadView.outrosChanged}">
+				    	<f:convertNumber minFractionDigits="2" locale="pt_BR" />
+				    </h:inputText>
 				    
 				    <h:outputText value="Margem de lucro desejada: (%)" />
 				    <h:inputText value="#{fileUploadView.margemLucro}" onchange="submit()" valueChangeListener="#{fileUploadView.margemChanged}"/>
+				    
 			    	
 			 		<h:outputText value="Custo Total:" />
-				    <h:outputText id="soma" value="R$ #{fileUploadView.custo.custoTotal}"/>
+				    <h:outputText id="soma" value="#{fileUploadView.custo.custoTotal}">
+				    	<f:convertNumber minFractionDigits="2" type="currency" locale="pt_BR" />
+				    </h:outputText>
 			    	
 			    	<f:facet name="footer">
 			    		<h:commandButton value="Salvar custo" type="submit"  action="#{fileUploadView.gravarCusto}" style="float:right;"/>

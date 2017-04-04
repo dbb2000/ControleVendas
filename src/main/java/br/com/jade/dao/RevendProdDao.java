@@ -8,6 +8,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
 import br.com.jade.enums.Localidade;
+import br.com.jade.enums.ModoVenda;
 import br.com.jade.enums.Status;
 import br.com.jade.model.Produto;
 import br.com.jade.model.Revendedor;
@@ -45,6 +46,7 @@ public class RevendProdDao {
 		
 		if(prod.getStatus().equalsIgnoreCase(Status.VENDIDO.getStatus())){
 			prod.getVenda().setPrecoVenda(prod.getPrecoVenda());
+			prod.getVenda().setFormaPagamento(ModoVenda.DINHEIRO.getModoVenda());
 			prod.getVenda().setVendedor(apelido);
 		}else {
 			prod.getVenda().setDataVenda(null);
@@ -123,12 +125,7 @@ public class RevendProdDao {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
+	//TODO mudar o menu de opções para uma barra horizontal na parte superior
 	//TODO Criar metodo para limpar a base.Definir aonde e quando isso vai rodar
 	
 	

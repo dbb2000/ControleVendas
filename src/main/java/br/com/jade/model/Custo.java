@@ -44,9 +44,6 @@ public class Custo {
 	
 	@Column(name="CUSTO_TOTAL")
 	BigDecimal custoTotal;
-	
-	@Column(name="ADICIONAL_PECA")
-	Long adicionalPeca;
 
 
 	public Date getDataCompra() {
@@ -111,14 +108,6 @@ public class Custo {
 
 	public void setCustoTotal(BigDecimal custoTotal) {
 		this.custoTotal = custoTotal;
-	}
-
-	public Long getAdicionalPeca() {
-		return adicionalPeca;
-	}
-
-	public void setAdicionalPeca(Long adicionalPeca) {
-		this.adicionalPeca = adicionalPeca;
 	}
 
 	public Long getId() {

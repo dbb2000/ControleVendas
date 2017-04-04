@@ -165,8 +165,4 @@ public class Produto {
 		return true;
 	}
 	
-	
-
-	//TODO consertar a notação de ponto para virgula nas casas de centavos
-	
 }

@@ -9,7 +9,35 @@
    
   </h:head>   
 	  <h:body>
-	  
+	  <script>
+		   PrimeFaces.locales['pt'] = {  
+		           closeText: 'Fechar',  
+		           prevText: 'Anterior',  
+		           nextText: 'Próximo',  
+		           currentText: 'Começo',  
+		           monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],  
+		           monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun', 'Jul','Ago','Set','Out','Nov','Dez'],  
+		           dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],  
+		           dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'],  
+		           dayNamesMin: ['D','S','T','Q','Q','S','S'],  
+		           weekHeader: 'Semana',  
+		           firstDay: 1,  
+		           isRTL: false,  
+		           showMonthAfterYear: false,  
+		           yearSuffix: '',  
+		           timeOnlyTitle: 'Só Horas',  
+		           timeText: 'Tempo',  
+		           hourText: 'Hora',  
+		           minuteText: 'Minuto',  
+		           secondText: 'Segundo',  
+		           currentText: 'Data Atual',  
+		           ampm: false,  
+		           month: 'Mês',  
+		           week: 'Semana',  
+		           day: 'Dia',  
+		           allDayText : 'Todo Dia'  
+		       }; 
+   </script>
 	  <script type="text/javascript">
     	function handleDrop(event, ui) {
         var droppedCar = ui.draggable;
@@ -18,7 +46,7 @@
     	}
 	  </script>
 	  
-	  <h:form id="prodRevenForm" onkeypress="if (event.keyCode == 13) { return false; }"> <!-- para evitar o Enter falso -->>
+	  <h:form id="prodRevenForm" onkeypress="if (event.keyCode == 13) { return false; }"> <!-- para evitar o Enter falso -->
 	  	
 	  	<p:growl id="msgs" showDetail="true"/>
 	    <p:fieldset id="availableProdutosField" legend="Produtos disponíveis">
@@ -47,14 +75,16 @@
 	            <p:column style="width:6%" headerText="Id" filterBy="#{produto.id}" filterable="false" sortBy="#{produto.id}" filterMatchMode="contains">
 	                <h:outputText value="#{produto.id}" />
 	            </p:column>
-	            <p:column style="width:11%" headerText="Código">
+	            <p:column style="width:11%" headerText="Código" filterBy="#{produto.codigo}" filterable="false" filterMatchMode="contains">
 	                <h:outputText value="#{produto.codigo}" />
 	            </p:column>
-	            <p:column headerText="Descrição do produto">
+	            <p:column headerText="Descrição do produto" filterBy="#{produto.descricao}" filterable="false" filterMatchMode="contains">
 	                <h:outputText value="#{produto.descricao}" />
 	            </p:column>
-	            <p:column style="width:6%" headerText="Preço Venda">
-	                <h:outputText value="#{produto.precoVenda}" />
+	            <p:column style="width:8%;text-align:center" headerText="Preço Venda">
+	                <h:outputText value="#{produto.precoVenda}">
+	                	<f:convertNumber minFractionDigits="2" locale="pt_BR" />
+	                </h:outputText>
 	            </p:column>
 	        </p:dataTable>
 	    </p:fieldset>
@@ -77,7 +107,9 @@
 
              	<f:facet name="header">		      
              		<p:panelGrid columns="2" style="text-align:left">     
-             		<h:outputText value="Total: R$ #{revendProdBean.selectedRevendedor.totalMercadorias}"></h:outputText>
+             		<h:outputText title="Total em mercadorias" value="#{revendProdBean.selectedRevendedor.totalMercadorias}">
+             			<f:convertNumber type="currency" minFractionDigits="2" locale="pt_BR" />
+             		</h:outputText>
 		            <p:outputPanel style="text-align:right" >		            	
 		                <h:outputText value="Procurar: " />
 		                <p:inputText id="globalFilter" onkeyup="PF('produtosRevendTable').filter()" style="width:150px" placeholder="Digite Palavra..."/>
@@ -116,8 +148,16 @@
 	 
 		       <p:column headerText="Preço Venda" style="width:5%;text-align:center" filterBy="#{produto.precoVenda}" filterable="false" filterMatchMode="contains">
 		           <p:cellEditor>
-		               <f:facet name="output"><h:outputText value="#{produto.precoVenda}" /></f:facet>
-		               <f:facet name="input"><p:inputText value="#{produto.precoVenda}" style="width:100%" label="venda"/></f:facet>
+		               <f:facet name="output">
+		               		<h:outputText value="#{produto.precoVenda}">
+		               			<f:convertNumber minFractionDigits="2" locale="pt_BR" />
+		               		</h:outputText>
+		               </f:facet>
+		               <f:facet name="input">
+		               		<p:inputText value="#{produto.precoVenda}" style="width:100%" label="venda">
+		               			<f:convertNumber minFractionDigits="2" locale="pt_BR" />
+		               		</p:inputText>
+		               </f:facet>
 		           </p:cellEditor>
 		       </p:column>
 		       
@@ -132,16 +172,16 @@
 		           </p:cellEditor>
 		       </p:column>
 		       
-		       <p:column headerText="Modo Venda" style="width:6%;text-align:center" filterBy="#{produto.venda.formaPagamento}" filterable="false" filterMatchMode="contains">
-		           <p:cellEditor>
-		               <f:facet name="output"><h:outputText value="#{produto.venda.formaPagamento}" /></f:facet>
-		               <f:facet name="input">
-		                   <h:selectOneMenu value="#{produto.venda.formaPagamento}" style="width:100%">
-		                       <f:selectItems value="#{revendProdBean.modosVenda}" var="modoVenda" itemLabel="#{modo}" itemValue="#{modo}" />
-		                   </h:selectOneMenu>
-		               </f:facet>
-		           </p:cellEditor>
-		       </p:column>
+<!-- 		       <p:column headerText="Modo Venda" style="width:6%;text-align:center" filterBy="#{produto.venda.formaPagamento}" filterable="false" filterMatchMode="contains"> -->
+<!-- 		           <p:cellEditor> -->
+<!-- 		               <f:facet name="output"><h:outputText value="#{produto.venda.formaPagamento}" /></f:facet> -->
+<!-- 		               <f:facet name="input"> -->
+<!-- 		                   <h:selectOneMenu value="#{produto.venda.formaPagamento}" style="width:100%"> -->
+<!-- 		                       <f:selectItems value="#{revendProdBean.modosVenda}" var="modoVenda" itemLabel="#{modo}" itemValue="#{modo}" /> -->
+<!-- 		                   </h:selectOneMenu> -->
+<!-- 		               </f:facet> -->
+<!-- 		           </p:cellEditor> -->
+<!-- 		       </p:column> -->
 		       
 		       <p:column headerText="Data" style="width:7%;text-align:center" filterBy="#{produto.venda.dataVenda}" filterable="false" filterMatchMode="contains">
 		           <p:cellEditor>
@@ -151,7 +191,7 @@
 		               		</h:outputText> 
 		               </f:facet>
 		               <f:facet name="input">
-		               		<p:calendar id="effect" value="#{produto.venda.dataVenda}" effect="fold" pattern="dd/MM/yyyy"  />
+		               		<p:calendar id="effect" value="#{produto.venda.dataVenda}" effect="fold" pattern="dd/MM/yyyy" locale="pt" />
 		               </f:facet>
 		           </p:cellEditor>
 		       </p:column>
