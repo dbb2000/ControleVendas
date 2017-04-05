@@ -117,7 +117,7 @@
             		</p:panelGrid>
 		       	</f:facet>                 
 				
-				<p:ajax event="rowEdit" listener="#{revendProdBean.onRowEdit}" update="selectedProdutoTable"  />
+				<p:ajax event="rowEdit" listener="#{revendProdBean.onRowEdit}" update=":prodRevenForm:msgs"/>
 		       	<p:ajax event="rowEditCancel" listener="#{revendProdBean.onRowCancel}" update=":prodRevenForm:msgs" />
 		       		                        
 	            <p:column style="width:3%">
@@ -203,14 +203,15 @@
 	            </p:dataTable>
 	        </p:outputPanel>
 	    </p:fieldset>
-	    <h:commandButton value="Salvar produtos para #{revendProdBean.selectedRevendedor.apelido}" style="float:right;" type="submit"  action="#{revendProdBean.gravar}"/>
+	    <h:commandButton value="Salvar produtos para #{revendProdBean.selectedRevendedor.apelido}" style="float:right;" type="submit"  
+	    						action="#{revendProdBean.gravar}" onclick="PF('produtosRevendTable').clearFilters()" />
 	 
 	    <p:droppable for="selectedProdutos" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="availableProdutos" onDrop="handleDrop">
-	        <p:ajax listener="#{revendProdBean.onRevendedorDrop}" update="dropArea availableProdutos" />
+	        <p:ajax listener="#{revendProdBean.onRevendedorDrop}" update="dropArea selectedProdutoTable availableProdutos" />
 	    </p:droppable>
 	    
 	    <p:droppable for="availableProdutosField" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="selectedProdutoTable" onDrop="handleDrop">
-	        <p:ajax listener="#{revendProdBean.onListaProdutosDrop}" update="dropArea availableProdutos" />
+	        <p:ajax listener="#{revendProdBean.onListaProdutosDrop}" update="dropArea selectedProdutoTable availableProdutos" />
 	    </p:droppable>	    
 
 	</h:form>
