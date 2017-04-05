@@ -204,10 +204,10 @@
 	        </p:outputPanel>
 	    </p:fieldset>
 	    <h:commandButton value="Salvar produtos para #{revendProdBean.selectedRevendedor.apelido}" style="float:right;" type="submit"  
-	    						action="#{revendProdBean.gravar}" onclick="PF('produtosRevendTable').clearFilters()" />
+	    						action="#{revendProdBean.gravar}" />
 	 
 	    <p:droppable for="selectedProdutos" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="availableProdutos" onDrop="handleDrop">
-	        <p:ajax listener="#{revendProdBean.onRevendedorDrop}" update="dropArea selectedProdutoTable availableProdutos" />
+	        <p:ajax listener="#{revendProdBean.onRevendedorDrop}" update="selectedProdutoTable dropArea availableProdutos" />
 	    </p:droppable>
 	    
 	    <p:droppable for="availableProdutosField" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="selectedProdutoTable" onDrop="handleDrop">

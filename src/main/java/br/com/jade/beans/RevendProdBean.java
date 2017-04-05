@@ -11,6 +11,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.DragDropEvent;
 import org.primefaces.event.RowEditEvent;
 
@@ -29,8 +30,6 @@ public class RevendProdBean implements Serializable {
 	private List<Produto> produtos;	
 	private List<Produto> produtosFiltrados;
 	private List<Produto> produtosRevendedorFiltrados;
-	
-
 	private RevendProdDao revendProdDao = new RevendProdDao();
 	
     @ManagedProperty("#{modoVendaBean}")
@@ -46,10 +45,9 @@ public class RevendProdBean implements Serializable {
     public String onLoad() {
     	this.produtos = null;
     	this.selectedRevendedor.setProdutos(null);
-    	
+    	this.limpaWidgetVar();    	
     	this.produtos = revendProdDao.getProdutos();
     	this.selectedRevendedor.setProdutos(revendProdDao.buscaLista(selectedRevendedor.getApelido()));
-    	
     	
         return "cadProdReven";        
     }
@@ -59,8 +57,7 @@ public class RevendProdBean implements Serializable {
     	BigDecimal total = new BigDecimal(0);
     	
     	for(Produto produto : selectedRevendedor.getProdutos()){
-    		total = total.add(produto.getPrecoVenda());
-    		
+    		total = total.add(produto.getPrecoVenda());    		
     	}    	
     	selectedRevendedor.setTotalMercadorias(total);
     }
@@ -73,18 +70,16 @@ public class RevendProdBean implements Serializable {
         if( produtosFiltrados != null ){
         	produtosFiltrados.remove(produto);
         	//produtosFiltrados = null;
-
         }
         
-        if(produtosRevendedorFiltrados != null){
-        	produtosRevendedorFiltrados = null;
-
-        }
+//        if(produtosRevendedorFiltrados != null){
+//        	produtosRevendedorFiltrados = null;
+//
+//        }
+    	this.limpaWidgetVar();
         
         this.selectedRevendedor.getProdutos().add(produto);
         this.somaProdutos();
-
-        
     }
     
     public void onListaProdutosDrop(DragDropEvent ddEvent) {
@@ -103,9 +98,7 @@ public class RevendProdBean implements Serializable {
         
         revendProdDao.atualizaStatus(produto);
         this.produtos.add(produto);        
-        this.somaProdutos();
-
-        
+        this.somaProdutos();        
     }
     
 	public void onRowEdit(RowEditEvent event) {
@@ -122,9 +115,7 @@ public class RevendProdBean implements Serializable {
 		//}
 		
     	FacesMessage msg = new FacesMessage("Produto Atualizado com sucesso", produto.getCodigo());
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-
-        
+        FacesContext.getCurrentInstance().addMessage(null, msg);        
     }
      
     public void onRowCancel(RowEditEvent event) {
@@ -132,16 +123,13 @@ public class RevendProdBean implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
     
-    public String atualizarPagina(){
-    	return "cadProdReven";
-    }
-    
-
-    
     public String gravar(){
     	this.removerProdutosVendidos();
     	this.somaProdutos();
     	revendProdDao.gravar(selectedRevendedor);
+    	
+    	this.limpaWidgetVar();
+    	    	
     	FacesContext context = FacesContext.getCurrentInstance();
     	FacesMessage mensagem = new FacesMessage(
     	FacesMessage.SEVERITY_INFO, "Produtos atribuídos.",
@@ -160,11 +148,18 @@ public class RevendProdBean implements Serializable {
 			if(Status.DISPONIVEL.getStatus().equalsIgnoreCase(produto.getStatus())){
 				listaDisponiveis.add(produto);
 			}
-		}
-		
+		}		
 		selectedRevendedor.getProdutos().clear();
-		selectedRevendedor.setProdutos(listaDisponiveis);
-		
+		selectedRevendedor.setProdutos(listaDisponiveis);		
+	}
+	
+	/**
+	 * limpa as variáveis widgetvar da tela quando o filtro de pesquisa é aplicado
+	 */
+	private void limpaWidgetVar(){
+		RequestContext requestContext = RequestContext.getCurrentInstance();
+   	 	requestContext.execute("PF('produtosTable').clearFilters()");
+   	 	requestContext.execute("PF('produtosRevendTable').clearFilters()");
 	}
 
 	public Revendedor getSelectedRevendedor() {
