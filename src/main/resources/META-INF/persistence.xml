@@ -31,22 +31,11 @@
 <!--                     <property name="hibernate.hbm2ddl.auto" value="update" /> -->
 			
 <!-- 					Heroku Postgresql PRODUÇÃO -->
-<!-- 					<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" /> -->
-<!-- 					<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://ec2-54-163-224-108.compute-1.amazonaws.com:5432/d9ugvsm68g76i4" ></property> -->
-<!-- 					<property name="javax.persistence.jdbc.user" value="wmydavripswuvh" /> -->
-<!-- 					<property name="javax.persistence.jdbc.password" value="ed6fe913a2b30abfa392bce9a27768c64acbb3b2e0b1f3dfeaae17f2f2c4afbf"  /> -->
-<!-- 					<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://172.31.8.223:5432/vendas" ></property> -->
-<!-- 					<property name="javax.persistence.jdbc.user" value="davi" /> -->
-<!-- 					<property name="javax.persistence.jdbc.password" value="davi1980"  /> -->
-<!-- 					<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" /> -->
-<!-- 					<property name="hibernate.connection.shutdown" value="true" /> -->
-<!-- 					<property name="hibernate.hbm2ddl.auto" value="update" /> -->
-<!-- 					<property name="hibernate.show_sql" value="true" /> -->
-<!-- 					<property name="hibernate.format_sql" value="true"/> -->
-										
-<!-- 					Openshift Postgresql HOMOLOGAÇÃO -->
 					<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
-					<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://172.30.67.24:5432/vendas" ></property>
+					<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://ec2-54-163-224-108.compute-1.amazonaws.com:5432/d9ugvsm68g76i4" ></property>
+					<property name="javax.persistence.jdbc.user" value="wmydavripswuvh" />
+					<property name="javax.persistence.jdbc.password" value="ed6fe913a2b30abfa392bce9a27768c64acbb3b2e0b1f3dfeaae17f2f2c4afbf"  />
+					<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://172.31.8.223:5432/vendas" ></property>
 					<property name="javax.persistence.jdbc.user" value="davi" />
 					<property name="javax.persistence.jdbc.password" value="davi1980"  />
 					<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
@@ -54,6 +43,17 @@
 					<property name="hibernate.hbm2ddl.auto" value="update" />
 					<property name="hibernate.show_sql" value="true" />
 					<property name="hibernate.format_sql" value="true"/>
+										
+<!-- 					Openshift Postgresql HOMOLOGAÇÃO -->
+<!-- 					<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" /> -->
+<!-- 					<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://172.30.67.24:5432/vendas" ></property> -->
+<!-- 					<property name="javax.persistence.jdbc.user" value="davi" /> -->
+<!-- 					<property name="javax.persistence.jdbc.password" value="davi1980"  /> -->
+<!-- 					<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" /> -->
+<!-- 					<property name="hibernate.connection.shutdown" value="true" /> -->
+<!-- 					<property name="hibernate.hbm2ddl.auto" value="update" /> -->
+<!-- 					<property name="hibernate.show_sql" value="true" /> -->
+<!-- 					<property name="hibernate.format_sql" value="true"/> -->
 <!-- 					Essas duas abaixo são uma correção para a lentidão do Postgresql -->
 <!-- 					<property name="hibernate.jdbc.use_get_generated_keys" value="true" /> -->
 <!-- 					<property name="hibernate.temp.use_jdbc_metadata_defaults" value="false" /> -->
