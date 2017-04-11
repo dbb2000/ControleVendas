@@ -11,7 +11,6 @@ import javax.persistence.Table;
 @Table(name = "TAXA_CARTAO")
 public class TaxaCartao {
 
-	//TODO precisa calcular o desconto de taxas do cartão se a venda for cred ou deb
 	@Id
 	@Column(name="OPERADORA", unique=true, columnDefinition="VARCHAR(15)")
 	String operadora;
@@ -42,5 +41,5 @@ public class TaxaCartao {
 		this.operadora = operadora;
 	}
 	
-	
+	//TODO validar cpf: http://www.devmedia.com.br/validando-o-cpf-em-uma-aplicacao-java/22097
 }

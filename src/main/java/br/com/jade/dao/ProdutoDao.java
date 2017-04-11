@@ -102,23 +102,31 @@ public class ProdutoDao implements Serializable {
 				
 				// campo[0] = código
 				// campo[1] = descrição
-				// campo[2] = preço de custo
+				// campo[2] = qtde de peças
+				// campo[3] = preço de custo
 				String[] campos = line.split(";");
+				int qtde = Integer.parseInt(campos[2]);
 				
-				BigDecimal custoEfetivo = Calculos.calculaCustoEfetivo(totalProdutos, custo.getDescontoRecebido(), new BigDecimal(campos[2]), custo.getCustoTotal());
-				BigDecimal precoVenda = Calculos.calculaPrecoVenda(margemLucro, custoEfetivo);
-				
-				Produto produto = new Produto();
-				produto.setCodigo(campos[0]);
-				produto.setDescricao(campos[1]);
-				
-				produto.setPrecoCusto(new BigDecimal(campos[2]));
-				produto.setPrecoCustoEfetivo(custoEfetivo);
-				produto.setPrecoVenda(precoVenda);				
-				produto.setDataEntrada(custo.getDataCompra());
-				produto.setCusto(custo);
-	
-				gravar(produto);			
+				for( int cont = 1 ; cont <= qtde; cont++){
+					
+					String precoConvertido = campos[3].replace(',', '.'); //conversão notação de virgula para ponto
+					
+					BigDecimal custoEfetivo = Calculos.calculaCustoEfetivo(totalProdutos, custo.getDescontoRecebido(), new BigDecimal(precoConvertido), custo.getCustoTotal());
+					BigDecimal precoVenda = Calculos.calculaPrecoVenda(margemLucro, custoEfetivo);
+					
+					Produto produto = new Produto();
+					produto.setCodigo(campos[0]);
+					produto.setDescricao(campos[1]);
+					
+					produto.setPrecoCusto(new BigDecimal(precoConvertido));
+					produto.setPrecoCustoEfetivo(custoEfetivo);
+					produto.setPrecoVenda(precoVenda);				
+					produto.setDataEntrada(custo.getDataCompra());
+					produto.setCusto(custo);
+		
+					gravar(produto);
+				}
+							
 			}
 
 		} catch (IOException e) {
