@@ -1,11 +1,10 @@
 package br.com.jade.beans;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.LineNumberReader;
-import java.io.Reader;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -161,14 +160,19 @@ public class FileUploadView implements Serializable {
     
 	private int contarLinhas (InputStream file) throws IOException{
 		
+		BufferedReader br = null;
+		String line;
 		int numberOfLines = 0;
 
 		try {
-			Reader fr = new InputStreamReader(file);
-			LineNumberReader lnr = new LineNumberReader(fr);
-			lnr.skip(Long.MAX_VALUE);
-			numberOfLines = lnr.getLineNumber();
-
+			
+			br = new BufferedReader(new InputStreamReader(file));
+			while ((line = br.readLine()) != null) {
+				
+				String[] campos = line.split(";");				
+				int qtde = Integer.parseInt(campos[2]);				
+				numberOfLines = numberOfLines + qtde;				
+			}
 		}
 		catch (Exception e){ 
 			System.out.println(e); 
