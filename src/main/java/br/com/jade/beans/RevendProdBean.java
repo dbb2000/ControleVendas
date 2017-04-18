@@ -169,11 +169,14 @@ public class RevendProdBean implements Serializable {
 	}
 	
 	public String imprimeRelatorio() throws FileNotFoundException, ClassNotFoundException, SQLException{
-		String relat = "resources/jasper/report1.jrxml";		
+		String relat = "resources/jasper/report1.jrxml";
+		//preciso pegar o caminho do logo que compõe o relatório
+		String absolutePath= FacesContext.getCurrentInstance().getExternalContext().getRealPath("resources/images/logo.png");
 		Connection conexao = revendProdDao.getConnection();		
 		Map<String, Object> parametros = new HashMap<>();
 		
-		parametros.put("revendedor", selectedRevendedor.getApelido());		
+		parametros.put("revendedor", selectedRevendedor.getApelido());
+		parametros.put("logo", absolutePath);
 		GeradorDeRelatorios gerador = new GeradorDeRelatorios(conexao);
 		
 		gerador.geraPdf(relat, parametros);

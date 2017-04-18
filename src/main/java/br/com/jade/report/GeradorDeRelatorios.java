@@ -29,7 +29,7 @@ public class GeradorDeRelatorios {
 
             // preenche relatorio
             JasperPrint print = JasperFillManager.fillReport(jasper, parametros, this.conexao);
-            JasperViewer.viewReport(print, false); // exibe na tela para impressão ou salvar (melhor solução
+            JasperViewer.viewReport(print, false); // exibe na tela para impressão ou salvar (melhor solução)
             
 //             exporta para pdf (não preciso agora mas vou deixar comentado
 //            JRExporter exporter = new JRPdfExporter();
