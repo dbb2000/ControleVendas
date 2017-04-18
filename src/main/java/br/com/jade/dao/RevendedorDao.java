@@ -9,8 +9,6 @@ import javax.persistence.TypedQuery;
 import br.com.jade.model.Revendedor;
 import br.com.jade.util.JpaUtil;
 
-//@ManagedBean(name = "revendedorDao")
-//@RequestScoped
 public class RevendedorDao {
 
 	private EntityManager manager = JpaUtil.getEntityManager();

@@ -1,8 +1,6 @@
 package br.com.jade.beans;
 
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -171,16 +169,14 @@ public class RevendProdBean implements Serializable {
 	}
 	
 	public String imprimeRelatorio() throws FileNotFoundException, ClassNotFoundException, SQLException{
-		String relat = "resources/jasper/report1.jrxml";
-		
-		Connection conexao = revendProdDao.getConnection();
-		
+		String relat = "resources/jasper/report1.jrxml";		
+		Connection conexao = revendProdDao.getConnection();		
 		Map<String, Object> parametros = new HashMap<>();
-		parametros.put("revendedor", selectedRevendedor.getApelido() );		
-		OutputStream saida = new FileOutputStream("/home/davi/Desktop/report.pdf");		
+		
+		parametros.put("revendedor", selectedRevendedor.getApelido());		
 		GeradorDeRelatorios gerador = new GeradorDeRelatorios(conexao);
 		
-		gerador.geraPdf(relat, parametros, saida);
+		gerador.geraPdf(relat, parametros);
 		conexao.close();
 		return null;
 	}

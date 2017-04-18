@@ -19,13 +19,8 @@ import br.com.jade.model.Revendedor;
 import br.com.jade.model.Venda;
 import br.com.jade.util.JpaUtil;
 
-//@ManagedBean(name = "revendProdDao")
-//@SessionScoped
 public class RevendProdDao {
 	
-	
-
-
 	
 	public List<Produto> getProdutos() {
 		EntityManager manager = JpaUtil.getEntityManager();
@@ -45,6 +40,7 @@ public class RevendProdDao {
 		EntityManager manager = JpaUtil.getEntityManager();
 		EntityTransaction tx = manager.getTransaction();
 		tx.begin();
+		@SuppressWarnings("unused")
 		Venda venda  = manager.merge(produto.getVenda());
 		Produto prod = manager.merge(produto);
 		

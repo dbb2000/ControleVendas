@@ -1,15 +1,11 @@
 package br.com.jade.dao;
 
-import javax.faces.bean.ApplicationScoped;
-import javax.faces.bean.ManagedBean;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import br.com.jade.model.Custo;
 import br.com.jade.util.JpaUtil;
 
-//@ManagedBean(name = "custoDao")
-//@ApplicationScoped
 public class CustoDao {
 
 	private EntityManager manager = JpaUtil.getEntityManager();
