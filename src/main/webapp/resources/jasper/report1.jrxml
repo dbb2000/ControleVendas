@@ -120,6 +120,7 @@ where rp.revendedor_apelido=$P{revendedor};]]>
 	<parameter name="revendedor" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="logo" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select *, (select count(*) as qtde_prod from revendedor_produto where revendedor_apelido=$P{revendedor}) from revendedor where apelido=$P{revendedor};]]>
 	</queryString>
@@ -168,7 +169,7 @@ where rp.revendedor_apelido=$P{revendedor};]]>
 			</frame>
 			<image>
 				<reportElement x="0" y="1" width="119" height="74" uuid="b364bd24-e04a-4a88-9ef0-b71f3ac02e81"/>
-				<imageExpression><![CDATA["/home/davi/Desktop/controle-vendas/logo.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 			</image>
 			<textField pattern="dd/MM/yyyy">
 				<reportElement x="431" y="15" width="124" height="15" uuid="3653ca9b-eedc-4a27-97dd-6a760e1d8fc2"/>
