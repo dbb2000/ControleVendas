@@ -1,11 +1,15 @@
 package br.com.jade.dao;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
+
+import org.hibernate.Session;
+import org.hibernate.internal.SessionImpl;
 
 import br.com.jade.enums.Localidade;
 import br.com.jade.enums.ModoVenda;
@@ -122,6 +126,16 @@ public class RevendProdDao {
 		tx.commit();
 		manager.close();
 		return lista;
+	}
+	
+	public Connection getConnection(){
+		
+		EntityManager manager = JpaUtil.getEntityManager();		
+		Session session = manager.unwrap(Session.class);
+		SessionImpl sessionImpl = (SessionImpl) session;		
+		Connection connection = sessionImpl.connection();
+
+		return connection;
 	}
 	
 	

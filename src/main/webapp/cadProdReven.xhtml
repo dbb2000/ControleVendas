@@ -203,8 +203,14 @@
 	            </p:dataTable>
 	        </p:outputPanel>
 	    </p:fieldset>
-	    <h:commandButton value="Salvar produtos para #{revendProdBean.selectedRevendedor.apelido}" style="float:right;" type="submit"  
+	    
+	    <p:panelGrid columns="2" layout="grid">
+	    	<h:commandButton value="imprime lista" style="float:left;" action="#{revendProdBean.imprimeRelatorio}" />
+	    
+	    	<h:commandButton value="Salvar produtos para #{revendProdBean.selectedRevendedor.apelido}" style="float:right;" type="submit"  
 	    						action="#{revendProdBean.gravar}" />
+	    </p:panelGrid>
+	    
 	 
 	    <p:droppable for="selectedProdutos" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="availableProdutos" onDrop="handleDrop">
 	        <p:ajax listener="#{revendProdBean.onRevendedorDrop}" update="selectedProdutoTable dropArea availableProdutos" />
