@@ -1,9 +1,14 @@
 package br.com.jade.beans;
 
+import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -19,6 +24,7 @@ import br.com.jade.dao.RevendProdDao;
 import br.com.jade.enums.Status;
 import br.com.jade.model.Produto;
 import br.com.jade.model.Revendedor;
+import br.com.jade.report.GeradorDeRelatorios;
 
 @ManagedBean
 @SessionScoped
@@ -160,6 +166,19 @@ public class RevendProdBean implements Serializable {
 		RequestContext requestContext = RequestContext.getCurrentInstance();
    	 	requestContext.execute("PF('produtosTable').clearFilters()");
    	 	requestContext.execute("PF('produtosRevendTable').clearFilters()");
+	}
+	
+	public String imprimeRelatorio() throws FileNotFoundException, ClassNotFoundException, SQLException{
+		String relat = "resources/jasper/report1.jrxml";		
+		Connection conexao = revendProdDao.getConnection();		
+		Map<String, Object> parametros = new HashMap<>();
+		
+		parametros.put("revendedor", selectedRevendedor.getApelido());		
+		GeradorDeRelatorios gerador = new GeradorDeRelatorios(conexao);
+		
+		gerador.geraPdf(relat, parametros);
+		conexao.close();
+		return null;
 	}
 
 	public Revendedor getSelectedRevendedor() {
