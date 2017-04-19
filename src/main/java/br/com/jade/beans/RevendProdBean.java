@@ -1,6 +1,7 @@
 package br.com.jade.beans;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -14,7 +15,10 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.DragDropEvent;
@@ -25,6 +29,10 @@ import br.com.jade.enums.Status;
 import br.com.jade.model.Produto;
 import br.com.jade.model.Revendedor;
 import br.com.jade.report.GeradorDeRelatorios;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.JasperRunManager;
 
 @ManagedBean
 @SessionScoped
@@ -168,18 +176,41 @@ public class RevendProdBean implements Serializable {
    	 	requestContext.execute("PF('produtosRevendTable').clearFilters()");
 	}
 	
-	public String imprimeRelatorio() throws FileNotFoundException, ClassNotFoundException, SQLException{
+	public String imprimeRelatorio() throws ClassNotFoundException, SQLException, JRException, IOException{
+		
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		ExternalContext externalContext = facesContext.getExternalContext();		
+		HttpServletResponse resp = (HttpServletResponse) externalContext.getResponse();
+		
+		byte[] bytes = null;
+		
 		String relat = "resources/jasper/report1.jrxml";
 		//preciso pegar o caminho do logo que compõe o relatório
-		String absolutePath= FacesContext.getCurrentInstance().getExternalContext().getRealPath("resources/images/logo.png");
+		String absoluteLogoPath= FacesContext.getCurrentInstance().getExternalContext().getRealPath("resources/images/logo.png");
 		Connection conexao = revendProdDao.getConnection();		
 		Map<String, Object> parametros = new HashMap<>();
 		
 		parametros.put("revendedor", selectedRevendedor.getApelido());
-		parametros.put("logo", absolutePath);
-		GeradorDeRelatorios gerador = new GeradorDeRelatorios(conexao);
+		parametros.put("logo", absoluteLogoPath);
 		
-		gerador.geraPdf(relat, parametros);
+		//GeradorDeRelatorios gerador = new GeradorDeRelatorios(conexao);		
+		//gerador.geraPdf(relat, parametros);
+		
+		String absolutePath= FacesContext.getCurrentInstance().getExternalContext().getRealPath(relat);
+        JasperReport jasper = JasperCompileManager.compileReport(absolutePath);
+		
+		bytes = JasperRunManager.runReportToPdf(jasper, parametros, conexao);
+		
+		
+		resp.reset();
+	    resp.resetBuffer();
+	    resp.setContentType("application/pdf");
+	    resp.setContentLength(bytes.length);
+	    ServletOutputStream ouputStream = resp.getOutputStream();
+	     ouputStream.write(bytes, 0, bytes.length);
+	     ouputStream.flush();
+	     ouputStream.close();
+		
 		conexao.close();
 		return null;
 	}
