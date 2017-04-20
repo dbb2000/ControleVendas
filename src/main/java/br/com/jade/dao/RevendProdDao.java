@@ -1,11 +1,15 @@
 package br.com.jade.dao;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
+
+import org.hibernate.Session;
+import org.hibernate.internal.SessionImpl;
 
 import br.com.jade.enums.Localidade;
 import br.com.jade.enums.ModoVenda;
@@ -15,13 +19,8 @@ import br.com.jade.model.Revendedor;
 import br.com.jade.model.Venda;
 import br.com.jade.util.JpaUtil;
 
-//@ManagedBean(name = "revendProdDao")
-//@SessionScoped
 public class RevendProdDao {
 	
-	
-
-
 	
 	public List<Produto> getProdutos() {
 		EntityManager manager = JpaUtil.getEntityManager();
@@ -41,6 +40,7 @@ public class RevendProdDao {
 		EntityManager manager = JpaUtil.getEntityManager();
 		EntityTransaction tx = manager.getTransaction();
 		tx.begin();
+		@SuppressWarnings("unused")
 		Venda venda  = manager.merge(produto.getVenda());
 		Produto prod = manager.merge(produto);
 		
@@ -122,6 +122,16 @@ public class RevendProdDao {
 		tx.commit();
 		manager.close();
 		return lista;
+	}
+	
+	public Connection getConnection(){
+		
+		EntityManager manager = JpaUtil.getEntityManager();		
+		Session session = manager.unwrap(Session.class);
+		SessionImpl sessionImpl = (SessionImpl) session;		
+		Connection connection = sessionImpl.connection();
+
+		return connection;
 	}
 	
 	

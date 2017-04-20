@@ -1,9 +1,7 @@
 package br.com.jade.dao;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
-import javax.persistence.Persistence;
 
 import br.com.jade.model.Usuario;
 import br.com.jade.util.JpaUtil;

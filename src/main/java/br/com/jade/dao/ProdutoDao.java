@@ -22,8 +22,6 @@ import br.com.jade.model.Venda;
 import br.com.jade.util.Calculos;
 import br.com.jade.util.JpaUtil;
 
-//@ManagedBean(name = "produtoDao")
-//@ViewScoped
 public class ProdutoDao implements Serializable {
 
 	/**
