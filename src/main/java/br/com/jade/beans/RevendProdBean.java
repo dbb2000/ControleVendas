@@ -1,8 +1,12 @@
 package br.com.jade.beans;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.charset.Charset;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -14,7 +18,10 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.DragDropEvent;
@@ -24,7 +31,10 @@ import br.com.jade.dao.RevendProdDao;
 import br.com.jade.enums.Status;
 import br.com.jade.model.Produto;
 import br.com.jade.model.Revendedor;
-import br.com.jade.report.GeradorDeRelatorios;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.JasperRunManager;
 
 @ManagedBean
 @SessionScoped
@@ -168,20 +178,48 @@ public class RevendProdBean implements Serializable {
    	 	requestContext.execute("PF('produtosRevendTable').clearFilters()");
 	}
 	
-	public String imprimeRelatorio() throws FileNotFoundException, ClassNotFoundException, SQLException{
-		String relat = "resources/jasper/report1.jrxml";
-		//preciso pegar o caminho do logo que compõe o relatório
-		String absolutePath= FacesContext.getCurrentInstance().getExternalContext().getRealPath("resources/images/logo.png");
-		Connection conexao = revendProdDao.getConnection();		
-		Map<String, Object> parametros = new HashMap<>();
+	public void imprimeRelatorio() throws ClassNotFoundException, SQLException, JRException, IOException{
+
+		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();		
+
+		HttpServletResponse response = (HttpServletResponse) externalContext.getResponse();		
+		Connection conexao = revendProdDao.getConnection();
+		char[] bytes = null;
 		
+		String absoluteLogoPath= externalContext.getRealPath("resources/images/logo.png"); //caminho do logo que compõe o relatório
+		String absolutePath= externalContext.getRealPath("resources/jasper/report1.jrxml"); // caminho para o jrxml do relatório
+				
+		
+		Map<String, Object> parametros = new HashMap<>();		
 		parametros.put("revendedor", selectedRevendedor.getApelido());
-		parametros.put("logo", absolutePath);
-		GeradorDeRelatorios gerador = new GeradorDeRelatorios(conexao);
+		parametros.put("logo", absoluteLogoPath);
 		
-		gerador.geraPdf(relat, parametros);
+		//GeradorDeRelatorios gerador = new GeradorDeRelatorios(conexao);		
+		//gerador.geraPdf(relat, parametros);		
+
+        JasperReport jasper = JasperCompileManager.compileReport(absolutePath);		
+		
+        Charset latin1Charset = Charset.forName("ISO-8859-1");
+        CharBuffer charBuffer = latin1Charset.decode(ByteBuffer.wrap(JasperRunManager.runReportToPdf(jasper, parametros, conexao)));
+        ByteBuffer byteBuffer = latin1Charset.encode(charBuffer);
+        
+        bytes= charBuffer.array();
+        
+		
+		
+		response.reset();
+	    response.resetBuffer();
+	    response.setContentType("application/pdf");
+	    response.setContentLength(bytes.length);
+	    PrintWriter ouputStream = response.getWriter();
+		ouputStream.write(bytes, 0, bytes.length);
+		ouputStream.flush();
+		ouputStream.close();
+
+
 		conexao.close();
-		return null;
+		
+		//return null;
 	}
 
 	public Revendedor getSelectedRevendedor() {
