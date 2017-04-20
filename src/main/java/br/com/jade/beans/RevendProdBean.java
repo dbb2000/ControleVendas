@@ -1,12 +1,8 @@
 package br.com.jade.beans;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
-import java.nio.charset.Charset;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -20,7 +16,6 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
 import org.primefaces.context.RequestContext;
@@ -31,10 +26,8 @@ import br.com.jade.dao.RevendProdDao;
 import br.com.jade.enums.Status;
 import br.com.jade.model.Produto;
 import br.com.jade.model.Revendedor;
+import br.com.jade.report.GeradorDeRelatorios;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.JasperRunManager;
 
 @ManagedBean
 @SessionScoped
@@ -48,15 +41,15 @@ public class RevendProdBean implements Serializable {
 	private List<Produto> produtosRevendedorFiltrados;
 	private RevendProdDao revendProdDao = new RevendProdDao();
 	
+	private final String LOGOTIPO = "resources/images/logo.png";
+	private final String JRXML = "resources/jasper/report1.jrxml";
+	
     @ManagedProperty("#{modoVendaBean}")
     private ModoVendaBean modoVenda;
     
     @ManagedProperty("#{statusBean}")
     private StatusBean status;
 
-//    @PostConstruct()
-//    public void init() {
-//    }
     
     public String onLoad() {
     	this.produtos = null;
@@ -83,34 +76,24 @@ public class RevendProdBean implements Serializable {
   
         // preciso remover item dos produtos.
         this.produtos.remove(produto);
+
         if( produtosFiltrados != null ){
-        	produtosFiltrados.remove(produto);
-        	//produtosFiltrados = null;
+        	produtosFiltrados.remove(produto);        
         }
-        
-//        if(produtosRevendedorFiltrados != null){
-//        	produtosRevendedorFiltrados = null;
-//
-//        }
-    	this.limpaWidgetVar();
-        
+    	
+        this.limpaWidgetVar();
         this.selectedRevendedor.getProdutos().add(produto);
         this.somaProdutos();
     }
     
     public void onListaProdutosDrop(DragDropEvent ddEvent) {
-        Produto produto = ((Produto) ddEvent.getData());
+
+    	Produto produto = ((Produto) ddEvent.getData());
         this.selectedRevendedor.getProdutos().remove(produto);
+        
         if(produtosRevendedorFiltrados != null){
         	produtosRevendedorFiltrados.remove(produto);
-        	//produtosRevendedorFiltrados = null;
-
         }
-        
-//        if( produtosFiltrados != null ){
-//        	produtosFiltrados = null;
-//
-//        }
         
         revendProdDao.atualizaStatus(produto);
         this.produtos.add(produto);        
@@ -120,15 +103,8 @@ public class RevendProdBean implements Serializable {
 	public void onRowEdit(RowEditEvent event) {
 		
 		Produto produto = (Produto) event.getObject();
-//		this.somaProdutos();
 		revendProdDao.atualizar(produto, selectedRevendedor.getApelido());
-		
-	//	if(produto.getStatus().equals(Status.VENDIDO.getStatus())){
-	    	//revendProdDao.removerProdutoVendido(selectedRevendedor, produto);
-		//	this.selectedRevendedor.getProdutos().remove(produto);
-	    	this.somaProdutos();
-//	    	revendProdDao.gravar(selectedRevendedor);
-		//}
+    	this.somaProdutos();
 		
     	FacesMessage msg = new FacesMessage("Produto Atualizado com sucesso", produto.getCodigo());
         FacesContext.getCurrentInstance().addMessage(null, msg);        
@@ -139,7 +115,7 @@ public class RevendProdBean implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
     
-    public String gravar(){
+    public void gravar(){
     	this.removerProdutosVendidos();
     	this.somaProdutos();
     	revendProdDao.gravar(selectedRevendedor);
@@ -150,9 +126,7 @@ public class RevendProdBean implements Serializable {
     	FacesMessage mensagem = new FacesMessage(
     	FacesMessage.SEVERITY_INFO, "Produtos atribuídos.",
     	"Produtos para o revendedor " + selectedRevendedor.getApelido() + " modificado com sucesso.");
-    	context.addMessage(null, mensagem);
-    	
-    	return null;    	    	
+    	context.addMessage(null, mensagem);    	    	
     }     
 
 	private void removerProdutosVendidos() {
@@ -183,43 +157,19 @@ public class RevendProdBean implements Serializable {
 		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();		
 
 		HttpServletResponse response = (HttpServletResponse) externalContext.getResponse();		
-		Connection conexao = revendProdDao.getConnection();
-		char[] bytes = null;
+		Connection conexao = revendProdDao.getConnection();		
+		Map<String, Object> parametros = new HashMap<>();
 		
-		String absoluteLogoPath= externalContext.getRealPath("resources/images/logo.png"); //caminho do logo que compõe o relatório
-		String absolutePath= externalContext.getRealPath("resources/jasper/report1.jrxml"); // caminho para o jrxml do relatório
+		String absoluteLogoPath= externalContext.getRealPath(LOGOTIPO); //caminho do logo que compõe o relatório
+		String absolutePath= externalContext.getRealPath(JRXML); // caminho para o jrxml do relatório
 				
-		
-		Map<String, Object> parametros = new HashMap<>();		
 		parametros.put("revendedor", selectedRevendedor.getApelido());
 		parametros.put("logo", absoluteLogoPath);
-		
-		//GeradorDeRelatorios gerador = new GeradorDeRelatorios(conexao);		
-		//gerador.geraPdf(relat, parametros);		
 
-        JasperReport jasper = JasperCompileManager.compileReport(absolutePath);		
-		
-        Charset latin1Charset = Charset.forName("ISO-8859-1");
-        CharBuffer charBuffer = latin1Charset.decode(ByteBuffer.wrap(JasperRunManager.runReportToPdf(jasper, parametros, conexao)));
-        ByteBuffer byteBuffer = latin1Charset.encode(charBuffer);
-        
-        bytes= charBuffer.array();
-        
-		
-		
-		response.reset();
-	    response.resetBuffer();
-	    response.setContentType("application/pdf");
-	    response.setContentLength(bytes.length);
-	    PrintWriter ouputStream = response.getWriter();
-		ouputStream.write(bytes, 0, bytes.length);
-		ouputStream.flush();
-		ouputStream.close();
-
-
+		GeradorDeRelatorios gerador = new GeradorDeRelatorios(conexao);
+		gerador.geraPdf(parametros, response, absolutePath);
 		conexao.close();
-		
-		//return null;
+
 	}
 
 	public Revendedor getSelectedRevendedor() {
