@@ -239,4 +239,6 @@ public class RevendProdBean implements Serializable {
 
 	//TODO verificar a questão do @Inject
 	//TODO reimplementar o login. Pag 200 da apostila
+	//TODO colocar verificação nos campos obrigatórios
+	//TODO verificar se o apelido já existe ao cadastrar novo revendedor
 }

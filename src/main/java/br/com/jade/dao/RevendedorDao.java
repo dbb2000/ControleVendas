@@ -36,9 +36,9 @@ public class RevendedorDao {
 			buscado.setRg(revendedor.getRg());
 			buscado.setUf(revendedor.getUf());
 			buscado.setBairro(revendedor.getBairro());
+			buscado.setTotalMercadorias(revendedor.getTotalMercadorias());
 		}		
-		tx.commit();
-//		manager.close();	
+		tx.commit();	
 	}
 	
 	public void excluir( Revendedor revendedor){
@@ -48,14 +48,10 @@ public class RevendedorDao {
 		Revendedor reven = manager.find(Revendedor.class, revendedor.getApelido());
 		manager.remove(reven);
 		tx.commit();
-//		manager.close();
 	}
 	
 	public List<Revendedor> getRevendedores() {
-
-//		Query query = manager.createQuery("from Produto");
-		TypedQuery<Revendedor> query = manager.createQuery(
-				"from Revendedor", Revendedor.class);
+		TypedQuery<Revendedor> query = manager.createQuery("from Revendedor", Revendedor.class);
 		List<Revendedor> revendedores = query.getResultList();
 		
 		return revendedores;
