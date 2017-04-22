@@ -34,16 +34,6 @@ public class RevendedorBean implements Serializable {
     }
     
     public String gravarCadastro(){
-
-    	//caso seja uma alteração cadastral do revendedeor, preciso recuperar a lista de produtos e o valor total de mercadorias
-    	if(revendedor.getProdutos() == null){
-    		for( Revendedor revend : revendedores ){
-    			if(revend.getApelido().equals(this.revendedor.getApelido())){
-    				this.revendedor.setProdutos(revend.getProdutos());
-    				this.revendedor.setTotalMercadorias(revend.getTotalMercadorias());
-    			}
-    		}
-    	}
     	
     	revendedorDao.gravar(revendedor);
     	FacesContext context = FacesContext.getCurrentInstance();
