@@ -55,6 +55,9 @@
 					<h:outputText value="Celular:" />
 				    <p:inputMask value="#{revendedorBean.revendedor.foneCelular}" mask="(99)99999-9999" style="width: 96%"/>
 			    	
+			   		<h:inputHidden value="#{revendedorBean.revendedor.totalMercadorias}" />
+					<h:inputHidden value="#{revendedorBean.revendedor.produtos}" converter="produtosListConverter" />
+			    	
 			    	<f:facet name="footer">
 			    		<h:commandButton value="Salvar cadastro" type="submit"  action="#{revendedorBean.gravarCadastro}" style="float:right;"/>
 			    	</f:facet>

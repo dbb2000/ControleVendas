@@ -25,21 +25,16 @@ public class RevendedorBean implements Serializable {
 	private List<Revendedor> revendedoresFiltrados;
 	private Revendedor revendedor = new Revendedor();
 	private Revendedor selectedRevendedor;
-	
-//    @ManagedProperty("#{revendedor}")
-//    private Revendedor revendedor;
-
-//	@ManagedProperty("#{revendedorDao}")
 	private RevendedorDao revendedorDao = new RevendedorDao();
 
     @PostConstruct
     public void init() {
 
-        this.revendedores = revendedorDao.getRevendedores(); 
-        
+        this.revendedores = revendedorDao.getRevendedores();         
     }
     
-    public String gravarCadastro(){ 
+    public String gravarCadastro(){
+    	
     	revendedorDao.gravar(revendedor);
     	FacesContext context = FacesContext.getCurrentInstance();
     	FacesMessage mensagem = new FacesMessage(
@@ -47,23 +42,13 @@ public class RevendedorBean implements Serializable {
     	"Revedendor " + revendedor.getApelido() + " cadastrado com sucesso.");
     	context.addMessage(null, mensagem);
     	
-    	return "revendedores?faces-redirect=true";
-    	
-    	    	
+    	return "revendedores?faces-redirect=true";    	    	
     }
     
     public String carregarCadastro(){
-//    	this.revendedor = new Revendedor();
     	this.revendedor = selectedRevendedor;
     	return "cadRevendedor";
     }
-    
-//    public String associarItens(){
-////    	this.revendedor = new Revendedor();
-//    	this.revendedor = selectedRevendedor;
-//    	return "cadProdReven";
-//    }
-    
     
     public String excluirCadastro(){
 		
@@ -128,6 +113,4 @@ public class RevendedorBean implements Serializable {
 	public void setSelectedRevendedor(Revendedor selectedRevendedor) {
 		this.selectedRevendedor = selectedRevendedor;
 	}
-	
-
 }

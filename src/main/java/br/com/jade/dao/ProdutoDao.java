@@ -42,6 +42,14 @@ public class ProdutoDao implements Serializable {
 		return produtos;
 	}
 	
+	public List<Produto> getProdutos(List<Long>  longList){
+		
+		TypedQuery<Produto> query = manager.createQuery(
+				"from Produto where id in :ids", Produto.class);
+		query.setParameter("ids", longList);
+		return query.getResultList();
+	}
+	
 	public void atualizar(Produto produto, TaxaCartao taxas){
 		
 		EntityTransaction tx = manager.getTransaction();
