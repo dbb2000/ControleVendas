@@ -1,0 +1,54 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        template="main.xhtml">
+<ui:define name="source">
+  <h:head>
+   
+  </h:head>
+   
+  <h:body>
+       <h:form>
+       		<p:panelGrid columns="2" style="margin: 0 auto">
+			    <f:facet name="header">
+			        <h:outputText value="Dados de estoque e financeiro" />
+			    </f:facet>
+						 
+				   	<h:outputText value="Peças disponíveis:" />
+				    <h:outputText value="" />
+				 
+				    <h:outputText value="Peças vendidas:" />
+				    <h:outputText value=""/>
+				    
+					<h:outputText value="Custo total dos produtos:" />
+				    <h:outputText value="" />
+				    
+					<h:outputText value="Percentual de lucro:" />
+				    <h:outputText value="" />
+				 
+				    <h:outputText value="Valor lucro:" />
+				    <h:outputText value="" />
+				 
+					<h:outputText value="Vendas no débito:" />
+			   		<h:outputText value=""/>
+			   		
+			   		<h:outputText value="Vendas no crédito:" />
+			   		<h:outputText value=""/>
+			   		
+			   		<h:outputText value="Vendas em dinheiro:" />
+			    	<h:outputText value=""/>
+			    	
+			    	
+			    	<f:facet name="footer">
+
+			    	</f:facet>
+			    
+			</p:panelGrid>
+       
+		    <p:growl id="messages" showDetail="true" />
+       </h:form>
+  </h:body>
+  </ui:define>
+</ui:composition>
