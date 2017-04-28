@@ -15,6 +15,14 @@
 			    <f:facet name="header">
 			        <h:outputText value="Dados de estoque e financeiro" />
 			    </f:facet>
+			    	
+			    	<h3>Range Slider</h3>
+				    <h:panelGrid columns="1" style="margin-bottom: 10px">
+				        <h:outputText id="displayRange" value="Between #{dadosEstatiscosBean.mesInicial} and #{dadosEstatiscosBean.mesFinal}" />
+				        <p:slider for="inicio,fim" display="displayRange" style="width: 400px" range="true" displayTemplate="Between {min} and {max}" />
+				    </h:panelGrid>
+				    <h:inputHidden id="inicio" value="#{dadosEstatiscosBean.mesInicial}" />
+				    <h:inputHidden id="fim" value="#{dadosEstatiscosBean.mesFinal}" />
 						 
 				   	<h:outputText value="Peças disponíveis:" />
 				    <h:outputText value="" />

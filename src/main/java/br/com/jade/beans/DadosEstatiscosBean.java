@@ -7,4 +7,24 @@ import javax.faces.bean.ViewScoped;
 @ViewScoped
 public class DadosEstatiscosBean {
 
+	
+	private String mesInicial;
+	private String mesFinal;
+	
+	
+	
+	public String getMesInicial() {
+		return mesInicial;
+	}
+	public void setMesInicial(String mesInicial) {
+		this.mesInicial = mesInicial;
+	}
+	public String getMesFinal() {
+		return mesFinal;
+	}
+	public void setMesFinal(String mesFinal) {
+		this.mesFinal = mesFinal;
+	}
+	
+	
 }
