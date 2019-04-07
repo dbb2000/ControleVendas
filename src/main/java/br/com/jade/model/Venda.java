@@ -16,24 +16,22 @@ import javax.persistence.TemporalType;
 public class Venda {
 
 	@Id
-	@GeneratedValue//(strategy=GenerationType.IDENTITY)
+	@GeneratedValue
 	@Column(name="COD_VENDA")
-	Long codigoVenda;	
+	private Long codigoVenda;	
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name="DATA_VENDA")
-	Date dataVenda;	
+	private Date dataVenda;	
 	
 	@Column(name="VALOR_VENDA")
-	BigDecimal precoVenda;	
-	
-	//@Enumerated(EnumType.STRING)
-	@Column(name="FORMA_PGTO")
-	//Enum<ModoVenda> formaPagamento;
-	String formaPagamento;
+	private BigDecimal precoVenda;	
+		
+	@Column(name="FORMA_PGTO")	
+	private String formaPagamento;
 	
 	@Column(name="VENDEDOR")
-	String vendedor;
+	private String vendedor;
 
 	public Date getDataVenda() {
 		return dataVenda;
@@ -99,11 +97,5 @@ public class Venda {
 			return false;
 		return true;
 	}
-	
-	
-	
-
-	
-	
 	
 }

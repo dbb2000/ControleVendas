@@ -33,10 +33,8 @@ public class FileUploadView implements Serializable {
 	 */
 	private static final long serialVersionUID = -5740654576960452880L;
 
-//	@ManagedProperty("#{produtoDao}")
     private ProdutoDao produtoDao = new ProdutoDao();
-	
-//	@ManagedProperty("#{custoDao}")
+
 	private CustoDao custoDao = new CustoDao();
     
     @ManagedProperty("#{custo}")

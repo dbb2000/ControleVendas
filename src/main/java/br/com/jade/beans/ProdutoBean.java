@@ -32,7 +32,6 @@ public class ProdutoBean implements Serializable {
 	private Produto produto = new Produto();
 	private TaxaCartao taxas;
          
-//    @ManagedProperty("#{produtoDao}")
     private ProdutoDao produtoDao = new ProdutoDao();
     
     @ManagedProperty("#{localidadeBean}")    
