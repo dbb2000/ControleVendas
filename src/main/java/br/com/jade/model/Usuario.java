@@ -25,7 +25,6 @@ public class Usuario {
 	private String nomeCompleto;
 
 	@Column(name="lastAccess", unique=true)
-	//@Temporal(TemporalType.DATE)
 	private LocalDate ultimoAcesso;
 
 	public String getNomeUsuario() {
@@ -59,7 +58,5 @@ public class Usuario {
 	public void setNomeCompleto(String nomeCompleto) {
 		this.nomeCompleto = nomeCompleto;
 	}
-
-
 
 }

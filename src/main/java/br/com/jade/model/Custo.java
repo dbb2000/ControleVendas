@@ -22,28 +22,28 @@ public class Custo {
 	
 	@Column(name="DATA_COMPRA")
 	@Temporal(TemporalType.DATE)
-	Date dataCompra;
+	private Date dataCompra;
 	
 	@Column(name="QTDE_PECAS", length = 4)
-	int qtdePecas;
+	private int qtdePecas;
 	
 	@Column(name="DESCONTO_RECEBIDO")	
-	BigDecimal descontoRecebido;
+	private BigDecimal descontoRecebido;
 	
 	@Column(name="COMBUSTIVEL")
-	BigDecimal combustivel;
+	private BigDecimal combustivel;
 	
 	@Column(name="PEDAGIO")
-	BigDecimal pedagio;
+	private BigDecimal pedagio;
 	
 	@Column(name="FRETE")
-	BigDecimal frete;
+	private BigDecimal frete;
 	
 	@Column(name="OUTROS")
-	BigDecimal outros;
+	private BigDecimal outros;
 	
 	@Column(name="CUSTO_TOTAL")
-	BigDecimal custoTotal;
+	private BigDecimal custoTotal;
 
 
 	public Date getDataCompra() {

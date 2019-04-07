@@ -25,22 +25,28 @@
 				    <h:inputHidden id="fim" value="#{dadosEstatiscosBean.mesFinal}" />
 						 
 				   	<h:outputText value="Peças disponíveis:" />
-				    <h:outputText value="" />
+				    <h:outputText value="#{dadosEstatiscosBean.totalPecasDisponiveis}" />
 				 
-				    <h:outputText value="Peças vendidas:" />
-				    <h:outputText value=""/>
+				    <h:outputText value="Peças em loja:" />
+				    <h:outputText value="#{dadosEstatiscosBean.totalPecasLoja}"/>
 				    
-					<h:outputText value="Custo total dos produtos:" />
-				    <h:outputText value="" />
+					<h:outputText value="Peças com revendedores:" />
+				    <h:outputText value="#{dadosEstatiscosBean.totalPecasRevendedor}" />
 				    
+					<h:outputText value="Custo total de mercadorias:" />
+				    <h:outputText value="#{dadosEstatiscosBean.custoTotalMercadorias}"> 
+				    <f:convertNumber type="currency" minFractionDigits="2" locale="pt_BR" />
+				    </h:outputText>
+				 
+				    <h:outputText value="Total avaliado de mercadorias:" />
+				    <h:outputText value="#{dadosEstatiscosBean.valorMercadoriasAvaliado}"> 
+				    <f:convertNumber type="currency" minFractionDigits="2" locale="pt_BR" />
+				    </h:outputText>
+				 
 					<h:outputText value="Percentual de lucro:" />
-				    <h:outputText value="" />
-				 
-				    <h:outputText value="Valor lucro:" />
-				    <h:outputText value="" />
-				 
-					<h:outputText value="Vendas no débito:" />
-			   		<h:outputText value=""/>
+			   		<h:outputText value="#{dadosEstatiscosBean.percentualLucro}%" > 
+			   		<f:convertNumber type="number" minFractionDigits="2" maxFractionDigits="2"  />
+			   		</h:outputText>
 			   		
 			   		<h:outputText value="Vendas no crédito:" />
 			   		<h:outputText value=""/>

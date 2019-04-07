@@ -38,4 +38,9 @@ public class Calculos {
 		BigDecimal desconto = valor.divide(NUMERO_CEM).multiply(percentDesconto);			
 		return valor.subtract(desconto.setScale(2, RoundingMode.HALF_UP));
 	}
+	
+	public static BigDecimal calculaPercentualLucro(BigDecimal custoMercadoria, BigDecimal valorMercadoriaAvaliada) {
+		return ((valorMercadoriaAvaliada.multiply(NUMERO_CEM)).divide(custoMercadoria,2, RoundingMode.HALF_UP)).subtract(NUMERO_CEM); 
+				 
+	}
 }

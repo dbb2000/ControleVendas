@@ -12,61 +12,51 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "REVENDEDOR")
 public class Revendedor {
-
-//	@Id
-//	@GeneratedValue
-//	@Column(name="ID")
-//	int id;
 	
 	@Id
 	@Column(name="APELIDO", unique=true, columnDefinition="VARCHAR(15)")
-	String apelido;
+	private String apelido;
 	
 	@Column(name="NOME_COMPLETO")
-	String nomeCompleto;
+	private String nomeCompleto;
 	
 	@Column(name="ENDERECO")	
-	String endereço;
+	private String endereço;
 	
 	@Column(name="CPF")
-	String cpf;
+	private String cpf;
 	
 	@Column(name="RG")
-	String rg;
+	private String rg;
 	
 	@Column(name="COMPLEMENTO")
-	String complemento;
+	private String complemento;
 	
 	@Column(name="BAIRRO")
-	String bairro;
+	private String bairro;
 	
 	@Column(name="CIDADE")
-	String cidade;
+	private String cidade;
 
 	@Column(name="UF", length=2 )
-	String uf;
+	private String uf;
 
 	@Column(name="CEP")
-	String cep;
+	private String cep;
 	
 	@Column(name="FONE_RESIDENCIAL")
-	String foneResidencial;
+	private String foneResidencial;
 	
 	@Column(name="FONE_CELULAR")
-	String foneCelular;
+	private String foneCelular;
 	
 	@OneToMany
-	List<Produto> produtos;
+	private List<Produto> produtos;
 	
 	@Column(name="TOTAL_MERCADORIAS")
-	BigDecimal totalMercadorias;
+	private BigDecimal totalMercadorias;
 	
-//	public int getId() {
-//		return id;
-//	}
-//	public void setId(int id) {
-//		this.id = id;
-//	}
+
 	public String getApelido() {
 		return apelido;
 	}
@@ -151,10 +141,7 @@ public class Revendedor {
 	public void setBairro(String bairro) {
 		this.bairro = bairro;
 	}
-	//	public int getId() {
-//		return id;
-//	}
-//	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

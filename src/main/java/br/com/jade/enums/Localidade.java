@@ -15,5 +15,4 @@ public enum Localidade {
 		return localidade;
 	}
 	
-	
 }

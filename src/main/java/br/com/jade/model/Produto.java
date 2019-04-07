@@ -21,17 +21,15 @@ public class Produto {
 	@Id	
 	@GeneratedValue//(strategy=GenerationType.IDENTITY)
 	@Column(name="ID")
-	Long id;
+	private Long id;
 	
 	@Column(name="CODIGO")
 	private String codigo;
 	
 	@Column(name="DESCRICAO", length = 255)
 	private String descricao;
-	
-	//@Enumerated(EnumType.STRING)
+
 	@Column(name="LOCALIDADE")
-	//Enum<Localidade> localidade; 
 	private String localidade;
 	
 	@Column(name="PRECO_CUSTO", precision = 10, scale = 2)
@@ -43,9 +41,7 @@ public class Produto {
 	@Column(name="PRECO_VENDA", precision = 10, scale = 2)
 	private BigDecimal precoVenda;
 	
-	//@Enumerated(EnumType.STRING)
 	@Column(name="STATUS")
-	//Enum<Status> status;
 	private String status;
 	
 	@Temporal(TemporalType.DATE)
@@ -58,7 +54,7 @@ public class Produto {
 	
 	@ManyToOne()
 	@JoinColumn(name = "ID_CUSTO")
-	Custo custo;
+	private Custo custo;
 	
 	
 	public String getCodigo() {
@@ -73,12 +69,6 @@ public class Produto {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-//	public Enum<Localidade> getLocalidade() {
-//		return localidade;
-//	}
-//	public void setLocalidade(Enum<Localidade> localidade) {
-//		this.localidade = localidade;
-//	}
 	public BigDecimal getPrecoCusto() {
 		return precoCusto;
 	}
@@ -97,12 +87,6 @@ public class Produto {
 	public void setPrecoVenda(BigDecimal precoVenda) {
 		this.precoVenda = precoVenda;
 	}
-//	public Enum<Status> getStatus() {
-//		return status;
-//	}
-//	public void setStatus(Enum<Status> status) {
-//		this.status = status;
-//	}
 	public String getLocalidade() {
 		return localidade;
 	}

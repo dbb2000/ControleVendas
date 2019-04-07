@@ -13,13 +13,13 @@ public class TaxaCartao {
 
 	@Id
 	@Column(name="OPERADORA", unique=true, columnDefinition="VARCHAR(15)")
-	String operadora;
+	private String operadora;
 	
 	@Column(name="TAXA_DEBITO")	
-	BigDecimal taxaDebito;
+	private BigDecimal taxaDebito;
 	
 	@Column(name="TAXA_CREDITO")
-	BigDecimal taxaCredito;
+	private BigDecimal taxaCredito;
 	
 	
 	public BigDecimal getTaxaDebito() {

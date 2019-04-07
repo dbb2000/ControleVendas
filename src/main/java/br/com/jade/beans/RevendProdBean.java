@@ -36,13 +36,13 @@ public class RevendProdBean implements Serializable {
 	private static final long serialVersionUID = 2952101094659010510L;
 
 	private Revendedor selectedRevendedor;
-	private List<Produto> produtos;	
+	private transient List<Produto> produtos;	
 	private List<Produto> produtosFiltrados;
 	private List<Produto> produtosRevendedorFiltrados;
 	private RevendProdDao revendProdDao = new RevendProdDao();
 	
-	private final String LOGOTIPO = "resources/images/logo.png";
-	private final String JRXML = "resources/jasper/report1.jrxml";
+	private static final String LOGOTIPO = "resources/images/logo.png";
+	private static final String JRXML = "resources/jasper/report1.jrxml";
 	
     @ManagedProperty("#{modoVendaBean}")
     private ModoVendaBean modoVenda;
